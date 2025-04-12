@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
-import { handleSlug } from '../utils/slugGenerator';
+import { Document, Types, Model } from 'mongoose'; // Ensure Model is imported
+import { handleSlug } from '../shared/utils/generators/slug/slug-generator.service';
 
 @Schema({ timestamps: true })
 export class Pack extends Document {
@@ -87,7 +87,8 @@ export const PackSchema = SchemaFactory.createForClass(Pack);
 // Preserve pre-save hook
 PackSchema.pre('save', async function(next) {
   try {
-    this.slug = await handleSlug(this, 'designation', this.constructor);
+    // Explicitly cast this.constructor as a Model<Pack> to resolve the error
+    this.slug = await handleSlug(this, 'designation', this.constructor as Model<Pack>);
     next();
   } catch (error) {
     next(error);

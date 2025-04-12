@@ -1,7 +1,7 @@
 // src/shared/utils/statistics/statistics.module.ts
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Vente, VenteSchema } from '../../../vente/schemas/vente.schema';
+import { Vente, VenteSchema } from '../../../models/vente.schema';
 import { StatisticsService } from './statistics.service';
 
 @Module({

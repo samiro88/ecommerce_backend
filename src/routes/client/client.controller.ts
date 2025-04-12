@@ -7,11 +7,10 @@ import {
     Body 
   } from '@nestjs/common';
   import { ClientService } from './client.service';
-  import { 
-    CreateClientDto,
-    UpdateClientDto,
-    BulkDeleteDto
-  } from './dto';
+  import { CreateClientDto } from './dto/create-client.dto'; // Direct path to the create-client.dto.ts
+  import { UpdateClientDto } from './dto/update-client.dto'; // Direct path to the update-client.dto.ts
+  import { BulkDeleteDto } from './dto/bulk-delete.dto'; // Direct path to the bulk-delete.dto.ts
+  
   
   @Controller()
   export class ClientController {

@@ -2,7 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Vente } from '../../../vente/schemas/vente.schema';
+import { Vente, VenteSchema } from '../../../models/vente.schema';
 import {
   RevenueOverTimeResult,
   YearOverYearComparison,
@@ -18,8 +18,8 @@ export class StatisticsService {
 
   async getTotalRevenueOverTime(
     timeFrame = 'monthly',
-    startDate: Date = null,
-    endDate: Date = null
+    startDate:Date | null = null,
+    endDate: Date | null = null
   ): Promise<RevenueOverTimeResult[]> {
     const end = endDate || new Date();
     const start = startDate || new Date(new Date().setFullYear(end.getFullYear() - 1));
@@ -184,8 +184,8 @@ export class StatisticsService {
   }
 
   async getCategoryPerformance(
-    startDate: Date = null,
-    endDate: Date = null
+    startDate: Date | null = null,
+    endDate: Date | null = null
   ): Promise<CategoryPerformance[]> {
     const matchStage = {
       createdAt: {
@@ -247,8 +247,8 @@ export class StatisticsService {
   }
 
   async getPromoCodeUsageStats(
-    startDate: Date = null,
-    endDate: Date = null
+    startDate: Date | null = null,
+    endDate: Date | null = null
   ): Promise<PromoCodeStats[]> {
     const matchStage = {
       "promoCode.id": { $exists: true, $ne: null },

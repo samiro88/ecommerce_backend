@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Blog } from './schemas/blog.schema';
-import { CreateBlogDto, UpdateBlogDto } from './dto';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { Blog } from '../../../models/blog.schema';
+import { CreateBlogDto } from '../dto/create-blog.dto';
+import { UpdateBlogDto } from '../dto/update-blog.dto';
+import { CloudinaryService } from '../../cloudinary/cloudinary.service';
 
 @Injectable()
 export class BlogService {
@@ -21,7 +22,7 @@ export class BlogService {
   }
 
   async createBlog(createBlogDto: CreateBlogDto, file: Express.Multer.File) {
-    let cover = undefined;
+    let cover: { url: string; img_id: string } | undefined = undefined;
     if (file) {
       const result = await this.cloudinaryService.uploadImage(file);
       cover = { url: result.secure_url, img_id: result.public_id };

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { SubCategoriesController } from './sub-categories.controller';
-import { SubCategoriesService } from './sub-categories.service';
+import { SubCategoriesController } from './subcategory.controller';
+import { SubCategoriesService } from './subcategory.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { SubCategory, SubCategorySchema } from '../models/SubCategory';
-import { Category, CategorySchema } from '../models/Category';
-import { Product, ProductSchema } from '../models/Product';
+import { SubCategory, SubCategorySchema } from '../../models/sub-category.schema';
+import { Category, CategorySchema } from '../../models/category.schema';          // Go back 2 directories
+import { Product, ProductSchema } from '../../models/product.schema';
 
 @Module({
   imports: [

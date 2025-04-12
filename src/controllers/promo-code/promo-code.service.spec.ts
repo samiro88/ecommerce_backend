@@ -1,15 +1,28 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PromoCodeService } from './promo-code.service';
+import { PromoCodesService } from './promo-code.service';
+import { getModelToken } from '@nestjs/mongoose';
 
-describe('PromoCodeService', () => {
-  let service: PromoCodeService;
+describe('PromoCodesService', () => {
+  let service: PromoCodesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PromoCodeService],
+      providers: [
+        PromoCodesService,
+        {
+          provide: getModelToken('PromoCode'),
+          useValue: {
+            findAll: jest.fn(),
+            findOne: jest.fn(),
+            create: jest.fn(),
+            update: jest.fn(),
+            remove: jest.fn(),
+          }, // Mock PromoCode model
+        },
+      ],
     }).compile();
 
-    service = module.get<PromoCodeService>(PromoCodeService);
+    service = module.get<PromoCodesService>(PromoCodesService);
   });
 
   it('should be defined', () => {

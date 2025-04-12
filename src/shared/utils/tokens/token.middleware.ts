@@ -1,4 +1,3 @@
-// src/shared/utils/tokens/token.middleware.ts
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
@@ -6,6 +5,12 @@ import { TokenPayload } from './interfaces/token.interface';
 
 @Injectable()
 export class TokenMiddleware implements NestMiddleware {
+  constructor() {
+    if (!process.env.JWT_SECRET) {
+      throw new Error('JWT_SECRET is not defined in environment variables');
+    }
+  }
+
   async use(req: Request, res: Response, next: NextFunction) {
     try {
       const token = req.params.token || req.headers.authorization?.split(' ')[1];
@@ -15,13 +20,12 @@ export class TokenMiddleware implements NestMiddleware {
       }
 
       const jwtData = await new Promise<TokenPayload>((resolve, reject) => {
-        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        jwt.verify(token, process.env.JWT_SECRET as string, (err, decoded) => {
           if (err) reject(err);
           else resolve(decoded as TokenPayload);
         });
       });
 
-      // Attach to request object for controller access
       req['user'] = jwtData;
       next();
     } catch (error) {
@@ -37,6 +41,12 @@ export class TokenMiddleware implements NestMiddleware {
 
 @Injectable()
 export class ClientTokenMiddleware implements NestMiddleware {
+  constructor() {
+    if (!process.env.JWT_SECRET) {
+      throw new Error('JWT_SECRET is not defined in environment variables');
+    }
+  }
+
   async use(req: Request, res: Response, next: NextFunction) {
     try {
       const token = req.params.token || req.headers.authorization?.split(' ')[1];
@@ -46,7 +56,7 @@ export class ClientTokenMiddleware implements NestMiddleware {
       }
 
       const jwtData = await new Promise<TokenPayload>((resolve, reject) => {
-        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        jwt.verify(token, process.env.JWT_SECRET as string, (err, decoded) => {
           if (err) reject(err);
           else resolve(decoded as TokenPayload);
         });

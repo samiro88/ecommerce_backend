@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PacksController } from './packs.controller';
 import { PacksService } from './packs.service';
-import { Pack, PackSchema } from '../models/pack';
+import { Pack, PackSchema } from '../../models/pack.schema';
 import { MulterModule } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 

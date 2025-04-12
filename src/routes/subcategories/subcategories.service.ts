@@ -6,8 +6,8 @@ import {
   } from '@nestjs/common';
   import { InjectModel } from '@nestjs/mongoose';
   import { Model } from 'mongoose';
-  import { SubCategory } from '../models/SubCategory';
-  import { Category } from '../models/Category';
+  import { SubCategory } from '../../models/sub-category.schema';;
+  import { Category } from '../../models/category.schema';;
   import mongoose from 'mongoose';
   
   @Injectable()

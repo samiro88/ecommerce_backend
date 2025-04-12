@@ -1,15 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 @Schema({ 
-  timestamps: true, // 🟢 Automatically adds createdAt/updatedAt
-  collection: 'adminusers' // 🟢 Optional: explicit collection name
+  timestamps: true,
+  collection: 'adminusers'
 })
 export class AdminUser extends Document {
   @Prop({
     type: String,
     required: true,
-    unique: true,
+    unique: true, // Ensures the userName field is unique
   })
   userName: string;
 
@@ -25,11 +25,11 @@ export class AdminUser extends Document {
     default: 'admin',
   })
   role: string;
-
-  // 🟢 createdAt and updatedAt are automatically handled by @Schema(timestamps: true)
 }
 
 export const AdminUserSchema = SchemaFactory.createForClass(AdminUser);
 
-// 🟢 Add indexes if needed (same as original)
-AdminUserSchema.index({ userName: 1 }, { unique: true });
+// Add this to properly type the _id field
+export type AdminUserDocument = AdminUser & Document & {
+  _id: Types.ObjectId;
+};

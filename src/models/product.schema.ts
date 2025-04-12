@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
-import { handleSlug } from '../utils/slugGenerator';
+import { Document, Types, Model } from 'mongoose'; // Import Model for typecasting
+import { handleSlug } from '../shared/utils/generators/slug/slug-generator.service';
 import { Category } from './category.schema';
-import { SubCategory } from './sub-category.schema';
+import { SubCategory } from './sub-category.schema';  // Correct import path
 import { Client } from './client.schema';
 
 @Schema({ timestamps: true })
@@ -10,6 +10,23 @@ export class Product extends Document {
   @Prop({ required: true })
   designation: string;
 
+  @Prop({
+    type: [{
+      name: String,
+      options: [{
+        value: String,
+        priceAdjustment: Number
+      }]
+    }]
+  })
+  variations: Array<{
+    name: string;
+    options: Array<{
+      value: string;
+      priceAdjustment: number;
+      
+    }>;
+  }>;
   @Prop()
   codaBar: string;
 
@@ -120,11 +137,13 @@ export class Product extends Document {
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
+export type ProductDocument = Product & Document;
 
 // Preserve pre-save hook
 ProductSchema.pre('save', async function(next) {
   try {
-    this.slug = await handleSlug(this, 'designation', this.constructor);
+    // Explicitly cast this.constructor as a Model<Product> to resolve the error
+    this.slug = await handleSlug(this, 'designation', this.constructor as Model<Product>);
     next();
   } catch (error) {
     next(error);

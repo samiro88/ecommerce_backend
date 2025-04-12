@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
-import { handleSlug } from '../utils/slugGenerator';
-import { Product } from './product.schema'; // Ensure this exists
-import { SubCategory } from './sub-category.schema'; // Ensure this exists
+import { Document, Types, Model } from 'mongoose';
+import { handleSlug } from '../shared/utils/generators/slug/slug-generator.service';
+import { Product } from '../models/product.schema'; // Corrected path
+import { SubCategory } from '../models/sub-category.schema'; // Corrected path
 
 @Schema({ timestamps: true })
 export class Category extends Document {
@@ -31,11 +31,12 @@ export class Category extends Document {
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
-
+export type CategoryDocument = Category & Document; 
 // Preserve pre-save hook
 CategorySchema.pre('save', async function (next) {
   try {
-    this.slug = await handleSlug(this, 'designation', this.constructor);
+    // TypeScript fix: Casting to Model<Category>
+    this.slug = await handleSlug(this, 'designation', this.constructor as Model<Category>);
     next();
   } catch (error) {
     next(error);

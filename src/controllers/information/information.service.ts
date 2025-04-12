@@ -2,8 +2,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Information } from '../models/information';
-import * as cloudinary from '../utils/cloudinary';
+import { Information } from '../../models/information.schema';
+import { v2 as cloudinary } from 'cloudinary';
 
 @Injectable()
 export class InformationService {
@@ -49,7 +49,7 @@ export class InformationService {
         throw new Error('Information document not found');
       }
 
-      let logoResult = null;
+      let logoResult: { secure_url: string; public_id: string } | null = null;
       if (file) {
         if (information.general?.logo?.img_id) {
           await cloudinary.uploader.destroy(information.general.logo.img_id);
@@ -100,7 +100,7 @@ export class InformationService {
       return {
         success: true,
         message: 'General information updated successfully',
-        data: updatedInformation.general,
+        data: updatedInformation?.general || null,
       };
     } catch (error) {
       console.error('Error updating general information:', error);
@@ -144,7 +144,7 @@ export class InformationService {
       return {
         success: true,
         message: 'Advanced information updated successfully',
-        data: updatedInformation.advanced,
+        data: updatedInformation?.advanced || null,
       };
     } catch (error) {
       console.error('Error updating advanced information:', error);
@@ -188,10 +188,20 @@ export class InformationService {
       });
 
       if (!information.homePage) {
-        information.homePage = {};
+        information.homePage = {
+          images: {
+            slides: [],
+            materielImageSection: { url: '', img_id: '' },
+            brands: [],
+          },
+        };
       }
       if (!information.homePage.images) {
-        information.homePage.images = {};
+        information.homePage.images = {
+          slides: [],
+          materielImageSection: { url: '', img_id: '' },
+          brands: [],
+        };
       }
 
       information.homePage.images.materielImageSection = {
@@ -232,7 +242,7 @@ export class InformationService {
         information.homePage.images.materielImageSection.img_id,
       );
 
-      information.homePage.images.materielImageSection = undefined;
+      information.homePage.images.materielImageSection = { url: '', img_id: '' };
       await information.save();
 
       return {
@@ -297,8 +307,22 @@ export class InformationService {
         information = new this.informationModel({});
       }
 
-      if (!information.homePage) information.homePage = {};
-      if (!information.homePage.images) information.homePage.images = {};
+      if (!information.homePage) {
+        information.homePage = {
+          images: {
+            slides: [],
+            materielImageSection: { url: '', img_id: '' },
+            brands: [],
+          },
+        };
+      }
+      if (!information.homePage.images) {
+        information.homePage.images = {
+          slides: [],
+          materielImageSection: { url: '', img_id: '' },
+          brands: [],
+        };
+      }
       if (!information.homePage.images.slides) information.homePage.images.slides = [];
 
       const uploadPromises = files.map(async (file) => {
@@ -382,8 +406,22 @@ export class InformationService {
         throw new Error('Information document not found');
       }
 
-      if (!information.homePage) information.homePage = {};
-      if (!information.homePage.images) information.homePage.images = {};
+      if (!information.homePage) {
+        information.homePage = {
+          images: {
+            slides: [],
+            materielImageSection: { url: '', img_id: '' },
+            brands: [],
+          },
+        };
+      }
+      if (!information.homePage.images) {
+        information.homePage.images = {
+          slides: [],
+          materielImageSection: { url: '', img_id: '' },
+          brands: [],
+        };
+      }
 
       const existingIds = new Set(
         (information.homePage.images.slides || []).map((slide) => slide.img_id),
@@ -436,8 +474,22 @@ export class InformationService {
         information = new this.informationModel({});
       }
 
-      if (!information.homePage) information.homePage = {};
-      if (!information.homePage.images) information.homePage.images = {};
+      if (!information.homePage) {
+        information.homePage = {
+          images: {
+            slides: [],
+            materielImageSection: { url: '', img_id: '' },
+            brands: [],
+          },
+        };
+      }
+      if (!information.homePage.images) {
+        information.homePage.images = {
+          slides: [],
+          materielImageSection: { url: '', img_id: '' },
+          brands: [],
+        };
+      }
       if (!information.homePage.images.brands) information.homePage.images.brands = [];
 
       const uploadPromises = files.map(async (file) => {
@@ -517,8 +569,22 @@ export class InformationService {
         throw new Error('Information document not found');
       }
 
-      if (!information.homePage) information.homePage = {};
-      if (!information.homePage.images) information.homePage.images = {};
+      if (!information.homePage) {
+        information.homePage = {
+          images: {
+            slides: [],
+            materielImageSection: { url: '', img_id: '' },
+            brands: [],
+          },
+        };
+      }
+      if (!information.homePage.images) {
+        information.homePage.images = {
+          slides: [],
+          materielImageSection: { url: '', img_id: '' },
+          brands: [],
+        };
+      }
 
       const existingIds = new Set(
         (information.homePage.images.brands || []).map((brand) => brand.img_id),

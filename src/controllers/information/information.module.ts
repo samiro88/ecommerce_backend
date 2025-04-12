@@ -1,17 +1,18 @@
-// information.module.ts
-import { Module } from '@nestjs/common';
-import { InformationController } from './information.controller';
+import { Module ,forwardRef } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { InformationService } from './information.service';
-import { MulterModule } from '@nestjs/platform-express';
-import { memoryStorage } from 'multer';
+import { InformationController } from './information.controller';
+import { Information, InformationSchema } from '../../models/information.schema';
 
 @Module({
   imports: [
-    MulterModule.register({
-      storage: memoryStorage(),
-    }),
+    MongooseModule.forFeature([
+      { name: Information.name, schema: InformationSchema }, // Register Information schema
+    ]),
+    forwardRef(() => InformationModule), // Use forwardRef to resolve circular dependency
   ],
   controllers: [InformationController],
   providers: [InformationService],
+  exports: [InformationService], // Export the service if needed in other modules
 })
 export class InformationModule {}

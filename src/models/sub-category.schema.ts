@@ -8,6 +8,11 @@ export class SubCategory extends Document {
   @Prop({ required: true })
   designation: string;
 
+  @Prop({ required: true })
+  name: string;
+  @Prop({ required: true, unique: true })
+  slug: string;
+
   @Prop({ type: Types.ObjectId, ref: 'Category' })
   category: Types.ObjectId | Category;
 
@@ -22,6 +27,7 @@ export class SubCategory extends Document {
 }
 
 export const SubCategorySchema = SchemaFactory.createForClass(SubCategory);
+export type SubCategoryDocument = SubCategory & Document;
 
 // Optional: Add index for better query performance
 SubCategorySchema.index({ category: 1 });

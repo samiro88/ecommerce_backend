@@ -10,6 +10,7 @@ class ClientDto {
   @IsOptional() @IsString() ville?: string;
   @IsOptional() @IsString() address?: string;
   @IsOptional() @IsString() clientNote?: string;
+  @IsOptional() @IsString() id?: string;
 }
 
 class LivreurDto {

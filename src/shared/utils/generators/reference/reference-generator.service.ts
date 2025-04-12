@@ -23,7 +23,7 @@ export class SlugService {
   async generateUniqueSlug<T extends Document>(
     text: string,
     model: Model<T>,
-    existingId: string = null
+    existingId: string | null = null
   ): Promise<string> {
     let slug = this.slugify(text);
     let counter = 1;
@@ -63,7 +63,7 @@ export class SlugService {
       return this.generateUniqueSlug(
         document[fieldName].toString(),
         model,
-        document._id
+        String(document[fieldName])
       );
     }
 

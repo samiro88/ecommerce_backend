@@ -9,7 +9,7 @@ import { Message, MessageSchema } from './message.schema';
 import { Pack, PackSchema } from './pack.schema';
 import { Page, PageSchema } from './page.schema';
 import { Product, ProductSchema } from './product.schema';
-import { SubCategory, SubCategorySchema } from './sub-category.schema';
+import { SubCategory, SubCategorySchema } from '../models/sub-category.schema';// Corrected path
 import { PromoCode, PromoCodeSchema } from './promo-code.schema';
 import { Vente, VenteSchema } from './vente.schema'; // New addition
 

@@ -7,7 +7,7 @@ import {
   Body,
   HttpStatus,
 } from '@nestjs/common';
-import { MessagesService } from './messages.service';
+import { MessagesService } from './routes/messages/messages.service'; 
 
 @Controller('messages')
 export class MessagesController {

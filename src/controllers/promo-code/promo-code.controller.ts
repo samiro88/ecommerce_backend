@@ -8,7 +8,7 @@ import {
     Param,
     ParseArrayPipe,
   } from '@nestjs/common';
-  import { PromoCodesService } from './promo-codes.service';
+  import { PromoCodesService } from './promo-code.service';
   import { CreatePromoCodeDto } from './dto/create-promo-code.dto';
   import { UpdatePromoCodeDto } from './dto/update-promo-code.dto';
   

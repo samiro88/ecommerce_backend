@@ -1,15 +1,29 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SubcategoriesController } from './subcategories.controller';
+import { SubCategoriesController } from './subcategories.controller';
+import { SubCategoriesService } from './subcategories.service';
 
-describe('SubcategoriesController', () => {
-  let controller: SubcategoriesController;
+describe('SubCategoriesController', () => {
+  let controller: SubCategoriesController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [SubcategoriesController],
+      controllers: [SubCategoriesController],
+      providers: [
+        {
+          provide: SubCategoriesService,
+          useValue: {
+            // Mock SubCategoriesService methods
+            findAll: jest.fn(),
+            findOne: jest.fn(),
+            create: jest.fn(),
+            update: jest.fn(),
+            remove: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
-    controller = module.get<SubcategoriesController>(SubcategoriesController);
+    controller = module.get<SubCategoriesController>(SubCategoriesController);
   });
 
   it('should be defined', () => {

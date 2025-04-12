@@ -3,10 +3,12 @@ import {
     Controller, Post, Delete, Put, Get,
     Param, Body, UploadedFile, UseInterceptors
   } from '@nestjs/common';
-  import { FileInterceptor } from '@nestjs/platform-express';
-  import { CategoryService } from '../services/category.service';
-  import { categoryMulterOptions } from '../config/category-multer.config';
-  import { CreateCategoryDto, UpdateCategoryDto } from '../dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CategoryService } from './category.service';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
+import { categoryMulterOptions } from './config/category-multer.config';
+  
   
   @Controller('category')
   export class CategoryController {

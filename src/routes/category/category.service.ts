@@ -1,10 +1,17 @@
-// src/category/services/category.service.ts
 import { Injectable } from '@nestjs/common';
-import { CreateCategoryDto, UpdateCategoryDto } from '../dto';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
+
+type Category = {
+  id: number;
+  name: string;
+  description?: string;
+  image?: string;
+};
 
 @Injectable()
 export class CategoryService {
-  private categories = [];
+  private categories: Category[] = [];
 
   async createCategory(createDto: CreateCategoryDto, image: Express.Multer.File) {
     const newCategory = {

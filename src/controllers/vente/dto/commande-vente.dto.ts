@@ -1,5 +1,7 @@
 import { IsArray, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { CreateVenteDto } from './create-vente.dto';  
+
 
 class CommandeItemDto {
   @IsNotEmpty() @IsString() type: 'Product' | 'Pack';

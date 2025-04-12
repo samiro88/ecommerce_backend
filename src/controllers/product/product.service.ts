@@ -3,25 +3,31 @@ import {
     NotFoundException,
     BadRequestException,
     InternalServerErrorException,
+    Inject,
+    forwardRef,
   } from '@nestjs/common';
   import { InjectModel } from '@nestjs/mongoose';
   import { Model } from 'mongoose';
   import * as mongoose from 'mongoose';
-  import * as cloudinary from 'cloudinary';
-  import {
-    Product,
-    ProductDocument,
-    Category,
-    CategoryDocument,
-    SubCategory,
-    SubCategoryDocument,
-  } from '../schemas';
-  import {
-    CreateProductDto,
-    UpdateProductDto,
-    DeleteManyProductsDto,
-    ProductQueryDto,
-  } from './dto';
+  import { v2 as cloudinary } from 'cloudinary';
+  import { Product } from '../../models/product.schema';
+  import { ProductDocument } from '../../models/product.schema';
+  import { Category } from '../../models/category.schema';
+  import { CategoryDocument } from '../../models/category.schema';
+  import { SubCategory } from '../../models/sub-category.schema';
+  import { SubCategoryDocument } from '../../models/sub-category.schema';
+  import { CreateProductDto } from 'src/controllers/product/dto/create-product.dto';
+  import { UpdateProductDto } from 'src/controllers/product/dto/update-product.dto';
+  import { DeleteManyProductsDto } from 'src/controllers/product/dto/delete-many-products.dto';
+  import { ProductQueryDto } from 'src/controllers/product/dto/product-query.dto';
+  import { VentesService } from '../../controllers/vente/vente.service';
+  
+  
+  export interface CloudinaryImage {
+    url: string;
+    img_id: string;
+  }
+  
   
   @Injectable()
   export class ProductsService {
@@ -30,6 +36,8 @@ import {
       @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>,
       @InjectModel(SubCategory.name)
       private subCategoryModel: Model<SubCategoryDocument>,
+      @Inject(forwardRef(() => VentesService)) // Use forwardRef for circular dependency
+      private readonly ventesService: VentesService,
     ) {}
   
     async createProduct(
@@ -112,6 +120,9 @@ import {
   
         // Upload main image
         const mainImageFile = files.find(f => f.fieldname === 'mainImage');
+        if (!mainImageFile) {
+          throw new BadRequestException('Main image is required');
+        }
         const mainImageStr = mainImageFile.buffer.toString('base64');
         const mainImageDataUri = `data:${mainImageFile.mimetype};base64,${mainImageStr}`;
   
@@ -120,26 +131,26 @@ import {
           resource_type: "auto",
         });
   
-        // Upload additional images
-        const images = [];
-        const additionalImages = files.filter(f => f.fieldname === 'images');
-        if (additionalImages.length > 0) {
-          for (const imageFile of additionalImages) {
-            const imageStr = imageFile.buffer.toString('base64');
-            const imageDataUri = `data:${imageFile.mimetype};base64,${imageStr}`;
-  
-            const imageResult = await cloudinary.uploader.upload(imageDataUri, {
-              folder: "products/additional",
-              resource_type: "auto",
-            });
-  
-            images.push({
-              url: imageResult.secure_url,
-              img_id: imageResult.public_id,
-            });
-          }
-        }
-  
+// Upload additional images
+const images: CloudinaryImage[] = [];
+const additionalImages = files.filter(f => f.fieldname === 'images');
+if (additionalImages.length > 0) {
+  for (const imageFile of additionalImages) {
+    const imageStr = imageFile.buffer.toString('base64');
+    const imageDataUri = `data:${imageFile.mimetype};base64,${imageStr}`;
+
+    const imageResult = await cloudinary.uploader.upload(imageDataUri, {
+      folder: "products/additional",
+      resource_type: "auto",
+    });
+
+    images.push({
+      url: imageResult.secure_url,
+      img_id: imageResult.public_id,
+    } as CloudinaryImage);  // Type assertion here
+  }
+}
+        
         // Create the product
         const newProduct = await this.productModel.create(
           [{
@@ -312,14 +323,15 @@ import {
           throw new NotFoundException('Product not found');
         }
   
-        // CATEGORY VALIDATION
-        let newCategory = null;
-        if (categoryId) {
-          newCategory = await this.categoryModel.findById(categoryId).session(session);
-          if (!newCategory) {
-            throw new NotFoundException('New category not found');
-          }
-        }
+// CATEGORY VALIDATION
+let newCategory: CategoryDocument | null = null;
+if (categoryId) {
+  newCategory = await this.categoryModel.findById(categoryId).session(session) as CategoryDocument | null;
+  if (!newCategory) {
+    throw new NotFoundException('New category not found');
+  }
+}
+
   
         // SUBCATEGORY VALIDATION
         if (subCategoryIds.length > 0) {
@@ -412,8 +424,8 @@ import {
     }
   
     private async handleMainImageUpdate(
-      existingProduct: any,
-      newImageFile: Express.Multer.File,
+      existingProduct: ProductDocument,
+      newImageFile: Express.Multer.File | undefined,
       session: mongoose.ClientSession
     ) {
       if (!newImageFile) return null;
@@ -672,14 +684,14 @@ import {
   
     async deleteManyProducts(deleteManyProductsDto: DeleteManyProductsDto) {
       try {
-        const { productIds } = deleteManyProductsDto;
+        const ids = deleteManyProductsDto.ids;
   
-        if (!productIds || !Array.isArray(productIds) || productIds.length === 0) {
+        if (!ids|| !Array.isArray(ids) || ids.length === 0) {
           throw new BadRequestException("Please provide an array of product IDs to delete");
         }
   
         // Find all products with their category and subcategory references
-        const products = await this.productModel.find({ _id: { $in: productIds } })
+        const products = await this.productModel.find({ _id: { $in: ids } })
           .populate("category")
           .populate("subCategory");
   
@@ -712,8 +724,8 @@ import {
             }
   
             // Collect category and subcategory IDs for reference cleanup
-            if (product.category) {
-              categoryIds.add(product.category._id.toString());
+            if (product.category && product.category._id) {
+              categoryIds.add((product.category._id as mongoose.Types.ObjectId).toString());
             }
             if (product.subCategory && product.subCategory.length > 0) {
               product.subCategory.forEach((subCat: any) => {
@@ -726,7 +738,7 @@ import {
           if (categoryIds.size > 0) {
             await this.categoryModel.updateMany(
               { _id: { $in: Array.from(categoryIds) } },
-              { $pull: { products: { $in: productIds } } },
+              { $pull: { products: { $in: ids } } },
               { session }
             );
           }
@@ -735,14 +747,14 @@ import {
           if (subCategoryIds.size > 0) {
             await this.subCategoryModel.updateMany(
               { _id: { $in: Array.from(subCategoryIds) } },
-              { $pull: { products: { $in: productIds } } },
+              { $pull: { products: { $in: ids } } },
               { session }
             );
           }
   
           // Delete the products
           const deleteResult = await this.productModel.deleteMany(
-            { _id: { $in: productIds } },
+            { _id: { $in: ids } },
             { session }
           );
   

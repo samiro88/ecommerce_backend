@@ -5,9 +5,10 @@ import {
   } from '@nestjs/common';
   import { InjectModel } from '@nestjs/mongoose';
   import { Model, ClientSession } from 'mongoose';
-  import { SubCategory } from '../models/SubCategory';
-  import { Category } from '../models/Category';
-  import { Product } from '../models/Product';
+  import { SubCategory,} from '../../models/sub-category.schema';
+  import { Category, } from '../../models/category.schema';          // Go back 2 directories
+  import { Product,} from '../../models/product.schema';
+  
   import { CreateSubCategoryDto } from './dto/create-sub-category.dto';
   import { UpdateSubCategoryDto } from './dto/update-sub-category.dto';
   import { InjectConnection } from '@nestjs/mongoose';
@@ -116,7 +117,8 @@ import {
         }
   
         subCategory.designation = updateSubCategoryDto.designation;
-        subCategory.updatedAt = Date.now();
+        subCategory.updatedAt = new Date();
+
   
         await subCategory.save({ session });
   

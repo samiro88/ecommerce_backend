@@ -5,7 +5,24 @@ import { Document } from 'mongoose';
 export class PromoCode extends Document {
   @Prop({ unique: true })
   code: string;
+  
+  @Prop({ required: true, enum: ['percentage', 'fixed'] })
+  discountType: string;
 
+  @Prop({ required: true })
+  discountValue: number;
+
+  @Prop({ required: true })
+  validFrom: Date;
+
+  @Prop({ required: true })
+  validUntil: Date;
+
+  @Prop()
+  minOrderAmount: number;
+
+  @Prop({ default: true })
+  isActive: boolean;
   @Prop()
   discount: number;
 

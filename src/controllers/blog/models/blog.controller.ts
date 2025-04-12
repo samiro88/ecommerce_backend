@@ -1,8 +1,10 @@
 import { Controller, Get, Post, Delete, Put, Body, Param, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CreateBlogDto, UpdateBlogDto } from './dto';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { CreateBlogDto } from '../dto/create-blog.dto';
+import { UpdateBlogDto } from '../dto/update-blog.dto';
+import { CloudinaryService } from '../../../shared/utils/cloudinary/cloudinary/cloudinary.service';
+
 
 @Controller('blogs')
 export class BlogController {

@@ -17,7 +17,9 @@ import {
   
   @Controller('admin/products') // Maintaining /admin prefix
   export class ProductsController {
-    constructor(private readonly productsService: ProductsService) {}
+    constructor(private readonly productsService: ProductsService) {
+      console.log('ProductsService injected:', !!this.productsService);
+    }
   
     @Post('new')
     @UseInterceptors(FilesInterceptor('images', 10)) // Same 10 file limit

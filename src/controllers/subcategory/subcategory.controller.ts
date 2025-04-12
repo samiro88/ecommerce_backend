@@ -7,7 +7,7 @@ import {
     Body,
     Param,
   } from '@nestjs/common';
-  import { SubCategoriesService } from './sub-categories.service';
+  import { SubCategoriesService } from './subcategory.service';
   import { CreateSubCategoryDto } from './dto/create-sub-category.dto';
   import { UpdateSubCategoryDto } from './dto/update-sub-category.dto';
   

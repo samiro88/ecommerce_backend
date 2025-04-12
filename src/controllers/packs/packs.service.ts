@@ -6,8 +6,8 @@ import {
   } from '@nestjs/common';
   import { InjectModel } from '@nestjs/mongoose';
   import { Model } from 'mongoose';
-  import * as cloudinary from '../utils/cloudinary';
-  import { Pack } from '../models/pack';
+  import { v2 as cloudinary } from 'cloudinary';
+  import { Pack } from '../../models/pack.schema';
   import mongoose from 'mongoose';
   
   @Injectable()
@@ -32,7 +32,7 @@ import {
         } = body;
   
         // Validate required fields
-        const missingFields = [];
+        const missingFields: string[] = [];
         if (!designation) missingFields.push('designation');
         if (!price) missingFields.push('price');
         if (!files?.mainImage) missingFields.push('mainImage');
@@ -44,7 +44,7 @@ import {
         }
   
         // Upload main image
-        const mainImageFile = files.mainImage[0];
+        const mainImageFile = files.mainImage?.[0];
         const mainImageStr = mainImageFile.buffer.toString('base64');
         const mainImageDataUri = `data:${mainImageFile.mimetype};base64,${mainImageStr}`;
   
@@ -54,7 +54,7 @@ import {
         });
   
         // Upload additional images
-        const images = [];
+        const images: { url: string; img_id: string }[] = [];
         if (files.images && files.images.length > 0) {
           for (const imageFile of files.images) {
             const imageStr = imageFile.buffer.toString('base64');
@@ -150,10 +150,10 @@ import {
   
         // Handle image updates
         const [mainImage, images] = await Promise.all([
-          this.handleMainImageUpdate(existingPack, files?.mainImage, session),
+          this.handleMainImageUpdate(existingPack, files?.mainImage || [], session),
           this.handleGalleryImagesUpdate(
             existingPack,
-            files?.images,
+            files?.images || [],
             rawData.deletedImages,
             session,
           ),
@@ -304,8 +304,8 @@ import {
       sort?: string;
     }) {
       try {
-        const page = parseInt(query.page) || 1;
-        const limit = parseInt(query.limit) || 10;
+        const page = parseInt(query.page || '1', 10);
+        const limit = parseInt(query.limit || '10', 10);
         const skip = (page - 1) * limit;
   
         // Build filter object

@@ -6,7 +6,7 @@ import {
   } from '@nestjs/common';
   import { InjectModel } from '@nestjs/mongoose';
   import { Model } from 'mongoose';
-  import { PromoCode } from '../models/PromoCode';
+  import { PromoCode } from '../../models/promo-code.schema';;
   import mongoose from 'mongoose';
   
   @Injectable()

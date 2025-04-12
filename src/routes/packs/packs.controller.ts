@@ -14,6 +14,8 @@ import {
   } from '@nestjs/common';
   import { FilesInterceptor } from '@nestjs/platform-express';
   import { PacksService } from './packs.service';
+
+  
   
   @Controller('admin/packs') // Maintaining /admin prefix from original
   export class PacksController {

@@ -15,8 +15,8 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
-import { UpdateBlogDto } from './dto/update-blog.dto';
-import { multerOptions } from '../../config/multer.config';
+import { UpdateBlogDto } from './dto/dto/update-blog.dto';
+import { multerOptions } from './config/multer.config';
 
 @Controller()
 export class BlogController {

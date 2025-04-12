@@ -3,17 +3,22 @@ import {
     NotFoundException,
     BadRequestException,
     InternalServerErrorException,
+    Inject,
+    forwardRef,
   } from '@nestjs/common';
   import { InjectModel } from '@nestjs/mongoose';
   import { Model } from 'mongoose';
-  import * as cloudinary from '../utils/cloudinary';
-  import { Product } from '../models/Product';
+  import { v2 as cloudinary } from 'cloudinary';
+  import { Product } from '../../models/product.schema';
   import mongoose from 'mongoose';
+  import { VentesService } from '../../controllers/vente/vente.service'; // Correct path
   
   @Injectable()
   export class ProductsService {
     constructor(
       @InjectModel(Product.name) private productModel: Model<Product>,
+      @Inject(forwardRef(() => VentesService)) // Use forwardRef for circular dependency
+      private readonly ventesService: VentesService,
     ) {}
   
     async createProduct(body: any, files: Express.Multer.File[]) {
@@ -176,7 +181,7 @@ import {
           await Promise.all(
             product.images.map(img => 
               cloudinary.uploader.destroy(img.img_id)
-          );
+          ));
   
           // Upload new images
           const newImages = await Promise.all(
@@ -237,7 +242,7 @@ import {
         await Promise.all(
           product.images.map(img => 
             cloudinary.uploader.destroy(img.img_id)
-        );
+        ));
   
         await session.commitTransaction();
         return {
@@ -279,7 +284,7 @@ import {
           products.flatMap(product =>
             product.images.map(img => 
               cloudinary.uploader.destroy(img.img_id))
-        );
+        ));
   
         // Then delete products
         const deleteResult = await this.productModel

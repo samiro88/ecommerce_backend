@@ -9,7 +9,7 @@ import {
     Query,
     ParseArrayPipe,
   } from '@nestjs/common';
-  import { VentesService } from './ventes.service';
+  import { VentesService } from '../vente/vente.service';
   import { CreateVenteDto } from './dto/create-vente.dto';
   import { UpdateVenteDto } from './dto/update-vente.dto';
   import { ValidatePromoCodeDto } from './dto/validate-promo-code.dto';

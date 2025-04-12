@@ -1,13 +1,16 @@
-import { Module } from '@nestjs/common';
-import { VentesController } from './ventes.controller';
-import { VentesService } from './ventes.service';
+import { Module, forwardRef } from '@nestjs/common';
+import { VentesController } from '../../routes/ventes/ventes.controller';
+import { VentesService } from './vente.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Vente, VenteSchema } from '../models/Ventes';
-import { Client, ClientSchema } from '../models/Client';
-import { PromoCode, PromoCodeSchema } from '../models/PromoCode';
-import { Product, ProductSchema } from '../models/Product';
-import { Pack, PackSchema } from '../models/Pack';
-import { Information, InformationSchema } from '../models/Information';
+import { Vente, VenteSchema } from '../../models/vente.schema';
+import { Client, ClientSchema } from '../../models/client.schema';
+import { PromoCode, PromoCodeSchema } from '../../models/promo-code.schema';
+import { Product, ProductSchema } from '../../models/product.schema';
+import { Pack, PackSchema } from '../../models/pack.schema';
+import { Information, InformationSchema } from '../../models/information.schema';
+import { InformationModule } from '../information/information.module';
+import { Commande, CommandeSchema } from '../../models/commande.schema';
+import { ProductsModule } from '../product/product.module';
 
 @Module({
   imports: [
@@ -18,7 +21,10 @@ import { Information, InformationSchema } from '../models/Information';
       { name: Product.name, schema: ProductSchema },
       { name: Pack.name, schema: PackSchema },
       { name: Information.name, schema: InformationSchema },
+      { name: 'Commande', schema: CommandeSchema },
     ]),
+    forwardRef(() => InformationModule),
+    forwardRef(() => ProductsModule), // Import ProductsModule
   ],
   controllers: [VentesController],
   providers: [VentesService],

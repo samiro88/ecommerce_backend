@@ -1,19 +1,20 @@
 // src/auth/auth.service.ts
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { compare, hash } from 'bcryptjs';
-import { AdminUser } from '../models/admin-user.model';
-import { Client } from '../models/client.model';
-import { createToken } from '../utils/tokenManager'; // Assuming the same utility is available
+import { AdminUser, AdminUserDocument } from '../../models/admin-user.schema'; // Correct path
+import { Client, ClientDocument } from '../../models/client.schema';
+import { TokenService } from '../../shared/utils/tokens/token.service';
 
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
 
   constructor(
-    @InjectModel(AdminUser.name) private adminUserModel: Model<AdminUser>,
-    @InjectModel(Client.name) private clientModel: Model<Client>,
+    @InjectModel(AdminUser.name) private adminUserModel: Model<AdminUserDocument>,
+    @InjectModel(Client.name) private clientModel: Model<ClientDocument>,
+    private tokenService: TokenService,
   ) {}
 
   // Verify Admin User
@@ -45,7 +46,7 @@ export class AuthService {
         throw new Error('Incorrect Password');
       }
 
-      const token = createToken(adminUser._id.toString(), adminUser.role, '30d');
+      const token = this.tokenService.createToken(adminUser._id.toString(), adminUser.role, '30d');
       return {
         message: 'Logged in successfully',
         adminUsername: adminUser.userName,
@@ -100,9 +101,9 @@ export class AuthService {
         throw new Error('Incorrect Password');
       }
 
-      const token = createToken(client._id.toString(), 'client', '30d');
+      const token = this.tokenService.createToken(client._id.toString(), 'client', '30d');
       const clientObj = client.toObject();
-      delete clientObj.password;
+      delete (clientObj as any).password;
 
       return {
         status: 'ok',
@@ -131,9 +132,9 @@ export class AuthService {
           existingClient.isGuest = false;
 
           await existingClient.save();
-          const token = createToken(existingClient._id.toString(), 'client', '30d');
+          const token = this.tokenService.createToken(existingClient._id.toString(), 'client', '30d');
           const clientObj = existingClient.toObject();
-          delete clientObj.password;
+          delete (clientObj as any).password;
 
           return {
             status: 'ok',
@@ -160,9 +161,9 @@ export class AuthService {
 
       await newClient.save();
 
-      const token = createToken(newClient._id.toString(), 'client', '30d');
+      const token = this.tokenService.createToken(newClient._id.toString(), 'client', '30d');
       const clientObj = newClient.toObject();
-      delete clientObj.password;
+      delete (clientObj as any).password;
 
       return {
         status: 'ok',

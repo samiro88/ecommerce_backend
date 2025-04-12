@@ -1,10 +1,11 @@
 // src/auth/auth.controller.ts
 import { Controller, Post, Body, Param, Res, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { TokenService } from '../../shared/utils/tokens/token.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService, private readonly tokenService: TokenService) {}
 
   @Post('admin/verify')
   async verifyAdminUser(@Body('id') id: string, @Res() res) {

@@ -5,7 +5,10 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Blog } from '../models/blog.model';
+import { Blog } from './models/blog.model';
+import { CreateBlogDto } from './dto/create-blog.dto'; // Corrected import
+import { UpdateBlogDto } from './dto/dto/update-blog.dto';
+
 
 @Injectable()
 export class BlogService {

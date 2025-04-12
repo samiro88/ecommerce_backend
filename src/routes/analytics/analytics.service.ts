@@ -5,10 +5,10 @@ import {
   } from '@nestjs/common';
   import { InjectModel } from '@nestjs/mongoose';
   import { Model } from 'mongoose';
-  import { Product } from '../models/Product';
-  import { Category } from '../models/Category';
-  import { PromoCode } from '../models/PromoCode';
-  import { Ventes } from '../models/Ventes';
+  import { Product } from '../../models/product.schema';
+  import { Category } from '../../models/category.schema'; // ✅ Confirm this file exists
+  import { PromoCode } from '../../models/promo-code.schema';
+  import { Vente } from '../../models/vente.schema'; // Fixed name
   
   @Injectable()
   export class AnalyticsService {
@@ -16,7 +16,7 @@ import {
       @InjectModel(Product.name) private productModel: Model<Product>,
       @InjectModel(Category.name) private categoryModel: Model<Category>,
       @InjectModel(PromoCode.name) private promoCodeModel: Model<PromoCode>,
-      @InjectModel(Ventes.name) private ventesModel: Model<Ventes>,
+      @InjectModel(Vente.name) private ventesModel: Model<Vente>,
     ) {}
   
     async getTopSellingProducts() {

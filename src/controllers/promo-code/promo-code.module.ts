@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { PromoCodesController } from './promo-codes.controller';
-import { PromoCodesService } from './promo-codes.service';
+import { PromoCodesController } from './promo-code.controller';
+import { PromoCodesService } from './promo-code.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { PromoCode, PromoCodeSchema } from '../models/PromoCode';
+import { PromoCode, PromoCodeSchema } from '../../models/promo-code.schema';
 
 @Module({
   imports: [

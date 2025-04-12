@@ -1,9 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { handleSlug } from '../utils/slugGenerator';
+import { handleSlug } from '../shared/utils/generators/slug/slug-generator.service';
+import { Model } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Blog extends Document {
+
   @Prop({ required: true })
   title: string;
 
@@ -36,7 +38,7 @@ export const BlogSchema = SchemaFactory.createForClass(Blog);
 // 🟢 Preserve the pre-save hook
 BlogSchema.pre('save', async function (next) {
   try {
-    this.slug = await handleSlug(this, 'title', this.constructor);
+    this.slug = await handleSlug(this, 'title', this.constructor as Model<Blog>);
     next();
   } catch (error) {
     next(error);

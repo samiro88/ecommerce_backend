@@ -11,13 +11,12 @@ import {
     UseInterceptors,
   } from '@nestjs/common';
   import { FilesInterceptor } from '@nestjs/platform-express';
-  import { ProductsService } from './products.service';
-  import {
-    CreateProductDto,
-    UpdateProductDto,
-    DeleteManyProductsDto,
-    ProductQueryDto,
-  } from './dto';
+  import { ProductsService } from '../../routes/products/products.service'; // Correct path
+  import { CreateProductDto } from './dto/create-product.dto';
+  import { UpdateProductDto } from './dto/update-product.dto';
+  import { DeleteManyProductsDto } from './dto/delete-many-products.dto';
+  import { ProductQueryDto } from './dto/product-query.dto';
+  
   
   @Controller('products')
   export class ProductsController {
@@ -94,6 +93,6 @@ import {
   
     @Delete()
     async deleteManyProducts(@Body() deleteManyProductsDto: DeleteManyProductsDto) {
-      return this.productsService.deleteManyProducts(deleteManyProductsDto);
-    }
+      return this.productsService.deleteManyProducts(deleteManyProductsDto.ids);
+    }  
   }

@@ -2,9 +2,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Client } from './client.schema';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
+
+export interface Client {
+  email: string;
+  password?: string;
+  isGuest: boolean;
+  subscriber?: boolean;
+}
 
 @Injectable()
 export class ClientsService {
@@ -69,7 +75,7 @@ export class ClientsService {
     guestClient.isGuest = false;
     await guestClient.save();
 
-    const token = jwt.sign({ id: guestClient._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: guestClient._id }, process.env.JWT_SECRET || 'default_secret', {
       expiresIn: '30d',
     });
 
@@ -91,7 +97,11 @@ export class ClientsService {
       existingClient.password = hashedPassword;
       existingClient.isGuest = false;
       const savedClient = await existingClient.save();
-      const token = jwt.sign({ id: savedClient._id }, process.env.JWT_SECRET, {
+      if (!process.env.JWT_SECRET) {
+        throw new Error('JWT_SECRET is not defined in the environment variables');
+      }
+      const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+      const token = jwt.sign({ id: savedClient._id }, jwtSecret, {
         expiresIn: '30d',
       });
 
@@ -106,7 +116,8 @@ export class ClientsService {
       isGuest: false,
     });
     const savedClient = await client.save();
-    const token = jwt.sign({ id: savedClient._id }, process.env.JWT_SECRET, {
+    const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+    const token = jwt.sign({ id: savedClient._id }, jwtSecret, {
       expiresIn: '30d',
     });
 
@@ -119,10 +130,12 @@ export class ClientsService {
     const client = await this.clientModel.findOne({ email }).select('+password');
     if (!client) throw new Error('Invalid credentials');
 
+    if (!client.password) throw new Error('Password is not set for this client');
     const isMatch = await bcrypt.compare(password, client.password);
     if (!isMatch) throw new Error('Invalid credentials');
 
-    const token = jwt.sign({ id: client._id }, process.env.JWT_SECRET, {
+    const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+    const token = jwt.sign({ id: client._id }, jwtSecret, {
       expiresIn: '30d',
     });
 

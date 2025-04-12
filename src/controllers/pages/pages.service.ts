@@ -8,7 +8,7 @@ import {
   import { v2 as cloudinary } from 'cloudinary';
   import { CreatePageDto } from './dto/create-page.dto';
   import { UpdatePageDto } from './dto/update-page.dto';
-  import { Page } from '../models/Page';
+  import { Page } from '../../models/page.schema';
   
   @Injectable()
   export class PagesService {
@@ -36,7 +36,7 @@ import {
           throw new BadRequestException('Title and content are required');
         }
   
-        let cover = undefined;
+        let cover: { url: string; img_id: string } | undefined = undefined;
         if (file) {
           const fileStr = file.buffer.toString('base64');
           const fileType = file.mimetype;
@@ -111,7 +111,7 @@ import {
           );
         }
   
-        let cover = undefined;
+        let cover: { url: string; img_id: string } | undefined = undefined;
         const page = await this.pageModel.findById(id);
   
         if (!page) {
@@ -139,7 +139,7 @@ import {
           id,
           {
             ...updatePageDto,
-            ...(cover && { cover }),
+            ...(typeof cover === 'object' && cover !== null ? { cover } : {}),
           },
           { new: true, runValidators: true },
         );

@@ -4,12 +4,12 @@ import {
   } from '@nestjs/common';
   import { InjectModel } from '@nestjs/mongoose';
   import { Model } from 'mongoose';
-  import { Client } from '../models/client.model';
+  import { Client, ClientSchema } from '../../models/client.schema';
   
   @Injectable()
   export class ClientService {
     constructor(
-      @InjectModel('Client') private clientModel: Model<Client>
+      @InjectModel(Client.name) private clientModel: Model<Client>
     ) {}
   
     async createGuestClient(clientData: any) {

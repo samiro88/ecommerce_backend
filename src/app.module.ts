@@ -1,26 +1,27 @@
 import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppController } from './app.controller';
+import { ConfigModule } from '@nestjs/config';
+import { MessagesController } from './app.controller';
 import { AppService } from './app.service';
 
 // ======================
 // ALL ORIGINAL IMPORTS PRESERVED
 // ======================
-import { AuthModule } from './auth/auth.module';
-import { BlogModule } from './blog/blog.module';
-import { CategoryModule } from './category/category.module';
-import { CloudinaryModule } from './cloudinary/cloudinary.module';
-import { ClientsModule } from './clients/clients.module';
-import { InformationModule } from './information/information.module';
-import { MessagesModule } from './messages/messages.module';
-import { PacksModule } from './packs/packs.module';
-import { PagesModule } from './pages/pages.module';
-import { ProductModule } from './product/product.module';
-import { PromoCodeModule } from './promo-code/promo-code.module';
-import { SubcategoryModule } from './subcategory/subcategory.module';
-import { VenteModule } from './vente/vente.module';
-import { DatabaseModule } from './db/database.module';
-import { AnalyticsModule } from './analytics/analytics.module';
+import { AuthModule } from './routes/auth/auth.module';  // Correct path
+import { BlogModule } from './routes/blog/blog.module';  // Correct path
+import { CategoryModule } from './routes/category/category.module';  // Correct path
+import { CloudinaryModule } from 'src/shared/utils/cloudinary/cloudinary/cloudinary.module';
+import { ClientModule } from './routes/client/client.module';
+import { InformationModule } from './routes/information/information.module';  // Correct path
+import { MessagesModule } from './routes/messages/messages.module';  // Correct path
+import { PacksModule } from './routes/packs/packs.module';  // Correct path
+import { PagesModule } from './controllers/pages/pages.module';  // Correct path for PagesModule
+import { ProductsModule } from './routes/products/products.module';
+import { PromoCodesModule } from './routes/promo-codes/promo-codes.module';
+import { SubCategoriesModule } from './routes/subcategories/subcategories.module';
+import { VentesModule } from './routes/ventes/ventes.module';
+import { DatabaseModule } from './db/database.module'; // Correct path
+import { AnalyticsModule } from './routes/analytics/analytics.module';  // Correct path
 import { AdminModule } from './admin/admin.module';
 
 // ======================
@@ -35,15 +36,23 @@ import { ValidateObjectIdMiddleware } from './middleware/validate-id.middleware'
 import { TokenModule } from './shared/utils/tokens/token.module'; // Replaces tokenManager.js
 import { CryptoModule } from './shared/utils/crypto/crypto.module'; // Replaces hashing.js
 import { StatisticsModule } from './shared/utils/statistics/statistics.module'; // Replaces statistique.js
-import { GeneratorsModule } from './shared/utils/generators/generators.module'; // Replaces generateReference.js
+import { GeneratorsModule } from './shared/utils/generators/reference/generators.module';  // Corrected path
 import { SlugModule } from './shared/utils/generators/slug/slug.module'; // Replaces slugGenerator.js
 
 @Module({
   imports: [
+
+        // ======================
+    // CONFIG MODULE (GLOBAL)
+    // ======================
+    ConfigModule.forRoot({
+      isGlobal: true, // Makes ConfigModule globally available
+    }),
+
     // ======================
     // DATABASE (ORIGINAL)
     // ======================
-    MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://localhost/nest'),
+    MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://localhost:27017/protein_db'),
     DatabaseModule,
 
     // ======================
@@ -53,15 +62,15 @@ import { SlugModule } from './shared/utils/generators/slug/slug.module'; // Repl
     BlogModule,
     CategoryModule,
     CloudinaryModule, // Now uses shared config
-    ClientsModule,
+    ClientModule,
     InformationModule,
     MessagesModule,
     PacksModule,
     PagesModule,
-    ProductModule,
-    PromoCodeModule,
-    SubcategoryModule,
-    VenteModule,
+    ProductsModule,
+    PromoCodesModule,
+    SubCategoriesModule,
+    VentesModule,
     AnalyticsModule,
     AdminModule,
 
@@ -74,7 +83,7 @@ import { SlugModule } from './shared/utils/generators/slug/slug.module'; // Repl
     GeneratorsModule,
     SlugModule,
   ],
-  controllers: [AppController],
+  controllers: [MessagesController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {

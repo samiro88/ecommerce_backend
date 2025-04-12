@@ -1,15 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SubcategoriesService } from './subcategories.service';
+import { SubCategoriesService } from './subcategories.service';
+import { getModelToken } from '@nestjs/mongoose';
 
-describe('SubcategoriesService', () => {
-  let service: SubcategoriesService;
+describe('SubCategoriesService', () => {
+  let service: SubCategoriesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SubcategoriesService],
+      providers: [
+        SubCategoriesService,
+        {
+          provide: getModelToken('SubCategory'),
+          useValue: {}, // Mock SubCategory model
+        },
+        {
+          provide: getModelToken('Category'),
+          useValue: {}, // Mock Category model
+        },
+      ],
     }).compile();
 
-    service = module.get<SubcategoriesService>(SubcategoriesService);
+    service = module.get<SubCategoriesService>(SubCategoriesService);
   });
 
   it('should be defined', () => {

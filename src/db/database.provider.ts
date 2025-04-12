@@ -15,10 +15,14 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   // ============== EXISTING LOGIC (COPIED VERBATIM) ==============
   async connectToDatabase() {
     try {
-      await connect(process.env.MONGODB_URI);
+      const mongoUri = process.env.MONGODB_URI;
+      if (!mongoUri) {
+        throw new Error("MONGODB_URI is not defined in environment variables");
+      }
+      await connect(mongoUri);
       console.log("Connected to database 🗃️");
     } catch (error) {
-      console.log(" ❌ Error connecting to database", error);
+      console.log("❌ Error connecting to database", error);
       throw new Error("Error connecting to database");
     }
   }

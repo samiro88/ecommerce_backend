@@ -1,22 +1,40 @@
+// app.controller.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+[{
+	"resource": "/c:/Users/LENOVO/Desktop/ecommerce-backend/src/controllers/blog/models/blog.service.spec.ts",
+	"owner": "typescript",
+	"code": "2307",
+	"severity": 8,
+	"message": "Cannot find module '../../../shared/utils/cloudinary/cloudinary.service' or its corresponding type declarations.",
+	"source": "ts",
+	"startLineNumber": 4,
+	"startColumn": 35,
+	"endLineNumber": 4,
+	"endColumn": 88
+}]
+import { getModelToken } from '@nestjs/mongoose';
+import { MessagesController } from './app.controller';
+import { MessagesService } from './routes/messages/messages.service';
 
-describe('AppController', () => {
-  let appController: AppController;
+describe('MessagesController', () => {
+  let controller: MessagesController;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [MessagesController],
+      providers: [
+        MessagesService,
+        {
+          provide: getModelToken('Message'),
+          useValue: {}, // Mock Message model
+        },
+      ],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    controller = module.get<MessagesController>(MessagesController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
-    });
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
   });
 });
