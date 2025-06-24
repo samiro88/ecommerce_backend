@@ -53,7 +53,6 @@ export class Client extends Document {
 
 export const ClientSchema = SchemaFactory.createForClass(Client);
 
-// Add this to properly type the _id field
 export type ClientDocument = Client & Document & {
   _id: Types.ObjectId;
 };

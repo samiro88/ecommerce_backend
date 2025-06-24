@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import * as multer from 'multer';
 import { Request, Response, NextFunction } from 'express';
 
-// Extend the Request interface to include fileValidationError
+
 declare module 'express' {
   export interface Request {
     fileValidationError?: string;
@@ -18,14 +18,13 @@ export class MulterMiddleware implements NestMiddleware {
       if (file.mimetype.startsWith('image/')) {
         cb(null, true);
       } else {
-        cb(null, false); // Simply reject the file without error
-        // Alternatively, you can set an error message on the request
+        cb(null, false); 
         req.fileValidationError = 'Only image files are allowed';
       }
     },
   });
 
-  // Main middleware handler
+
   use(req: Request, res: Response, next: NextFunction) {
     this.upload.any()(req, res, (err: any) => {
       if (err) {
@@ -38,7 +37,7 @@ export class MulterMiddleware implements NestMiddleware {
     });
   }
 
-  // Specific upload configurations
+  
   static get productImages() {
     return multer({
       storage: multer.memoryStorage(),

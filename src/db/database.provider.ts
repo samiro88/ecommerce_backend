@@ -12,7 +12,7 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
     await this.disconnectFromDatabase();
   }
 
-  // ============== EXISTING LOGIC (COPIED VERBATIM) ==============
+  // ============== EXISTING LOGIC ==============
   async connectToDatabase() {
     try {
       const mongoUri = process.env.MONGODB_URI;

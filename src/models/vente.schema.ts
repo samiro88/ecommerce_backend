@@ -1,3 +1,4 @@
+
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Client } from './client.schema';
@@ -18,6 +19,7 @@ export class Vente extends Document {
       email: String,
       address: String,
       ville: String,
+      country: String, // <-- Added country field
       clientNote: String,
       phone1: String,
       phone2: String,
@@ -30,6 +32,7 @@ export class Vente extends Document {
     email: string;
     address: string;
     ville: string;
+    country?: string; // <-- Added country field (optional for backward compatibility)
     clientNote: string;
     phone1: string;
     phone2: string;

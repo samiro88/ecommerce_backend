@@ -1,0 +1,24 @@
+_id	id	name
+68109e95cecd66abf47280d5	1	Citron
+68109e95cecd66abf47280d6	2	Cassis
+68109e95cecd66abf47280d7	3	Fraise
+68109e95cecd66abf47280d8	4	Banane
+68109e95cecd66abf47280d9	5	Ananas
+68109e95cecd66abf47280da	6	Fruit de la passion
+68109e95cecd66abf47280db	7	Abricot
+68109e95cecd66abf47280dc	8	Pêche
+68109e95cecd66abf47280dd	9	Poire
+68109e95cecd66abf47280de	10	Vanilla
+68109e95cecd66abf47280df	11	Double chocolat
+68109e95cecd66abf47280e0	12	Chocolat
+68109e95cecd66abf47280e1	13	Cookies
+68109e95cecd66abf47280e2	14	Mojito
+68109e95cecd66abf47280e3	15	Coca Cola
+68109e95cecd66abf47280e4	16	Caramel
+68109e95cecd66abf47280e5	17	Tiramisu
+68109e95cecd66abf47280e6	18	Vanilla + Cheese cake
+68109e95cecd66abf47280e7	19	Biscuit
+68109e95cecd66abf47280e8	20	Mango
+68109e95cecd66abf47280e9	21	Vanilla + Orange
+68109e95cecd66abf47280ea	22	Orange
+68109e95cecd66abf47280eb	23	Watermelon

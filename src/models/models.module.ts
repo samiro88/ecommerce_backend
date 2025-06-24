@@ -9,9 +9,9 @@ import { Message, MessageSchema } from './message.schema';
 import { Pack, PackSchema } from './pack.schema';
 import { Page, PageSchema } from './page.schema';
 import { Product, ProductSchema } from './product.schema';
-import { SubCategory, SubCategorySchema } from '../models/sub-category.schema';// Corrected path
+import { SubCategory, SubCategorySchema } from '../models/sub-category.schema';
 import { PromoCode, PromoCodeSchema } from './promo-code.schema';
-import { Vente, VenteSchema } from './vente.schema'; // New addition
+import { Vente, VenteSchema } from './vente.schema'; 
 
 const schemaDefinitions = [
   { name: AdminUser.name, schema: AdminUserSchema },
@@ -25,7 +25,7 @@ const schemaDefinitions = [
   { name: Product.name, schema: ProductSchema },
   { name: SubCategory.name, schema: SubCategorySchema },
   { name: PromoCode.name, schema: PromoCodeSchema },
-  { name: Vente.name, schema: VenteSchema } // New addition
+  { name: Vente.name, schema: VenteSchema } 
 ];
 
 @Module({

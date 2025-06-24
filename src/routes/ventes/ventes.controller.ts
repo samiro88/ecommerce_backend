@@ -9,7 +9,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { VentesService } from '../../controllers/vente/vente.service'; // Correct path
+import { VentesService } from '../../modules/ventes/vente.service'; // Correct path
 
 @Controller('ventes')
 export class VentesController {

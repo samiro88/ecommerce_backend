@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Template Preview</title>
+</head>
+<body>
+  <h1>Template Preview</h1>
+
+  {{#if (eq template 'order-confirmation')}}
+    {{> order-confirmation customerName="John Doe" orderNumber="123456" customerEmail="john@example.com" unsubscribeLink="http://unsubscribe.com"}}
+  {{else if (eq template 'order-shipped')}}
+    {{> order-shipped customerName="John Doe" orderNumber="123456" customerEmail="john@example.com" unsubscribeLink="http://unsubscribe.com"}}
+  {{else}}
+    {{> weekly-promotion customerName="John Doe" customerEmail="john@example.com" unsubscribeLink="http://unsubscribe.com"}}
+  {{/if}}
+
+</body>
+</html>

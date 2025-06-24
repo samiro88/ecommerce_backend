@@ -1,18 +1,19 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-
-export class AdminLoginDto {
-  @IsEmail()
-  email: string;
-
-  @IsNotEmpty()
-  password: string;
-}
+// auth.dto.ts
+import { IsEmail, IsString } from 'class-validator';
 
 export class ClientLoginDto {
   @IsEmail()
   email: string;
 
-  @IsNotEmpty()
+  @IsString()
+  password: string;
+}
+
+export class AdminLoginDto {
+  @IsString()
+  username: string;
+
+  @IsString()
   password: string;
 }
 
@@ -23,6 +24,26 @@ export class ClientRegisterDto {
   @IsEmail()
   email: string;
 
-  @IsNotEmpty()
+  @IsString()
   password: string;
+
+  @IsString()
+  phone1: string;
+
+  @IsString()
+  ville: string;
+
+  @IsString()
+  address: string;
+}
+
+export class AdminRegisterDto {
+  @IsString()
+  username: string;
+
+  @IsString()
+  password: string;
+
+  @IsString()
+  role?: string;
 }

@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { VentesService } from '../../controllers/vente/vente.service'; // Corrected import path
+import { VentesService } from '../../modules/ventes/vente.service'; // Corrected import path
 import { getModelToken } from '@nestjs/mongoose';
-import { ProductsService } from '../../routes/products/products.service';
-import { InformationService } from '../../controllers/information/information.service';
+import { ProductsService } from '../../modules/products/product.service';
+import { InformationService } from '../../modules/information/information.service';
 
 describe('VentesService', () => {
   let service: VentesService;

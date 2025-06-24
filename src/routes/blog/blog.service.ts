@@ -1,3 +1,4 @@
+/*
 import { 
   Injectable, 
   NotFoundException, 
@@ -6,7 +7,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Blog } from './models/blog.model';
-import { CreateBlogDto } from './dto/create-blog.dto'; // Corrected import
+import { CreateBlogDto } from '../../modules/dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/dto/update-blog.dto';
 
 
@@ -98,3 +99,4 @@ export class BlogService {
     }
   }
 }
+  */

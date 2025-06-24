@@ -9,7 +9,7 @@ export class AdminUser extends Document {
   @Prop({
     type: String,
     required: true,
-    unique: true, // Ensures the userName field is unique
+    unique: true, 
   })
   userName: string;
 
@@ -29,7 +29,6 @@ export class AdminUser extends Document {
 
 export const AdminUserSchema = SchemaFactory.createForClass(AdminUser);
 
-// Add this to properly type the _id field
 export type AdminUserDocument = AdminUser & Document & {
   _id: Types.ObjectId;
 };

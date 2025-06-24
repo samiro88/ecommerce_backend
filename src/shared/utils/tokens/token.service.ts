@@ -14,4 +14,13 @@ export class TokenService {
       expiresIn
     });
   }
+
+  async verifyToken(token: string): Promise<any> {
+    try {
+      const decoded = await this.jwtService.verify(token);
+      return decoded;
+    } catch (error) {
+      throw new Error('Invalid token');
+    }
+  }
 }

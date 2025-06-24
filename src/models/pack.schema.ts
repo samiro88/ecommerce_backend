@@ -1,7 +1,11 @@
+
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types, Model } from 'mongoose'; // Ensure Model is imported
+import { Document, Types, Model } from 'mongoose';
 import { handleSlug } from '../shared/utils/generators/slug/slug-generator.service';
 
+/**
+ * Pack Schema - aligned with DB structure and extended 
+ */
 @Schema({ timestamps: true })
 export class Pack extends Document {
   @Prop({ required: true })
@@ -14,6 +18,9 @@ export class Pack extends Document {
   price: number;
 
   @Prop()
+  oldPrice: number;
+
+  @Prop()
   smallDescription: string;
 
   @Prop()
@@ -21,9 +28,6 @@ export class Pack extends Document {
 
   @Prop()
   question: string;
-
-  @Prop()
-  oldPrice: number;
 
   @Prop({
     type: {
@@ -80,14 +84,85 @@ export class Pack extends Document {
     createdAt: Date;
     updatedAt: Date;
   }>;
+
+  // --- Additional fields from DB structure ---
+  @Prop()
+  meta_description_fr: string;
+
+  @Prop()
+  promo_expiration_date: Date;
+
+  @Prop()
+  aggregateRating: string; // Consider parsing to object if needed
+
+  @Prop()
+  nutrition_values: string;
+
+  @Prop()
+  questions: string;
+
+  @Prop()
+  zone1: string;
+
+  @Prop()
+  zone2: string;
+
+  @Prop()
+  zone3: string;
+
+  @Prop()
+  zone4: string;
+
+  @Prop()
+  alt_cover: string;
+
+  @Prop()
+  description_cover: string;
+
+  @Prop()
+  content_seo: string;
+
+  @Prop()
+  note: string;
+
+  @Prop()
+  best_seller: string;
+
+  @Prop()
+  new_product: string;
+
+  @Prop()
+  gallery: string;
+
+  @Prop()
+  cover: string;
+
+  // --- Legacy/optional fields for future-proofing ---
+  @Prop()
+  sous_categorie_id: string;
+
+
+  @Prop()
+  code_product: string;
+
+  @Prop()
+  brand_id: string;
+
+  @Prop()
+  publier: string;
+
+  @Prop()
+  created_by: string;
+
+  @Prop()
+  updated_by: string;
 }
 
 export const PackSchema = SchemaFactory.createForClass(Pack);
 
-// Preserve pre-save hook
-PackSchema.pre('save', async function(next) {
+// Slug generation middleware
+PackSchema.pre('save', async function (next) {
   try {
-    // Explicitly cast this.constructor as a Model<Pack> to resolve the error
     this.slug = await handleSlug(this, 'designation', this.constructor as Model<Pack>);
     next();
   } catch (error) {

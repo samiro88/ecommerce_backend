@@ -1,6 +1,6 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { VentesService } from '../../controllers/vente/vente.service'; // Correct path
+import { VentesService } from '../../modules/ventes/vente.service'; // Correct path
 import { VentesController } from './ventes.controller';
 import { Vente, VenteSchema } from '../../models/vente.schema';
 import { Client, ClientSchema } from '../../models/client.schema';
@@ -9,12 +9,12 @@ import { Product, ProductSchema } from '../../models/product.schema';
 import { Pack, PackSchema } from '../../models/pack.schema';
 import { Information, InformationSchema } from '../../models/information.schema';
 import { Commande, CommandeSchema } from '../../models/commande.schema'; // Import Commande schema
-import { InformationModule } from '../../controllers/information/information.module'; // Import InformationModule
-import { ProductsModule } from '../products/products.module';
+import { InformationModule } from '../../modules/information/information.module'; // Import InformationModule
+import { ProductsModule } from '../../modules/products/products.module';
 
 @Module({
-  imports: [VentesModule, ProductsModule, // Add ProductsModule
-    forwardRef(() => ProductsModule), // Use forwardRef for circular dependency
+  imports: [
+    
     MongooseModule.forFeature([
       { name: Vente.name, schema: VenteSchema },
       { name: Client.name, schema: ClientSchema },
@@ -24,10 +24,11 @@ import { ProductsModule } from '../products/products.module';
       { name: Information.name, schema: InformationSchema },
       { name: 'Commande', schema: CommandeSchema },
     ]),
-    forwardRef(() => InformationModule),
+    forwardRef(() => InformationModule), // Use forwardRef for circular dependency
+    forwardRef(() => ProductsModule), // Use forwardRef for circular dependency
   ],
   controllers: [VentesController],
   providers: [VentesService],
-  exports: [VentesService], // Export VentesService
+  exports: [VentesService],
 })
 export class VentesModule {}
