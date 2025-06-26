@@ -697,8 +697,10 @@ export class ProductsService {
   reviews: reviewsByProduct[String(p.id)] || [],
   }));
   } else if (products && (products._id || products.id)) {
-  const productId = String(products.id);
-  const reviews = await this.reviewModel.find({ product_id: productId, publier: "1" }).lean();
+  //const productId = String(products.id);
+const businessId = products.id;
+console.log('attachReviews (single): businessId =', businessId);
+const reviews = await this.reviewModel.find({ product_id: businessId, publier: "1" }).lean();
   return {
   ...products.toObject?.() || products,
   reviews,
@@ -856,9 +858,11 @@ if (brand) {
           { id: id }
         ]
       })
-      .select('+designation_fr +description_fr +prix +promo +publier +cover')
+      //.select('+designation_fr +description_fr +prix +promo +publier +cover')
+      .select('+designation_fr +description_fr +prix +promo +publier +cover +id')
       .populate("category")
-      .populate("subCategory");
+      .populate("subCategory")
+      .lean(); // <-- Add this
 
       if (!product) {
         throw new NotFoundException("Product not found");

@@ -1,0 +1,8 @@
+Database Name: protein_db
+Collection Name: products
+Total Products: 314
+Products with Nutrition Fact: 152
+Products with Questions: 149
+Products with BOTH Nutrition Fact and Questions: 141
+
+Note: "Nutrition Fact" and "Questions" are counted as present if the field exists and is not empty.
