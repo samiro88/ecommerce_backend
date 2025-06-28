@@ -33,6 +33,7 @@ import { MusculationProductModule } from './modules/MusculationProducts/Musculat
 import { BrandsModule } from './modules/brands/brands.module';
 import { AromasModule } from './modules/aromas/aromas.module';
 import { UserModule } from './modules/user/user.module';
+import { BannerModule } from './modules/banner/banner.module';
 // ======================
 // NEW MODULES ADDED HERE (PRESERVING ALPHABETICAL ORDER)
 // ======================
@@ -169,7 +170,7 @@ import { DashboardModule } from './modules/analytics/dashboard.module';
     PaymentsModule, // NEW
     PaymeModule, // NEW
 
-
+ BannerModule,
     //dahboard module 
     DashboardModule, // NEW
     
