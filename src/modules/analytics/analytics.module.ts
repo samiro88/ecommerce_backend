@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule, getConnectionToken } from '@nestjs/mongoose';
 import { AnalyticsController } from '../../controllers/analytics.controller';
 import { AnalyticsService } from '../../services/analytics.service';
 import { SalesService } from '../../controllers/sales.service';
 import { StatisticsService } from 'src/shared/utils/statistics/statistics.service';
-import { Invoice, InvoiceSchema } from 'src/models/invoice.schema'; // <-- ADD THIS
+import { Invoice, InvoiceSchema } from 'src/models/invoice.schema';
 import { Product, ProductSchema } from 'src/models/product.schema';
 import { Category, CategorySchema } from 'src/models/category.schema';
 import { PromoCode, PromoCodeSchema } from 'src/models/promo-code.schema';
@@ -25,6 +25,10 @@ import { Vente, VenteSchema } from 'src/models/vente.schema';
     AnalyticsService,
     SalesService,
     StatisticsService,
+    {
+      provide: 'DATABASE_CONNECTION',
+      useExisting: getConnectionToken(),
+    },
   ],
   exports: [AnalyticsService, SalesService, StatisticsService],
 })

@@ -5,7 +5,7 @@ import { ExportModule } from '../export/export.module';
 import { ConfigModule } from '@nestjs/config';
 import { AnalyticsModule } from '../modules/analytics/analytics.module';
 import { AnalyticsService } from '../services/analytics.service';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule, getConnectionToken } from '@nestjs/mongoose';
 import { InvoiceSchema } from '../models/invoice.schema';
 
 // Import the schemas for Product, Category, PromoCode, and Vente
@@ -27,7 +27,14 @@ import { Vente, VenteSchema } from '../models/vente.schema';
       { name: Vente.name, schema: VenteSchema },
     ]),
   ],
-  providers: [TasksService, AnalyticsService],
+  providers: [
+    TasksService,
+    AnalyticsService,
+    {
+      provide: 'DATABASE_CONNECTION',
+      useExisting: getConnectionToken(),
+    },
+  ],
   exports: [TasksService],
 })
 export class TasksModule {}

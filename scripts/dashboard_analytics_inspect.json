@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "6861016201f8a26f196fedf9",
+    "ventesCount": 500,
+    "sampleVente": {
+      "_id": "682f9336da15047697258b0f",
+      "items": [
+        {
+          "itemId": "c20f28a5-8f58-4f9b-8fc0-3b4b8894716f",
+          "productName": "BCAA 12.000 457 G",
+          "quantity": 1,
+          "price": 100,
+          "categoryId": "6810a533cecd66abf472c0b3"
+        }
+      ]
+    }
+  }
+]

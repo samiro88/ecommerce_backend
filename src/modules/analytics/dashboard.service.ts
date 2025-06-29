@@ -1,17 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model, Connection, Schema } from 'mongoose';
 import { Commande } from '../../models/commande.schema';
 import { User } from '../../models/user.schema';
-import { Model } from 'mongoose';
 
 @Injectable()
 export class DashboardService {
+  private dashboardAnalyticsModel: Model<any>;
   constructor(
     @InjectModel(Commande.name) private orderModel: Model<Commande>,
     @InjectModel(User.name) private userModel: Model<User>,
-  ) {}
+    @Inject('DATABASE_CONNECTION') private readonly connection: Connection,
+  ) {
+    if (this.connection.models['dashboard_analytics']) {
+      this.dashboardAnalyticsModel = this.connection.models['dashboard_analytics'];
+    } else {
+      this.dashboardAnalyticsModel = this.connection.model(
+        'dashboard_analytics',
+        new Schema({}, { strict: false, collection: 'dashboard_analytics' })
+      );
+    }
+  }
 
   async getMetrics(range: string) {
+    const doc = await this.dashboardAnalyticsModel.findOne() as any;
+    if (!doc) return {};
+
+    // Use commandes and users arrays from analytics doc
+    const commandes: any[] = Array.isArray(doc.commandes) ? doc.commandes : [];
+    const users: any[] = Array.isArray(doc.users) ? doc.users : [];
+
     // Calculate date range
     const now = new Date();
     let start: Date;
@@ -20,25 +38,40 @@ export class DashboardService {
     else start = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
     // All-time users
-    const totalUsers = await this.userModel.countDocuments({});
+    const totalUsers = users.length;
+
     // New users in range
-    const newUsers = await this.userModel.countDocuments({ created_at: { $gte: start } });
-    const prevUsers = await this.userModel.countDocuments({ created_at: { $lt: start } });
+    const newUsers = users.filter(u => {
+      const d = u.created_at ? new Date(u.created_at) : null;
+      return d && d >= start;
+    }).length;
+    const prevUsers = users.filter(u => {
+      const d = u.created_at ? new Date(u.created_at) : null;
+      return d && d < start;
+    }).length;
 
     // All-time orders
-    const totalOrders = await this.orderModel.countDocuments({});
+    const totalOrders = commandes.length;
+
     // New orders in range
-    const newOrders = await this.orderModel.countDocuments({ created_at: { $gte: start } });
-    const prevOrders = await this.orderModel.countDocuments({ created_at: { $lt: start } });
+    const newOrders = commandes.filter(o => {
+      const d = o.created_at ? new Date(o.created_at) : null;
+      return d && d >= start;
+    }).length;
+    const prevOrders = commandes.filter(o => {
+      const d = o.created_at ? new Date(o.created_at) : null;
+      return d && d < start;
+    }).length;
 
-    // Sales (replace 'prix_ttc' with your actual total field if needed)
-    const salesAgg = await this.orderModel.aggregate([
-      { $match: { created_at: { $gte: start } } },
-      { $group: { _id: null, total: { $sum: { $toDouble: "$prix_ttc" } } } }
-    ]);
-    const sales = salesAgg[0]?.total || 0;
+    // Sales (prix_ttc as number)
+    const sales = commandes
+      .filter(o => {
+        const d = o.created_at ? new Date(o.created_at) : null;
+        return d && d >= start;
+      })
+      .reduce((sum, o) => sum + (typeof o.prix_ttc === 'string' ? parseFloat(o.prix_ttc) : Number(o.prix_ttc) || 0), 0);
 
-    // Sessions (dummy, replace with real if you track sessions)
+    // Sessions (dummy, unless you track sessions elsewhere)
     const sessions = Math.floor(Math.random() * 1000) + 100;
 
     return {
@@ -52,15 +85,26 @@ export class DashboardService {
   }
 
   async getRecentActivity(limit: number) {
-    const recentUsers = await this.userModel.find().sort({ created_at: -1 }).limit(limit).lean();
-    const recentOrders = await this.orderModel.find().sort({ created_at: -1 }).limit(limit).lean();
+    const doc = await this.dashboardAnalyticsModel.findOne() as any;
+    if (!doc) return [];
+
+    const users: any[] = Array.isArray(doc.users) ? doc.users : [];
+    const commandes: any[] = Array.isArray(doc.commandes) ? doc.commandes : [];
+
+    const recentUsers = users
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      .slice(0, limit);
+
+    const recentOrders = commandes
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      .slice(0, limit);
 
     const activities = [
       ...recentUsers.map(u => ({
         user: u.name || u.email,
         action: "registered",
         type: "create",
-        time: new Date((u as any).created_at),
+        time: u.created_at ? new Date(u.created_at) : null,
         avatar: null,
         resource: "User"
       })),
@@ -68,11 +112,11 @@ export class DashboardService {
         user: o.nom || o.email,
         action: "placed an order",
         type: "create",
-        time: new Date(o.created_at),
+        time: o.created_at ? new Date(o.created_at) : null,
         avatar: null,
         resource: "Order"
       }))
-    ].sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
+    ].sort((a, b) => new Date(b.time ?? 0).getTime() - new Date(a.time ?? 0).getTime());
 
     return activities.slice(0, limit);
   }

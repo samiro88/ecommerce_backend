@@ -1,37 +1,53 @@
 import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model, Types, Schema } from 'mongoose';
 import { Invoice } from '../models/invoice.schema';
 import { Product } from '../models/product.schema';
 import { Category } from '../models/category.schema';
 import { PromoCode } from '../models/promo-code.schema';
 import { Vente } from '../models/vente.schema';
 
+// For dashboard_analytics collection
+import { Connection } from 'mongoose';
+
 
 @Injectable()
 export class AnalyticsService {
+  private dashboardAnalyticsModel: Model<any>;
   constructor(
     @InjectModel(Invoice.name) private readonly invoiceModel: Model<Invoice>,
     @InjectModel(Product.name) private readonly productModel: Model<Product>,
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
     @InjectModel(PromoCode.name) private readonly promoCodeModel: Model<PromoCode>,
     @InjectModel(Vente.name) private readonly ventesModel: Model<Vente>,
-  ) {}
+    @Inject('DATABASE_CONNECTION') private readonly connection: Connection,
+  ) {
+    // Lazy model registration for dashboard_analytics
+    if (this.connection.models['dashboard_analytics']) {
+      this.dashboardAnalyticsModel = this.connection.models['dashboard_analytics'];
+    } else {
+      this.dashboardAnalyticsModel = this.connection.model(
+        'dashboard_analytics',
+        new Schema({}, { strict: false, collection: 'dashboard_analytics' })
+      );
+    }
+  }
 
-  // --- Methods from Invoice-based analytics ---
+  // --- Methods from dashboard_analytics ---
   async getMostSoldProduct() {
-    const result = await this.invoiceModel.aggregate([
-      { $unwind: '$items' },
-      {
-        $group: {
-          _id: '$items.product',
-          totalSold: { $sum: '$items.quantity' },
-        },
-      },
-      { $sort: { totalSold: -1 } },
-      { $limit: 1 },
-    ]);
-    return result[0];
+    const doc = await this.dashboardAnalyticsModel.findOne() as any;
+    if (!doc || !Array.isArray((doc as any).ventes)) return null;
+    const ventes: any[] = (doc as any).ventes;
+    const productSales = {};
+    ventes.forEach((vente: any) => {
+      (vente.items || []).forEach((item: any) => {
+        if (!item.productName) return;
+        productSales[item.productName] = (productSales[item.productName] || 0) + (item.quantity || 0);
+      });
+    });
+    const sorted = (Object.entries(productSales) as [string, number][]).sort((a, b) => b[1] - a[1]);
+    if (sorted.length === 0) return null;
+    return { product: sorted[0][0], totalSold: sorted[0][1] };
   }
 
   async getBestDayForProduct(productId: string) {
@@ -103,26 +119,18 @@ export class AnalyticsService {
   }
 
   async getTop5Products() {
-    return this.invoiceModel.aggregate([
-      { $unwind: "$items" },
-      {
-        $group: {
-          _id: "$items.product",
-          totalSold: { $sum: "$items.quantity" }
-        }
-      },
-      { $sort: { totalSold: -1 } },
-      { $limit: 5 },
-      {
-        $lookup: {
-          from: "products",
-          localField: "_id",
-          foreignField: "_id",
-          as: "productDetails"
-        }
-      },
-      { $unwind: "$productDetails" }
-    ]);
+    const doc = await this.dashboardAnalyticsModel.findOne() as any;
+    if (!doc || !Array.isArray((doc as any).ventes)) return [];
+    const ventes: any[] = (doc as any).ventes;
+    const productSales = {};
+    ventes.forEach((vente: any) => {
+      (vente.items || []).forEach((item: any) => {
+        if (!item.productName) return;
+        productSales[item.productName] = (productSales[item.productName] || 0) + (item.quantity || 0);
+      });
+    });
+    const sorted = (Object.entries(productSales) as [string, number][]).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    return sorted.map(([product, totalSold]) => ({ product, totalSold }));
   }
 
   async getMonthlyRevenueComparison(year: number, month: number) {
@@ -309,164 +317,105 @@ export class AnalyticsService {
   }
 
   async getTotalRevenueOverTime(query: any) {
-    try {
-      const { startDate, endDate } = query;
-      const matchStage: any = {};
-      if (startDate && endDate) {
-        matchStage.createdAt = {
-          $gte: new Date(startDate),
-          $lte: new Date(endDate),
-        };
-      }
-      return await this.ventesModel.aggregate([
-        { $match: matchStage },
-        {
-          $group: {
-            _id: null,
-            totalRevenue: { $sum: '$totalAmount' },
-            count: { $sum: 1 },
-          },
-        },
-      ]);
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    const doc = await this.dashboardAnalyticsModel.findOne() as any;
+    if (!doc || !Array.isArray((doc as any).ventes)) return [];
+    const ventes: any[] = (doc as any).ventes;
+    const { startDate, endDate } = query;
+    const start = startDate ? new Date(startDate) : null;
+    const end = endDate ? new Date(endDate) : null;
+    const filtered = ventes.filter((vente: any) => {
+      const date = vente.createdAt ? new Date(vente.createdAt) : null;
+      if (!date) return false;
+      if (start && date < start) return false;
+      if (end && date > end) return false;
+      return true;
+    });
+    const totalRevenue = filtered.reduce((sum: number, v: any) => sum + (v.netAPayer || 0), 0);
+    return [{ totalRevenue, count: filtered.length }];
   }
 
   async getYearOverYearComparison(query: any) {
-    try {
-      const currentYear = new Date().getFullYear();
-      const lastYear = currentYear - 1;
-      const results = await Promise.all([
-        this.ventesModel.aggregate([
-          {
-            $match: {
-              createdAt: {
-                $gte: new Date(`${currentYear}-01-01`),
-                $lte: new Date(`${currentYear}-12-31`),
-              },
-            },
-          },
-          {
-            $group: {
-              _id: null,
-              currentYearRevenue: { $sum: '$totalAmount' },
-            },
-          },
-        ]),
-        this.ventesModel.aggregate([
-          {
-            $match: {
-              createdAt: {
-                $gte: new Date(`${lastYear}-01-01`),
-                $lte: new Date(`${lastYear}-12-31`),
-              },
-            },
-          },
-          {
-            $group: {
-              _id: null,
-              lastYearRevenue: { $sum: '$totalAmount' },
-            },
-          },
-        ]),
-      ]);
-      return {
-        currentYear: results[0][0]?.currentYearRevenue || 0,
-        lastYear: results[1][0]?.lastYearRevenue || 0,
-        growthPercentage: results[0][0]?.currentYearRevenue
-          ? ((results[0][0].currentYearRevenue - (results[1][0]?.lastYearRevenue || 0)) /
-              (results[1][0]?.lastYearRevenue || 1)) *
-            100
-          : 0,
-      };
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    const doc = await this.dashboardAnalyticsModel.findOne() as any;
+    if (!doc || !Array.isArray((doc as any).ventes)) return { currentYear: 0, lastYear: 0, growthPercentage: 0 };
+    const ventes: any[] = (doc as any).ventes;
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const lastYear = currentYear - 1;
+    let currentYearRevenue = 0;
+    let lastYearRevenue = 0;
+    ventes.forEach((vente: any) => {
+      const date = vente.createdAt ? new Date(vente.createdAt) : null;
+      if (!date) return;
+      if (date.getFullYear() === currentYear) currentYearRevenue += vente.netAPayer || 0;
+      if (date.getFullYear() === lastYear) lastYearRevenue += vente.netAPayer || 0;
+    });
+    const growthPercentage = lastYearRevenue > 0 ? ((currentYearRevenue - lastYearRevenue) / lastYearRevenue) * 100 : 0;
+    return {
+      currentYear: currentYearRevenue,
+      lastYear: lastYearRevenue,
+      growthPercentage: parseFloat(growthPercentage.toFixed(2))
+    };
   }
 
   async getCategoryPerformance() {
-    try {
-      return await this.categoryModel.aggregate([
-        {
-          $lookup: {
-            from: 'products',
-            localField: '_id',
-            foreignField: 'category',
-            as: 'products',
-          },
-        },
-        {
-          $project: {
-            name: 1,
-            productCount: { $size: '$products' },
-            totalSales: { $sum: '$products.salesCount' },
-          },
-        },
-        { $sort: { totalSales: -1 } },
-      ]);
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    const doc = await this.dashboardAnalyticsModel.findOne() as any;
+    if (!doc || !Array.isArray((doc as any).ventes) || !Array.isArray((doc as any).categories)) return [];
+    const ventes: any[] = (doc as any).ventes;
+    const categories: any[] = (doc as any).categories;
+    // Map categoryId to designation
+    const categoryMap = {};
+    categories.forEach((cat: any) => {
+      categoryMap[cat._id?.toString()] = cat.designation;
+    });
+    // Aggregate sales by category
+    const categorySales: Record<string, number> = {};
+    ventes.forEach((vente: any) => {
+      (vente.items || []).forEach((item: any) => {
+        if (!item.productName || !item.category) return;
+        const cat = item.category;
+        categorySales[cat] = (categorySales[cat] || 0) + (item.quantity || 0);
+      });
+    });
+    return Object.entries(categorySales).map(([cat, totalSales]) => ({
+      name: categoryMap[cat] || cat,
+      totalSales
+    }));
   }
 
   async getPromoCodeUsage() {
-    try {
-      return await this.promoCodeModel.aggregate([
-        {
-          $lookup: {
-            from: 'ventes',
-            localField: 'code',
-            foreignField: 'promoCode',
-            as: 'usage',
-          },
-        },
-        {
-          $project: {
-            code: 1,
-            discountValue: 1,
-            usageCount: { $size: '$usage' },
-            totalDiscount: { $sum: '$usage.discountAmount' },
-          },
-        },
-        { $sort: { usageCount: -1 } },
-      ]);
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    const doc = await this.dashboardAnalyticsModel.findOne() as any;
+    if (!doc || !Array.isArray((doc as any).ventes)) return [];
+    const ventes: any[] = (doc as any).ventes;
+    // Aggregate promo code usage
+    const promoStats: Record<string, { usageCount: number, totalDiscount: number }> = {};
+    ventes.forEach((vente: any) => {
+      if (vente.promoCode) {
+        const code = vente.promoCode;
+        promoStats[code] = promoStats[code] || { usageCount: 0, totalDiscount: 0 };
+        promoStats[code].usageCount += 1;
+        promoStats[code].totalDiscount += vente.discount || 0;
+      }
+    });
+    return Object.entries(promoStats).map(([code, stats]) => ({
+      code,
+      usageCount: stats.usageCount,
+      totalDiscount: stats.totalDiscount
+    }));
   }
 
   async getDailySales(days: number): Promise<any> {
-    try {
-      const salesData = await this.ventesModel.aggregate([
-        {
-          $match: {
-            createdAt: {
-              $gte: new Date(Date.now() - days * 24 * 60 * 60 * 1000),
-            },
-          },
-        },
-        {
-          $group: {
-            _id: {
-              $dateToString: {
-                format: '%Y-%m-%d',
-                date: '$createdAt',
-              },
-            },
-            sales: { $sum: '$totalAmount' },
-          },
-        },
-        {
-          $sort: {
-            _id: 1,
-          },
-        },
-      ]);
-      return salesData;
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    const doc = await this.dashboardAnalyticsModel.findOne();
+    if (!doc || !Array.isArray((doc as any).ventes)) return [];
+    const ventes: any[] = (doc as any).ventes;
+    const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+    const dailyMap: Record<string, number> = {};
+    ventes.forEach((vente: any) => {
+      const date = vente.createdAt ? new Date(vente.createdAt) : null;
+      if (!date || date < cutoff) return;
+      const key = date.toISOString().slice(0, 10);
+      dailyMap[key] = (dailyMap[key] || 0) + (vente.netAPayer || 0);
+    });
+    return Object.entries(dailyMap).sort(([a], [b]) => a.localeCompare(b)).map(([date, sales]) => ({ date, sales }));
   }
 
   async getRecentActivity(limit: number = 10) {
@@ -526,23 +475,20 @@ export class AnalyticsService {
   }
 
   async getSalesByCountry() {
-    return this.ventesModel.aggregate([
-      {
-        $group: {
-          _id: "$client.country",
-          sales: { $sum: "$netAPayer" },
-          orders: { $sum: 1 }
-        }
-      },
-      {
-        $project: {
-          _id: 0,
-          country: "$_id",
-          sales: 1,
-          orders: 1
-        }
-      },
-      { $sort: { sales: -1 } }
-    ]);
+    const doc = await this.dashboardAnalyticsModel.findOne();
+    if (!doc || !Array.isArray((doc as any).ventes)) return [];
+    const ventes: any[] = (doc as any).ventes;
+    const countryMap: Record<string, { sales: number, orders: number }> = {};
+    ventes.forEach((vente: any) => {
+      const country = vente.client?.country || "Unknown";
+      countryMap[country] = countryMap[country] || { sales: 0, orders: 0 };
+      countryMap[country].sales += vente.netAPayer || 0;
+      countryMap[country].orders += 1;
+    });
+    return Object.entries(countryMap).map(([country, stats]) => ({
+      country,
+      sales: stats.sales,
+      orders: stats.orders
+    })).sort((a, b) => b.sales - a.sales);
   }
 }

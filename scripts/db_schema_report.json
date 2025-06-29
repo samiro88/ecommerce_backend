@@ -1,0 +1,181 @@
+{
+  "ventes": {
+    "exists": true,
+    "hasData": true,
+    "sampleId": "682f9336da15047697258b0f",
+    "fields": {
+      "createdAt": {
+        "exists": true,
+        "type": "object",
+        "sample": "2024-12-07T11:22:09.106Z"
+      },
+      "status": {
+        "exists": true,
+        "type": "string",
+        "sample": "completed"
+      },
+      "netAPayer": {
+        "exists": true,
+        "type": "number",
+        "sample": 100
+      },
+      "totalAmount": {
+        "exists": true,
+        "type": "number",
+        "sample": 100
+      },
+      "items": {
+        "exists": true,
+        "type": "object",
+        "sample": [
+          {
+            "itemId": "c20f28a5-8f58-4f9b-8fc0-3b4b8894716f",
+            "productName": "BCAA",
+            "quantity": 1,
+            "price": 100
+          }
+        ]
+      },
+      "promoCode": {
+        "exists": false,
+        "type": null,
+        "sample": null
+      },
+      "discount": {
+        "exists": false,
+        "type": null,
+        "sample": null
+      },
+      "client.country": {
+        "exists": true,
+        "type": "string",
+        "sample": "Tunisia"
+      }
+    }
+  },
+  "products": {
+    "exists": true,
+    "hasData": true,
+    "sampleId": "68109e5ececd66abf4727f67",
+    "fields": {
+      "_id": {
+        "exists": true,
+        "type": "object",
+        "sample": "68109e5ececd66abf4727f67"
+      },
+      "category": {
+        "exists": false,
+        "type": null,
+        "sample": null
+      },
+      "brand": {
+        "exists": false,
+        "type": null,
+        "sample": null
+      },
+      "salesCount": {
+        "exists": false,
+        "type": null,
+        "sample": null
+      },
+      "costPrice": {
+        "exists": false,
+        "type": null,
+        "sample": null
+      }
+    }
+  },
+  "categories": {
+    "exists": true,
+    "hasData": true,
+    "sampleId": "6810a533cecd66abf472c0b3",
+    "fields": {
+      "_id": {
+        "exists": true,
+        "type": "object",
+        "sample": "6810a533cecd66abf472c0b3"
+      },
+      "designation": {
+        "exists": true,
+        "type": "string",
+        "sample": "complements-alimentaires"
+      }
+    }
+  },
+  "promocodes": {
+    "exists": true,
+    "hasData": false,
+    "message": "No documents found."
+  },
+  "invoices": {
+    "exists": true,
+    "hasData": true,
+    "sampleId": "6810a3c6cecd66abf472a03a",
+    "fields": {
+      "date": {
+        "exists": false,
+        "type": null,
+        "sample": null
+      },
+      "total": {
+        "exists": false,
+        "type": null,
+        "sample": null
+      },
+      "items": {
+        "exists": false,
+        "type": null,
+        "sample": null
+      }
+    }
+  },
+  "commandes": {
+    "exists": true,
+    "hasData": true,
+    "sampleId": "6810a39ccecd66abf47299a9",
+    "fields": {
+      "created_at": {
+        "exists": true,
+        "type": "string",
+        "sample": "2023-09-20 07:53:54"
+      },
+      "prix_ttc": {
+        "exists": true,
+        "type": "string",
+        "sample": "539"
+      },
+      "nom": {
+        "exists": true,
+        "type": "string",
+        "sample": "Mongalgi"
+      },
+      "email": {
+        "exists": true,
+        "type": "string",
+        "sample": "aminecrash@yahoo.fr"
+      }
+    }
+  },
+  "users": {
+    "exists": true,
+    "hasData": true,
+    "sampleId": "6810a2dbcecd66abf4728545",
+    "fields": {
+      "created_at": {
+        "exists": true,
+        "type": "string",
+        "sample": "2023-05-13 12:10:25"
+      },
+      "name": {
+        "exists": true,
+        "type": "string",
+        "sample": "Admin"
+      },
+      "email": {
+        "exists": true,
+        "type": "string",
+        "sample": "micha@gmail.com"
+      }
+    }
+  }
+}

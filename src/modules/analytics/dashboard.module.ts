@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule, getConnectionToken } from '@nestjs/mongoose';
 import { DashboardController } from './dashboard.controller';
 import { DashboardService } from './dashboard.service';
 import { Commande, CommandeSchema } from '../../models/commande.schema';
@@ -13,7 +13,13 @@ import { User, UserSchema } from '../../models/user.schema';
     ]),
   ],
   controllers: [DashboardController],
-  providers: [DashboardService],
+  providers: [
+    DashboardService,
+    {
+      provide: 'DATABASE_CONNECTION',
+      useExisting: getConnectionToken(),
+    },
+  ],
   exports: [DashboardService],
 })
 export class DashboardModule {}

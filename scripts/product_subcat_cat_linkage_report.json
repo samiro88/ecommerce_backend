@@ -1,0 +1,4682 @@
+[
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f67",
+      "designation_fr": "BEST ZMA - 120 CAPS",
+      "sous_categorie_id": "29"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728106",
+      "id": "29",
+      "designation_fr": "ZMA",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f68",
+      "designation_fr": "Vita Core 60 Caps",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f6a",
+      "designation_fr": "ZMA PRO – 90 CAPS",
+      "sous_categorie_id": "29"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728106",
+      "id": "29",
+      "designation_fr": "ZMA",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f6c",
+      "designation_fr": "JOIN FLEX 120 TABS",
+      "sous_categorie_id": "25"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728102",
+      "id": "25",
+      "designation_fr": "Mineraux",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f6d",
+      "designation_fr": "OMEGA 3",
+      "sous_categorie_id": "26"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728103",
+      "id": "26",
+      "designation_fr": "Omega 3",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f6e",
+      "designation_fr": "GLUTAMINE SHOCK 500 G",
+      "sous_categorie_id": "21"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280ff",
+      "id": "21",
+      "designation_fr": "Glutamine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f6f",
+      "designation_fr": "Elite Arginine – 120 Capsulas",
+      "sous_categorie_id": "23"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728101",
+      "id": "23",
+      "designation_fr": "L-arginine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f70",
+      "designation_fr": "L-GLUTAMINE GLUTA PURE – 400G",
+      "sous_categorie_id": "21"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280ff",
+      "id": "21",
+      "designation_fr": "Glutamine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f71",
+      "designation_fr": "CitruArgin - 300 G",
+      "sous_categorie_id": "18"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fc",
+      "id": "18",
+      "designation_fr": "Citrulline",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f72",
+      "designation_fr": "BCAA 12.000 457 G",
+      "sous_categorie_id": "16"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fb",
+      "id": "16",
+      "designation_fr": "Bcaa",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f73",
+      "designation_fr": "BCAA 8:1:1  400G - REAL PHARM",
+      "sous_categorie_id": "16"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fb",
+      "id": "16",
+      "designation_fr": "Bcaa",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f74",
+      "designation_fr": "EAA – 420 G",
+      "sous_categorie_id": "20"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fe",
+      "id": "20",
+      "designation_fr": "EAA",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f75",
+      "designation_fr": "ZINC – 90 TAB – REAL PHARM",
+      "sous_categorie_id": "57"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728120",
+      "id": "57",
+      "designation_fr": "Zinc",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f76",
+      "designation_fr": "MUSCLE ON - 1KG - REAL PHARM",
+      "sous_categorie_id": "35"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810c",
+      "id": "35",
+      "designation_fr": "Gainers Riches en Protéines",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f77",
+      "designation_fr": "ISOLATE PROTEIN SUPREME 1.8 KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f78",
+      "designation_fr": "PURE WHEY ISOLATE 95 – 2.2KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f79",
+      "designation_fr": "PROTEIN VEGAN – 2KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f7a",
+      "designation_fr": "WHEY PROTEIN 2.27 KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f7b",
+      "designation_fr": "WHEY 80 – 2,25 KG",
+      "sous_categorie_id": "38"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810e",
+      "id": "38",
+      "designation_fr": "Protéines Complètes",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f7c",
+      "designation_fr": "NITRO TECH WHEY GOLD – 2,3KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f7d",
+      "designation_fr": "MAX MASS 3XL – 6KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f7e",
+      "designation_fr": "REAL MASS – 6.8 KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f7f",
+      "designation_fr": "CARBO-Z  MASS GAINER - 3 KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f80",
+      "designation_fr": "THE SHADOW – 270G",
+      "sous_categorie_id": "42"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728112",
+      "id": "42",
+      "designation_fr": "Pré-workout",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f81",
+      "designation_fr": "ANIMAL CUTS NO-STIM POWDER – 42 DOSES",
+      "sous_categorie_id": "33"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810a",
+      "id": "33",
+      "designation_fr": "Brûleurs de Graisse",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f82",
+      "designation_fr": "ANIMAL PAK - 44 PACKS",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f83",
+      "designation_fr": "CEINTURE DOS DE MUSCULATION",
+      "sous_categorie_id": "46"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728116",
+      "id": "46",
+      "designation_fr": "Ceinture de Musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f84",
+      "designation_fr": "SHAKER KONG – 700ML",
+      "sous_categorie_id": "48"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728118",
+      "id": "48",
+      "designation_fr": "Shakers et Bouteilles Sportives",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f85",
+      "designation_fr": "100 WHEY - 2KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f86",
+      "designation_fr": "PACK PRISE DE MASSE",
+      "sous_categorie_id": null
+    },
+    "subcategory": null,
+    "category": null,
+    "linkage": "Missing subcategory"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f87",
+      "designation_fr": "AMINO ENERGY – 270 G",
+      "sous_categorie_id": "14"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fa",
+      "id": "14",
+      "designation_fr": "Acides Aminés",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f88",
+      "designation_fr": "BEEF AMINOS – 200 TABS",
+      "sous_categorie_id": "14"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fa",
+      "id": "14",
+      "designation_fr": "Acides Aminés",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f89",
+      "designation_fr": "PLATINUM CREATINE – 400 GR",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f8a",
+      "designation_fr": "REAL ISOLATE – 1,8 KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f8b",
+      "designation_fr": "ZMA -120 CAPS",
+      "sous_categorie_id": "29"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728106",
+      "id": "29",
+      "designation_fr": "ZMA",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f8c",
+      "designation_fr": "Ashwagandha 100% Natural 90tabs",
+      "sous_categorie_id": "50"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811a",
+      "id": "50",
+      "designation_fr": "Ashwagandha",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f8d",
+      "designation_fr": "DELICIOUS GAINER 4,5KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f8e",
+      "designation_fr": "BEHEMOTH PREWORKOUT 500G",
+      "sous_categorie_id": "42"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728112",
+      "id": "42",
+      "designation_fr": "Pré-workout",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f8f",
+      "designation_fr": "ASHWAGANDHA – 90 TABS",
+      "sous_categorie_id": "50"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811a",
+      "id": "50",
+      "designation_fr": "Ashwagandha",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f90",
+      "designation_fr": "REAL HYDRO 100 - 1.8KG",
+      "sous_categorie_id": "41"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728111",
+      "id": "41",
+      "designation_fr": "Whey Hydrolysée",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f91",
+      "designation_fr": "CREATINE MONOHYDRATE - 500G -QUAMTRAX",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f92",
+      "designation_fr": "100% WHEY GOLD STANDARD – 2.27KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f93",
+      "designation_fr": "PROSTAR 100% WHEY PROTEIN – 2.4KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f94",
+      "designation_fr": "PROSTAR 100% WHEY PROTEIN – 907G",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f95",
+      "designation_fr": "COMBAT PROTEIN POWDER – 1.81KG",
+      "sous_categorie_id": "38"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810e",
+      "id": "38",
+      "designation_fr": "Protéines Complètes",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f96",
+      "designation_fr": "HARD MASS GAINER - 7Kg",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f97",
+      "designation_fr": "CREATINE MONOHYDRATE POWDER – 250G",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f98",
+      "designation_fr": "CREATINE MONOHYDRATE EN POUDRE - 250G",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f99",
+      "designation_fr": "MICRONIZED CREATINE POWDER – 317G",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f9a",
+      "designation_fr": "MUSCLE ON 2.27 KG",
+      "sous_categorie_id": "35"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810c",
+      "id": "35",
+      "designation_fr": "Gainers Riches en Protéines",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f9b",
+      "designation_fr": "PACK MUSCLE SEC",
+      "sous_categorie_id": null
+    },
+    "subcategory": null,
+    "category": null,
+    "linkage": "Missing subcategory"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f9c",
+      "designation_fr": "PACK PRISE DE MASSE-2",
+      "sous_categorie_id": null
+    },
+    "subcategory": null,
+    "category": null,
+    "linkage": "Missing subcategory"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f9d",
+      "designation_fr": "CREATINE MONOHYDRATE 300GR- HX NUTRITION",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f9e",
+      "designation_fr": "REAL WHEY 100 - 2,250 GR",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f9f",
+      "designation_fr": "ISO WHEY 2 KG HX NUTRITION",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fa0",
+      "designation_fr": "ZERO ISOLATE 2 KG - HX NUTRITION",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fa1",
+      "designation_fr": "BIG MONSTER 7 KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fa2",
+      "designation_fr": "LEVRO LEGENDARY MASS – 6.8KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fa3",
+      "designation_fr": "LEVRO LEGENDARY MASS – 3KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fa4",
+      "designation_fr": "HYDRO WHEY -1,59 KG",
+      "sous_categorie_id": "41"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728111",
+      "id": "41",
+      "designation_fr": "Whey Hydrolysée",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fa5",
+      "designation_fr": "REAL CASEIN 100 – 700G",
+      "sous_categorie_id": "37"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810d",
+      "id": "37",
+      "designation_fr": "Protéine de Caséine",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fa6",
+      "designation_fr": "GAIN BOLIC 6000 – 6,8 KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fa7",
+      "designation_fr": "LIPO 6 BLACK – 60 CAPS",
+      "sous_categorie_id": "31"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728108",
+      "id": "31",
+      "designation_fr": "Fat Burner",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fa8",
+      "designation_fr": "GOLD STANDARD GAINER – 1,62 KG",
+      "sous_categorie_id": "35"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810c",
+      "id": "35",
+      "designation_fr": "Gainers Riches en Protéines",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fa9",
+      "designation_fr": "ISOTOPE 100% Whey Isolate – 2,2KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727faa",
+      "designation_fr": "ISO WHEY ZERO – 2.27 KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fab",
+      "designation_fr": "WHEY PROTEIN COMPLEX 100% – 2.27KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fac",
+      "designation_fr": "PURE CREATINE – 300 GR",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fad",
+      "designation_fr": "100% CREATINE MONOHYDRATE 300G",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fae",
+      "designation_fr": "GLUTAMINE 500G – REAL PHARM",
+      "sous_categorie_id": "21"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280ff",
+      "id": "21",
+      "designation_fr": "Glutamine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727faf",
+      "designation_fr": "XTEND BCAA 420G",
+      "sous_categorie_id": "16"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fb",
+      "id": "16",
+      "designation_fr": "Bcaa",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fb0",
+      "designation_fr": "ANIMAL PAK",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fb1",
+      "designation_fr": "MR X EAA – 360G V-Shape",
+      "sous_categorie_id": "20"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fe",
+      "id": "20",
+      "designation_fr": "EAA",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fb2",
+      "designation_fr": "CEINTURE DOS -GOLD’S GYM",
+      "sous_categorie_id": "46"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728116",
+      "id": "46",
+      "designation_fr": "Ceinture de Musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fb3",
+      "designation_fr": "GANT DE FITNESS",
+      "sous_categorie_id": "47"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728117",
+      "id": "47",
+      "designation_fr": "Gants de Musculation et Fitness",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fb4",
+      "designation_fr": "GANTS DE MUSCULATION",
+      "sous_categorie_id": "47"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728117",
+      "id": "47",
+      "designation_fr": "Gants de Musculation et Fitness",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fb5",
+      "designation_fr": "BANDES DE TIRAGE",
+      "sous_categorie_id": "45"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728115",
+      "id": "45",
+      "designation_fr": "Bandes de Soutien Musculaire",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fb6",
+      "designation_fr": "DIP BELT",
+      "sous_categorie_id": "46"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728116",
+      "id": "46",
+      "designation_fr": "Ceinture de Musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fb7",
+      "designation_fr": "BONDES DE POIGNET",
+      "sous_categorie_id": "45"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728115",
+      "id": "45",
+      "designation_fr": "Bandes de Soutien Musculaire",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fb8",
+      "designation_fr": "Gut Blaster Ab Slings",
+      "sous_categorie_id": "46"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728116",
+      "id": "46",
+      "designation_fr": "Ceinture de Musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fb9",
+      "designation_fr": "BOUTEILLE D'EAU  2.2 LITRES",
+      "sous_categorie_id": "48"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728118",
+      "id": "48",
+      "designation_fr": "Shakers et Bouteilles Sportives",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fba",
+      "designation_fr": "WHEY HD 1,9 KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fbb",
+      "designation_fr": "GOLD WHEY 2 KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fbc",
+      "designation_fr": "BEEF PROTEIN -1,8 KG",
+      "sous_categorie_id": "39"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810f",
+      "id": "39",
+      "designation_fr": "Protéine de bœuf",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fbd",
+      "designation_fr": "SERIOUS MASS – 5,45 KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fbe",
+      "designation_fr": "GOLD CREATINE – 300G",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fbf",
+      "designation_fr": "C4 – PRE WORKOUT – 195 G",
+      "sous_categorie_id": "42"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728112",
+      "id": "42",
+      "designation_fr": "Pré-workout",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fc0",
+      "designation_fr": "WHEY GOLD STANDARD – 908G",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fc1",
+      "designation_fr": "PURE CLA 1000 – 90 SOFTGELS",
+      "sous_categorie_id": "1"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f7",
+      "id": "1",
+      "designation_fr": "CLA",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fc2",
+      "designation_fr": "TRIBULUS BULGARIAN – 90CAPS",
+      "sous_categorie_id": "51"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811b",
+      "id": "51",
+      "designation_fr": "Tribulus",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fc3",
+      "designation_fr": "CLA + CARNITINE – 350G",
+      "sous_categorie_id": "1"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f7",
+      "id": "1",
+      "designation_fr": "CLA",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fc4",
+      "designation_fr": "SERIOUS MASS - 2,7 KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fc5",
+      "designation_fr": "100% WHEY GOLD STANDARD – 4.5KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fc6",
+      "designation_fr": "OMEGA 3-6-9 90 GÉLULES",
+      "sous_categorie_id": "26"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728103",
+      "id": "26",
+      "designation_fr": "Omega 3",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fc7",
+      "designation_fr": "ANIMAL CUTS – 42 SACHETS",
+      "sous_categorie_id": "33"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810a",
+      "id": "33",
+      "designation_fr": "Brûleurs de Graisse",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fc8",
+      "designation_fr": "PLATINUM FISH OIL -100 CAPS",
+      "sous_categorie_id": "26"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728103",
+      "id": "26",
+      "designation_fr": "Omega 3",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fc9",
+      "designation_fr": "ANIMAL CUTS – 42 DOSES",
+      "sous_categorie_id": "31"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728108",
+      "id": "31",
+      "designation_fr": "Fat Burner",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fca",
+      "designation_fr": "FISH OIL – 100 SOFTGELS",
+      "sous_categorie_id": "26"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728103",
+      "id": "26",
+      "designation_fr": "Omega 3",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fcb",
+      "designation_fr": "MASS GAINER ZERO - 7KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fcc",
+      "designation_fr": "MASS GAINER – 5KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fcd",
+      "designation_fr": "MASS GAINER 3KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fce",
+      "designation_fr": "LEVRO PUMP - 360GR",
+      "sous_categorie_id": "42"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728112",
+      "id": "42",
+      "designation_fr": "Pré-workout",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fcf",
+      "designation_fr": "GOLD ISO - 2KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fd0",
+      "designation_fr": "REAL WHEY 2 KG - HX NUTRITION",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fd1",
+      "designation_fr": "WHEY HD - 2,267 G",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fd2",
+      "designation_fr": "ISO 100 DYMATIZE – 2.3KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fd3",
+      "designation_fr": "BETA ALANINE 300 G SCENIT NUTRITION",
+      "sous_categorie_id": "30"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728107",
+      "id": "30",
+      "designation_fr": "Beta alanine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fd4",
+      "designation_fr": "ARGININE 210 GR OSTROVIT",
+      "sous_categorie_id": "23"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728101",
+      "id": "23",
+      "designation_fr": "L-arginine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fd5",
+      "designation_fr": "GH MAX 180 TABLETS",
+      "sous_categorie_id": "27"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728104",
+      "id": "27",
+      "designation_fr": "Boosters Hormonaux",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fd6",
+      "designation_fr": "ISO TESTO MR.X 1.8 KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fd7",
+      "designation_fr": "GAINER XTREME 5.44 KG",
+      "sous_categorie_id": "35"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810c",
+      "id": "35",
+      "designation_fr": "Gainers Riches en Protéines",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fd8",
+      "designation_fr": "ANIMAL PAK 44 SCOOPS POWDER",
+      "sous_categorie_id": "25"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728102",
+      "id": "25",
+      "designation_fr": "Mineraux",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fd9",
+      "designation_fr": "THE RIPPER 150 G JNX SPORTS",
+      "sous_categorie_id": "33"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810a",
+      "id": "33",
+      "designation_fr": "Brûleurs de Graisse",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fda",
+      "designation_fr": "THE CURSE SKULL SHAKER – 700ML",
+      "sous_categorie_id": "48"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728118",
+      "id": "48",
+      "designation_fr": "Shakers et Bouteilles Sportives",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fdb",
+      "designation_fr": "LIFTING STRAPS",
+      "sous_categorie_id": "45"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728115",
+      "id": "45",
+      "designation_fr": "Bandes de Soutien Musculaire",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fdc",
+      "designation_fr": "THE OMEN FAT BURNER – 100CAPS",
+      "sous_categorie_id": "31"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728108",
+      "id": "31",
+      "designation_fr": "Fat Burner",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fdd",
+      "designation_fr": "SMART SHAKER",
+      "sous_categorie_id": "48"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728118",
+      "id": "48",
+      "designation_fr": "Shakers et Bouteilles Sportives",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fde",
+      "designation_fr": "C4 ENERGY DRINK",
+      "sous_categorie_id": "42"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728112",
+      "id": "42",
+      "designation_fr": "Pré-workout",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fdf",
+      "designation_fr": "BONDE GENOUX",
+      "sous_categorie_id": "45"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728115",
+      "id": "45",
+      "designation_fr": "Bandes de Soutien Musculaire",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fe0",
+      "designation_fr": "MONSTER ENERGY DRINK",
+      "sous_categorie_id": "42"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728112",
+      "id": "42",
+      "designation_fr": "Pré-workout",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fe1",
+      "designation_fr": "ANIMAL PAK - 30 PACKS",
+      "sous_categorie_id": "25"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728102",
+      "id": "25",
+      "designation_fr": "Mineraux",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fe2",
+      "designation_fr": "HYDRA BCAA + 309 G",
+      "sous_categorie_id": "16"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fb",
+      "id": "16",
+      "designation_fr": "Bcaa",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fe3",
+      "designation_fr": "NATURAL STEROL 100 TABLETS",
+      "sous_categorie_id": "27"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728104",
+      "id": "27",
+      "designation_fr": "Boosters Hormonaux",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fe4",
+      "designation_fr": "AMINO TARGET XPLODE 275 G",
+      "sous_categorie_id": "14"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fa",
+      "id": "14",
+      "designation_fr": "Acides Aminés",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fe5",
+      "designation_fr": "AMINO EAA 300 G",
+      "sous_categorie_id": "20"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fe",
+      "id": "20",
+      "designation_fr": "EAA",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fe6",
+      "designation_fr": "AMINO EAA ULTRA SPEED 300 G",
+      "sous_categorie_id": "20"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fe",
+      "id": "20",
+      "designation_fr": "EAA",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fe7",
+      "designation_fr": "BETA-ALANINE POWDER 180G",
+      "sous_categorie_id": "30"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728107",
+      "id": "30",
+      "designation_fr": "Beta alanine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fe8",
+      "designation_fr": "CITRULLINE SYNERGY - 240 G",
+      "sous_categorie_id": "18"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fc",
+      "id": "18",
+      "designation_fr": "Citrulline",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fe9",
+      "designation_fr": "CARBO ONE - 1 KG",
+      "sous_categorie_id": "54"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811d",
+      "id": "54",
+      "designation_fr": "Carbohydrates",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fea",
+      "designation_fr": "CARBO 1KG - OSTROVIT",
+      "sous_categorie_id": "54"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811d",
+      "id": "54",
+      "designation_fr": "Carbohydrates",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727feb",
+      "designation_fr": "ANIMAL OMEGA – 30PACKS",
+      "sous_categorie_id": "26"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728103",
+      "id": "26",
+      "designation_fr": "Omega 3",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fec",
+      "designation_fr": "VITAMIN C 1000 90CAPS",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fed",
+      "designation_fr": "CREATINE MONOHYDRATE 300G - ULTIMATE NUTRITION",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fee",
+      "designation_fr": "Collagen + Vitamin C 400g",
+      "sous_categorie_id": "53"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811c",
+      "id": "53",
+      "designation_fr": "Collagene",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fef",
+      "designation_fr": "LIPO 6 BLACK INTENSE – 60CAPS",
+      "sous_categorie_id": "31"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728108",
+      "id": "31",
+      "designation_fr": "Fat Burner",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ff0",
+      "designation_fr": "OPTI-MEN - 150TABS",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ff1",
+      "designation_fr": "OPTI-MEN - 90TABS",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ff2",
+      "designation_fr": "OPTI-WOMEN – 60CAPS",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ff3",
+      "designation_fr": "OPTI-WOMEN – 120CAPS",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ff4",
+      "designation_fr": "ARGININE & PYROGLUTAMATE & LYSINE – 100CAPS",
+      "sous_categorie_id": "23"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728101",
+      "id": "23",
+      "designation_fr": "L-arginine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ff5",
+      "designation_fr": "PROSTAR® 100% CASEIN PROTEIN – 907G",
+      "sous_categorie_id": "37"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810d",
+      "id": "37",
+      "designation_fr": "Protéine de Caséine",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ff6",
+      "designation_fr": "ANIMAL WHEY ISOLATE LOADED – 2.27KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ff7",
+      "designation_fr": "GOLD STANDARD GAINER – 4.6KG",
+      "sous_categorie_id": "35"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810c",
+      "id": "35",
+      "designation_fr": "Gainers Riches en Protéines",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ff8",
+      "designation_fr": "ANIMAL CUTS – 42DOSES",
+      "sous_categorie_id": "31"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728108",
+      "id": "31",
+      "designation_fr": "Fat Burner",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ff9",
+      "designation_fr": "ANIMAL STAK – 23PACKS",
+      "sous_categorie_id": "27"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728104",
+      "id": "27",
+      "designation_fr": "Boosters Hormonaux",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ffa",
+      "designation_fr": "Tapis Roulant - JX FITNESS",
+      "sous_categorie_id": "56"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811f",
+      "id": "56",
+      "designation_fr": "Équipement Cardio Fitness",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ffb",
+      "designation_fr": "Recumbent Exercise Bike",
+      "sous_categorie_id": "56"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811f",
+      "id": "56",
+      "designation_fr": "Équipement Cardio Fitness",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ffc",
+      "designation_fr": "Elliptical Trainer",
+      "sous_categorie_id": "56"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811f",
+      "id": "56",
+      "designation_fr": "Équipement Cardio Fitness",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ffd",
+      "designation_fr": "Exercise Spin Bike",
+      "sous_categorie_id": "56"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811f",
+      "id": "56",
+      "designation_fr": "Équipement Cardio Fitness",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727ffe",
+      "designation_fr": "WHEY CORE 2KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727fff",
+      "designation_fr": "GAINER MAX 3,8 KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728000",
+      "designation_fr": "GAINER MAX 7KG",
+      "sous_categorie_id": "35"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810c",
+      "id": "35",
+      "designation_fr": "Gainers Riches en Protéines",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728001",
+      "designation_fr": "MASS GAINER 1,5 KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728002",
+      "designation_fr": "Vita X 90 Tabs Multivitamines",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728003",
+      "designation_fr": "100 ISOLATE",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728004",
+      "designation_fr": "PACK SECHE EXTREME",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728005",
+      "designation_fr": "CREA-M  500 GR PROACTIVE",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728006",
+      "designation_fr": "TXT10 HX NUTRITION",
+      "sous_categorie_id": "27"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728104",
+      "id": "27",
+      "designation_fr": "Boosters Hormonaux",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728007",
+      "designation_fr": "CREA CORE 250G PROCELL",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728008",
+      "designation_fr": "MASSIVE GAINER 7KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728009",
+      "designation_fr": "CREATINE MONOHYDRATE 500GR- HX NUTRITION",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472800a",
+      "designation_fr": "OMEGA 3 - 90 SOFTGELS - ULTIMATE NUTRITION",
+      "sous_categorie_id": "26"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728103",
+      "id": "26",
+      "designation_fr": "Omega 3",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472800b",
+      "designation_fr": "IRON MASS 20 IHS – 7KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472800c",
+      "designation_fr": "WHEY 100 TREC – 2KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472800d",
+      "designation_fr": "ISO WHEY ZERO 2KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472800e",
+      "designation_fr": "CREATINE MONOHYDRATE 500G - V-SHAPE SUPPS",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472800f",
+      "designation_fr": "Tapis roulant professionnel - MND Fitness",
+      "sous_categorie_id": "56"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811f",
+      "id": "56",
+      "designation_fr": "Équipement Cardio Fitness",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728010",
+      "designation_fr": "Rameur professionnel - MND FITNESS",
+      "sous_categorie_id": "56"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811f",
+      "id": "56",
+      "designation_fr": "Équipement Cardio Fitness",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728011",
+      "designation_fr": "vélo à résistance magnétique MND FITNESS",
+      "sous_categorie_id": "56"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811f",
+      "id": "56",
+      "designation_fr": "Équipement Cardio Fitness",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728012",
+      "designation_fr": "Multi Degree Olympic Bench - MND FITNESS",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728013",
+      "designation_fr": "Layers Dumbbell Rack - MND FITNESS",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728014",
+      "designation_fr": "Seated Preacher Curl - MND FITNESS",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728015",
+      "designation_fr": "Multi-Functional Smith Machine - MND FITNESS",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728016",
+      "designation_fr": "CREATINE MONOHYDRATE 500G - DR SUPPLEMENTS SPORTS",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728017",
+      "designation_fr": "PULLDOWN MACHINE - MND FITNESS",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728018",
+      "designation_fr": "TRACTION LONGUE MACHINE  - MND FITNESS",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728019",
+      "designation_fr": "CHEST PRESSE INCLINEE MACHINE - MND FITNESS",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472801a",
+      "designation_fr": "FLAT BENCH - MND FITNESS",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472801b",
+      "designation_fr": "MULTI REGLABLE BENCH- MND FITNESS",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472801c",
+      "designation_fr": "Machine à câble d'entraînement fonctionnel",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472801d",
+      "designation_fr": "Leg Press Machine",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472801e",
+      "designation_fr": "Smith Machine",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472801f",
+      "designation_fr": "Rameur assis Machine",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728020",
+      "designation_fr": "Poulie Machine",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728021",
+      "designation_fr": "Machine d'extension des jambes",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728022",
+      "designation_fr": "Machine à squat",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728023",
+      "designation_fr": "Ring de Boxe",
+      "sous_categorie_id": "56"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811f",
+      "id": "56",
+      "designation_fr": "Équipement Cardio Fitness",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728024",
+      "designation_fr": "8 Station Multi Gym",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728025",
+      "designation_fr": "L-CARNITINE 2000 – 355ML",
+      "sous_categorie_id": "32"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728109",
+      "id": "32",
+      "designation_fr": "L-Carnitine",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728026",
+      "designation_fr": "Rameur assis  musculation",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728027",
+      "designation_fr": "Presse de musculation base à terre, siège incliné",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728028",
+      "designation_fr": "Presse épaules",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728029",
+      "designation_fr": "Presse cuisse",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472802a",
+      "designation_fr": "Presse à biceps",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472802b",
+      "designation_fr": "Machine Poulie",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472802c",
+      "designation_fr": "Machine Presse de musculation base à terre, siège incliné",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472802d",
+      "designation_fr": "MASS XXL – 6KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472802e",
+      "designation_fr": "Machine à rangées assise à chargement par plaques",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472802f",
+      "designation_fr": "Machine de flexion des biceps à chargement par plaques",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728030",
+      "designation_fr": "Curl des jambes à genoux chargé par plaques",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728031",
+      "designation_fr": "Pulldown large à chargement par plaques",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728032",
+      "designation_fr": "CREA PLUS - 300G - IHS",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728033",
+      "designation_fr": "GOLD POWER CORE MULTIVITAMIN 120 tablets",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728034",
+      "designation_fr": "GOLD L-CARNITINE 3000  500ML",
+      "sous_categorie_id": "32"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728109",
+      "id": "32",
+      "designation_fr": "L-Carnitine",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728035",
+      "designation_fr": "Machine à cuisses intérieure et extérieure sélective",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728036",
+      "designation_fr": "Machine d'extension arrière sélective",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728037",
+      "designation_fr": "Station de traction et de trempage sélective",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728038",
+      "designation_fr": "Machine à cuisses intérieure et extérieure sélective - jx fitness",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728039",
+      "designation_fr": "Curl des jambes sujettes sélectionné",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472803a",
+      "designation_fr": "Machine à mouches / papillons Pec sélective",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472803b",
+      "designation_fr": "Machine de curl biceps sélective",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472803c",
+      "designation_fr": "Machine de traction latérale sélective",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472803d",
+      "designation_fr": "Banc incliné olympique",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472803e",
+      "designation_fr": "Banc plat olympique",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472803f",
+      "designation_fr": "Banc de déclin olympique",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728040",
+      "designation_fr": "Boucle de prédicateur",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728041",
+      "designation_fr": "Banc d'épaule olympique",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728042",
+      "designation_fr": "Banc d'extension de dossier",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728043",
+      "designation_fr": "Banc multi-réglable",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728044",
+      "designation_fr": "Banc utilitaire",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728045",
+      "designation_fr": "Banc latéral",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728046",
+      "designation_fr": "Banc abdominal réglable",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728047",
+      "designation_fr": "Tour de puissance menton immersion/élévation des jambes",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728048",
+      "designation_fr": "Support d'haltères",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728049",
+      "designation_fr": "Machine a mollet jx fitness",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472804a",
+      "designation_fr": "ISO HD – 2.2KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472804b",
+      "designation_fr": "SUPREME WHEY IHS – 2KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472804c",
+      "designation_fr": "L-CARNITINE 3000 - 500 ML LIQUID",
+      "sous_categorie_id": "32"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728109",
+      "id": "32",
+      "designation_fr": "L-Carnitine",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472804d",
+      "designation_fr": "CREATINE MONOHYDRATE - 300G - OSTROVIT",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472804e",
+      "designation_fr": "EAA 400 G - OSTROVIT",
+      "sous_categorie_id": "20"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fe",
+      "id": "20",
+      "designation_fr": "EAA",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472804f",
+      "designation_fr": "TRIBULUS TERRESTRIS 90 - 60 CAPS - OSTROVIT",
+      "sous_categorie_id": "51"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811b",
+      "id": "51",
+      "designation_fr": "Tribulus",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728050",
+      "designation_fr": "CARBO – 1000G - OSTROVIT",
+      "sous_categorie_id": "54"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811d",
+      "id": "54",
+      "designation_fr": "Carbohydrates",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728051",
+      "designation_fr": "100% WHEY PROTEIN 2KG - OSTROVIT",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728052",
+      "designation_fr": "KOLAGEN+ 60 CAPS  REAL PHARM",
+      "sous_categorie_id": "40"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728110",
+      "id": "40",
+      "designation_fr": "Protéines pour cheveux",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728053",
+      "designation_fr": "ISO SENSATION 93 – 2.27KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728054",
+      "designation_fr": "disque olympique 2 5 kg",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728055",
+      "designation_fr": "disque olympique 5 kg",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728056",
+      "designation_fr": "disque olympique 15 kg",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728057",
+      "designation_fr": "barre olympique 2.2 cm",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728058",
+      "designation_fr": "disque olympique 10 kg",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728059",
+      "designation_fr": "disque olympique 25 kg",
+      "sous_categorie_id": "55"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811e",
+      "id": "55",
+      "designation_fr": "Matériel de musculation",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472805a",
+      "designation_fr": "SHOW TIME V3.0 – 360G",
+      "sous_categorie_id": "42"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728112",
+      "id": "42",
+      "designation_fr": "Pré-workout",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472805b",
+      "designation_fr": "BCAA PLUS – 400G",
+      "sous_categorie_id": "16"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fb",
+      "id": "16",
+      "designation_fr": "Bcaa",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472805c",
+      "designation_fr": "AAKG PLUS – 120CAPS",
+      "sous_categorie_id": "23"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728101",
+      "id": "23",
+      "designation_fr": "L-arginine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472805d",
+      "designation_fr": "ISOTONIC SPORT 400G",
+      "sous_categorie_id": "43"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728113",
+      "id": "43",
+      "designation_fr": "Pendant l'entraînement",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472805e",
+      "designation_fr": "100% CREATINE MONOHYDRATE 300G - BIOTECH USA",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472805f",
+      "designation_fr": "CREATINE REAL PHARM | 300G",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728060",
+      "designation_fr": "MEGA OMEGA 3 90 CAPS - BIOTECH",
+      "sous_categorie_id": "26"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728103",
+      "id": "26",
+      "designation_fr": "Omega 3",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728061",
+      "designation_fr": "ZMA  -  BIOTECH USA",
+      "sous_categorie_id": "29"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728106",
+      "id": "29",
+      "designation_fr": "ZMA",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728062",
+      "designation_fr": "MULTIVITAMIN FOR MEN 60 TABLETS - BIOTECH USA",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728063",
+      "designation_fr": "PURE WHEY IHS – 2KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728064",
+      "designation_fr": "ISO SENSATION 93 – 910G",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728065",
+      "designation_fr": "One - A - Day - BIOTECH USA",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728066",
+      "designation_fr": "ASHWAGANDHA - 60 GÉLULES | BIOTECH USA",
+      "sous_categorie_id": "50"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811a",
+      "id": "50",
+      "designation_fr": "Ashwagandha",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728067",
+      "designation_fr": "TRIBULUS MAXIMUS  90TABS - BIOTECH USA",
+      "sous_categorie_id": "51"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811b",
+      "id": "51",
+      "designation_fr": "Tribulus",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728068",
+      "designation_fr": "TRIBULUS 60CAPS - REAL PHARM",
+      "sous_categorie_id": "51"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811b",
+      "id": "51",
+      "designation_fr": "Tribulus",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728069",
+      "designation_fr": "LIPO 6 BLACK ULTRA CONCENTRATE – 60CAPS",
+      "sous_categorie_id": "31"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728108",
+      "id": "31",
+      "designation_fr": "Fat Burner",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472806a",
+      "designation_fr": "ANABOLIC L-CARNITINE 3000 MG - 500 ml",
+      "sous_categorie_id": "32"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728109",
+      "id": "32",
+      "designation_fr": "L-Carnitine",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472806b",
+      "designation_fr": "GOLD L-ARGININE 1000 120 tablets",
+      "sous_categorie_id": "23"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728101",
+      "id": "23",
+      "designation_fr": "L-arginine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472806c",
+      "designation_fr": "PSYCHOTIC  PRE-WORKOUT",
+      "sous_categorie_id": "42"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728112",
+      "id": "42",
+      "designation_fr": "Pré-workout",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472806d",
+      "designation_fr": "ZINC + CHELATE - BIOTECH USA",
+      "sous_categorie_id": "57"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728120",
+      "id": "57",
+      "designation_fr": "Zinc",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472806e",
+      "designation_fr": "GSN - PURE WHEY | 2kg",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472806f",
+      "designation_fr": "GSN - CREATINE MONOHYDRATE | 200g",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728070",
+      "designation_fr": "GSN - BIG MASS GAINER | 3KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728071",
+      "designation_fr": "GSN - ISOLATE PRO | 2KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728072",
+      "designation_fr": "GSN - NITRO WHEY | 2kg",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728073",
+      "designation_fr": "GSN - CREATINE MONOHYDRATE | 500g",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728074",
+      "designation_fr": "L-CARNITINE IHS – 90CAPS",
+      "sous_categorie_id": "32"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728109",
+      "id": "32",
+      "designation_fr": "L-Carnitine",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728075",
+      "designation_fr": "NITRO TECH RIPPED – 1.8 KG MUSCLETECH",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728076",
+      "designation_fr": "ZMA – 60 Capsules HX NUTRITION",
+      "sous_categorie_id": "29"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728106",
+      "id": "29",
+      "designation_fr": "ZMA",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728077",
+      "designation_fr": "TRIBULUS 90 CAPS - HX NUTRITION",
+      "sous_categorie_id": "51"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811b",
+      "id": "51",
+      "designation_fr": "Tribulus",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728078",
+      "designation_fr": "BOUTEILLE D'EAU 1.8 LITRES",
+      "sous_categorie_id": "48"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728118",
+      "id": "48",
+      "designation_fr": "Shakers et Bouteilles Sportives",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728079",
+      "designation_fr": "PROTEIN SHAKER - 450ML - SPORT LIFE",
+      "sous_categorie_id": "48"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728118",
+      "id": "48",
+      "designation_fr": "Shakers et Bouteilles Sportives",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472807a",
+      "designation_fr": "BOUTEILLE EN PLASTIQUE 600ML SPORTLIFE",
+      "sous_categorie_id": "48"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728118",
+      "id": "48",
+      "designation_fr": "Shakers et Bouteilles Sportives",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472807b",
+      "designation_fr": "COMPACT WHEY GOLD PROTEIN 1KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472807c",
+      "designation_fr": "COMPACT WHEY GOLD PROTEIN 2KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472807d",
+      "designation_fr": "COMPACT WHEY ISOLATE 1.8KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472807e",
+      "designation_fr": "CITRULLINE MALATE 210G OSTROVIT",
+      "sous_categorie_id": "18"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fc",
+      "id": "18",
+      "designation_fr": "Citrulline",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472807f",
+      "designation_fr": "ZMA ADVANCED 60CAPS OSTROVIT",
+      "sous_categorie_id": "29"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728106",
+      "id": "29",
+      "designation_fr": "ZMA",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728080",
+      "designation_fr": "SHAKER HX NUTRITION – 700ML",
+      "sous_categorie_id": "48"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728118",
+      "id": "48",
+      "designation_fr": "Shakers et Bouteilles Sportives",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728081",
+      "designation_fr": "SHAKER UNIVERSAL NUTRITION – 700ML",
+      "sous_categorie_id": "48"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728118",
+      "id": "48",
+      "designation_fr": "Shakers et Bouteilles Sportives",
+      "categorie_id": "6"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728082",
+      "designation_fr": "BIG RAMY LABS - BIG WHEY 2KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728083",
+      "designation_fr": "BIG RAMY LABS - ISO BIG 2KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728084",
+      "designation_fr": "BIG RAMY LABS - CREATINE 300G",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728085",
+      "designation_fr": "BIG RAMY LABS - BCAA 300G",
+      "sous_categorie_id": "16"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fb",
+      "id": "16",
+      "designation_fr": "Bcaa",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728086",
+      "designation_fr": "BIG RAMY LABS - BEEF MASS GAINER 4.9KG",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728087",
+      "designation_fr": "MR X IGF-1 ANABOLIC MASS",
+      "sous_categorie_id": "35"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810c",
+      "id": "35",
+      "designation_fr": "Gainers Riches en Protéines",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728088",
+      "designation_fr": "CARBOX 1KG - BioTechUSA",
+      "sous_categorie_id": "54"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472811d",
+      "id": "54",
+      "designation_fr": "Carbohydrates",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728089",
+      "designation_fr": "BOOGIEMAN 300 G - TREC NUTRITION",
+      "sous_categorie_id": "42"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728112",
+      "id": "42",
+      "designation_fr": "Pré-workout",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472808a",
+      "designation_fr": "ISO PLUS  700 G - Olimp Sport Nutrition",
+      "sous_categorie_id": "43"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728113",
+      "id": "43",
+      "designation_fr": "Pendant l'entraînement",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472808b",
+      "designation_fr": "BCAA + GLUTAMINE 500G - QUAMTRAX",
+      "sous_categorie_id": "16"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fb",
+      "id": "16",
+      "designation_fr": "Bcaa",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472808c",
+      "designation_fr": "BCAA ZERO 360G - BIOTECH USA",
+      "sous_categorie_id": "16"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fb",
+      "id": "16",
+      "designation_fr": "Bcaa",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472808d",
+      "designation_fr": "L-ARGININE 300G - BIOTECH USA",
+      "sous_categorie_id": "23"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728101",
+      "id": "23",
+      "designation_fr": "L-arginine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472808e",
+      "designation_fr": "BCAA ULTRA SPEED - TREC NUTRITION",
+      "sous_categorie_id": "16"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fb",
+      "id": "16",
+      "designation_fr": "Bcaa",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472808f",
+      "designation_fr": "ISO WHEY IHS – 2KG",
+      "sous_categorie_id": "8"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f9",
+      "id": "8",
+      "designation_fr": "Isolat de Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728090",
+      "designation_fr": "ANABOLIC CREATINE 300G - KEVIN LEVRONE",
+      "sous_categorie_id": "19"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280fd",
+      "id": "19",
+      "designation_fr": "Créatine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728091",
+      "designation_fr": "PREMIUM WHEY GOLD 2KG -  VICTOR MARTINEZ",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728092",
+      "designation_fr": "PREMIUM V-BULK 5,5KG - VICTOR MARTINEZ",
+      "sous_categorie_id": "35"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810c",
+      "id": "35",
+      "designation_fr": "Gainers Riches en Protéines",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728093",
+      "designation_fr": "100% WHEY PROTEIN – 2.27KG - CHALLENGER NUTRITION",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728094",
+      "designation_fr": "THUNDER GAINER 5.4KG - CHALLENGER NUTRITION",
+      "sous_categorie_id": "35"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810c",
+      "id": "35",
+      "designation_fr": "Gainers Riches en Protéines",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728095",
+      "designation_fr": "GSN - BIG MASS GAINER | 6KG",
+      "sous_categorie_id": "35"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810c",
+      "id": "35",
+      "designation_fr": "Gainers Riches en Protéines",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728096",
+      "designation_fr": "TST + GH - BioTech USA",
+      "sous_categorie_id": "27"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728104",
+      "id": "27",
+      "designation_fr": "Boosters Hormonaux",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728097",
+      "designation_fr": "VITAMIN FORTE 120 CAPS  - OSTROVIT",
+      "sous_categorie_id": "28"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728105",
+      "id": "28",
+      "designation_fr": "Vitamines",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728098",
+      "designation_fr": "GLUTAMINE 300G OSTROVIT",
+      "sous_categorie_id": "21"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280ff",
+      "id": "21",
+      "designation_fr": "Glutamine",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4728099",
+      "designation_fr": "MASS GAINER 7KG - WARRIORS",
+      "sous_categorie_id": "34"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf472810b",
+      "id": "34",
+      "designation_fr": "Gainers Haute Énergie",
+      "categorie_id": "3"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472809a",
+      "designation_fr": "BIOTINE 60 CAPS - REAL PHARM",
+      "sous_categorie_id": "40"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728110",
+      "id": "40",
+      "designation_fr": "Protéines pour cheveux",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472809b",
+      "designation_fr": "HYDROXYCUT HARDCORE SUPER ELITE 120 CAPS",
+      "sous_categorie_id": "31"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728108",
+      "id": "31",
+      "designation_fr": "Fat Burner",
+      "categorie_id": "2"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472809c",
+      "designation_fr": "VAPOR X5 PRE WORKOUT - MUSCLETECH",
+      "sous_categorie_id": "42"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728112",
+      "id": "42",
+      "designation_fr": "Pré-workout",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472809d",
+      "designation_fr": "PRE WORKOUT ADVANCED 420G GOLD STANDARD",
+      "sous_categorie_id": "42"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728112",
+      "id": "42",
+      "designation_fr": "Pré-workout",
+      "categorie_id": "5"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472809e",
+      "designation_fr": "WHEY PRO WARRIORS | 2KG",
+      "sous_categorie_id": "7"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf47280f8",
+      "id": "7",
+      "designation_fr": "Protéine Whey",
+      "categorie_id": "4"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf472809f",
+      "designation_fr": "TEST HD ÉLITE 120 CAPS",
+      "sous_categorie_id": "27"
+    },
+    "subcategory": {
+      "_id": "6810a12ececd66abf4728104",
+      "id": "27",
+      "designation_fr": "Boosters Hormonaux",
+      "categorie_id": "1"
+    },
+    "category": null,
+    "linkage": "Missing category"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f66",
+      "designation_fr": "Multi Vit+ 120 Caps - Scenit Nutrition",
+      "sous_categorie_id": null
+    },
+    "subcategory": null,
+    "category": null,
+    "linkage": "Missing subcategory"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f69",
+      "designation_fr": "PLATINUM MULTIVITAMIN – 90 TABS",
+      "sous_categorie_id": null
+    },
+    "subcategory": null,
+    "category": null,
+    "linkage": "Missing subcategory"
+  },
+  {
+    "product": {
+      "_id": "68109e5ececd66abf4727f6b",
+      "designation_fr": "T 9 TESTO BOOSTER 120 CAPS",
+      "sous_categorie_id": null
+    },
+    "subcategory": null,
+    "category": null,
+    "linkage": "Missing subcategory"
+  }
+]

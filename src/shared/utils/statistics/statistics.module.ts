@@ -1,6 +1,6 @@
 // src/shared/utils/statistics/statistics.module.ts
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule, getConnectionToken } from '@nestjs/mongoose';
 import { Vente, VenteSchema } from '../../../models/vente.schema';
 import { StatisticsService } from './statistics.service';
 
@@ -8,7 +8,13 @@ import { StatisticsService } from './statistics.service';
   imports: [
     MongooseModule.forFeature([{ name: Vente.name, schema: VenteSchema }])
   ],
-  providers: [StatisticsService],
+  providers: [
+    StatisticsService,
+    {
+      provide: 'DATABASE_CONNECTION',
+      useExisting: getConnectionToken(),
+    },
+  ],
   exports: [StatisticsService]
 })
 export class StatisticsModule {}

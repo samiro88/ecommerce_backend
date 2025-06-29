@@ -84,26 +84,11 @@ export class AnalyticsController {
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string
   ) {
-    const realData = await this.statisticsService.getTotalRevenueOverTime(
+    return await this.statisticsService.getTotalRevenueOverTime(
       timeFrame,
       startDate ? new Date(startDate) : null,
       endDate ? new Date(endDate) : null
     );
-
-    // Always fallback if realData is empty or not an array
-    if (!Array.isArray(realData) || realData.length === 0) {
-      return [
-        { label: "Jan", totalRevenue: 12000, orderCount: 300 },
-        { label: "Feb", totalRevenue: 15000, orderCount: 500 },
-        { label: "Mar", totalRevenue: 14000, orderCount: 700 },
-        { label: "Apr", totalRevenue: 17000, orderCount: 900 },
-        { label: "May", totalRevenue: 20000, orderCount: 1200 },
-        { label: "Jun", totalRevenue: 18000, orderCount: 1500 },
-        { label: "Jul", totalRevenue: 22000, orderCount: 1800 },
-      ];
-    }
-
-    return realData;
   }
 
   @Get('revenue/year-comparison')
@@ -119,7 +104,6 @@ export class AnalyticsController {
   @ApiOperation({ summary: 'Get year-over-year revenue comparison' })
   async getYearOverYearComparisonAlt() {
     return this.statisticsService.getYearOverYearComparison();
-    
   }
 
   // --- Category & Promo Analytics ---
