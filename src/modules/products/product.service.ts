@@ -121,7 +121,29 @@ export class ProductsService {
       const products = await this.productModel.find({ 
         categoryId: category,
         publier: "1"
-      }).exec();
+      })
+      .select({
+      designation_fr: 1, // <-- Add this
+      designation: 1,    // <-- And this (for fallback)
+      cover: 1,
+      slug: 1,
+      smallDescription: 1,
+      prix: 1,
+      promo: 1,
+      "mainImage.url": 1,
+      "images.url": 1,
+      inStock: 1,
+      features: 1,
+      variant: 1,
+      nutritionalValues: 1,
+      category: 1,
+      subCategory: 1,
+      brand: 1,
+      rate: 1,
+      reviews: 1
+    })
+      
+      .exec();
       
       if (!products || products.length === 0) {
         throw new HttpException(
@@ -1018,6 +1040,8 @@ if (brand) {
       })
       .select({
         designation: 1,
+          designation_fr: 1, // <-- ADD THIS
+          cover: 1,          // <-- ADD THIS
         slug: 1,
         smallDescription: 1,
         prix: 1,
