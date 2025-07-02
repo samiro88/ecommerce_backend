@@ -20,7 +20,13 @@ export class InformationService {
   }
 
   getInformation() {
-    return { message: 'Information retrieved successfully' };
+    // Replace with your actual company info or fetch from DB if needed
+    return {
+      phone_1: "+216 27 612 500",
+      phone_2: "+216 73 200 169",
+      adresse_fr: "Rue Ribat, 4000 Sousse Tunisie",
+      // Add other fields as needed
+    };
   }
 
   getMaterielImageSection() {
