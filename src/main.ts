@@ -14,11 +14,17 @@ async function bootstrap() {
   // ======================
   // CORS Configuration
   // ======================
+  function parseOrigins(origins: string | undefined) {
+    return origins ? origins.split(",").map(o => o.trim()) : [];
+  }
+
+  const corsOrigins = [
+    ...parseOrigins(configService.get('CORSADMIN')),
+    ...parseOrigins(configService.get('CORSSTORE')),
+  ].filter(Boolean);
+
   const corsOptions = {
-    origin: [
-      configService.get('CORSADMIN'),
-      configService.get('CORSSTORE'),
-    ],
+    origin: corsOrigins,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
