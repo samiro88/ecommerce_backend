@@ -62,7 +62,7 @@ async function bootstrap() {
     await app.listen(PORT);
     console.log(`🚀 Server running in ${NODE_ENV} mode on port ${PORT}`);
   } catch (error) {
-    console.error('❌ Error', error);
+    console.error('Server Error', error);
     process.exit(1);
   }
 }

@@ -167,10 +167,35 @@ async getStoreNewArrivals() {
   async getProductsWithMilleurVente() {
     try {
       const result = await this.productsService.getProductsWithMilleurVente();
+      // Normalize each product to match the frontend's expectations
+      const normalizedProducts = result.data.map((p) => ({
+        id: p.id || p._id,
+        _id: p._id,
+        title: p.title || p.designation_fr || p.designation || "",
+        designation: p.designation || "",
+        designation_fr: p.designation_fr || "",
+        price: p.price ?? p.prix ?? 0,
+        discountedPrice: p.discountedPrice ?? p.promo ?? p.promo_ht ?? p.price ?? p.prix ?? 0,
+        oldPrice: p.oldPrice ?? p.prix_ht ?? p.promo ?? 0,
+        imgs: {
+          thumbnails: p.images?.map((img) => img.url) || (p.mainImage?.url ? [p.mainImage.url] : []),
+          previews: p.images?.map((img) => img.url) || (p.mainImage?.url ? [p.mainImage.url] : []),
+        },
+        mainImage: p.mainImage || { url: p.cover || "" },
+        cover: p.cover || p.mainImage?.url || "",
+        inStock: p.inStock ?? (p.rupture === "0" ? true : false),
+        reviews: p.reviews || [],
+        features: p.features || [],
+        subCategory: p.subCategory || [],
+        slug: p.slug || "",
+        isBestSeller: true,
+        isNewProduct: false,
+        // Add any other fields your frontend expects here
+      }));
       return {
         success: true,
-        count: result.data.length,
-        products: result.data,
+        count: normalizedProducts.length,
+        products: normalizedProducts,
       };
     } catch (error) {
       throw new HttpException(
