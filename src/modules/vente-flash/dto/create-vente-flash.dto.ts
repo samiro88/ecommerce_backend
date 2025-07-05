@@ -1,33 +1,33 @@
-import { IsOptional, IsString, IsNotEmpty } from 'class-validator';
+import { IsOptional, IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateVenteFlashDto {
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  id: string; // "59"
-
-  @IsString()
-  @IsNotEmpty()
-  designation_fr: string; // "Parapharmacie en ligne..."
-
-  @IsString()
-  @IsOptional()
-  cover?: string; // "articles/February2025/AL1Yaro8oxaQ0vW8RE4T.webp"
-
-  @IsString()
-  @IsOptional()
-  description?: string; // HTML content
-
-  @IsString()
-  @IsOptional()
-  publier?: string = "1"; // Default to "1" (published)
-
-  @IsString()
-  @IsOptional()
-  meta_description_fr?: string | null;
+  id: number;
 
   @IsString()
   @IsNotEmpty()
-  slug: string; // "parapharmacie-en-ligne..."
+  slug: string;
+
+  @IsString()
+  @IsNotEmpty()
+  designation_fr: string;
+
+  @IsString()
+  @IsOptional()
+  cover?: string;
+
+  @IsString()
+  @IsOptional()
+  new_product?: string;
+
+  @IsString()
+  @IsOptional()
+  best_seller?: string;
+
+  @IsNumber()
+  @IsOptional()
+  note?: number;
 
   @IsString()
   @IsOptional()
@@ -37,7 +37,19 @@ export class CreateVenteFlashDto {
   @IsOptional()
   description_cover?: string | null;
 
-  @IsString({ each: true })
+  @IsNumber()
+  @IsNotEmpty()
+  prix: number;
+
+  @IsString()
   @IsOptional()
-  products?: string[]; // Array of product IDs ("12", etc.)
+  pack?: string;
+
+  @IsNumber()
+  @IsOptional()
+  promo?: number;
+
+  @IsString()
+  @IsOptional()
+  promo_expiration_date?: string;
 }

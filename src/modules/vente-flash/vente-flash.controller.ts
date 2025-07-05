@@ -22,11 +22,6 @@ export class VenteFlashController {
     return this.venteFlashService.findOne(id);
   }
 
-  @Get(':id/products')
-  getProducts(@Param('id') id: string) {
-    return this.venteFlashService.getFlashSaleProducts(id);
-  }
-
   @Put(':id')
   update(@Param('id') id: string, @Body() updateVenteFlashDto: UpdateVenteFlashDto) {
     return this.venteFlashService.update(id, updateVenteFlashDto);

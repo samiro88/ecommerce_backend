@@ -1,10 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 
 @Schema({ collection: 'VenteFlash' })
 export class VenteFlash extends Document {
   @Prop({ required: true })
-  declare id: string;
+  declare id: number;
+
+  @Prop({ required: true })
+  slug: string;
 
   @Prop({ required: true })
   designation_fr: string;
@@ -13,22 +16,13 @@ export class VenteFlash extends Document {
   cover: string;
 
   @Prop()
-  description: string;
-
-  @Prop({ default: '1' })
-  publier: string;
-
-  @Prop({ type: Date })
-  created_at: Date;
-
-  @Prop({ type: Date })
-  updated_at: Date;
+  new_product: string;
 
   @Prop()
-  meta_description_fr: string;
+  best_seller: string;
 
-  @Prop({ required: true })
-  slug: string;
+  @Prop()
+  note: Number;
 
   @Prop()
   alt_cover: string;
@@ -37,26 +31,16 @@ export class VenteFlash extends Document {
   description_cover: string;
 
   @Prop()
-  meta: string;
+  prix: Number;
 
   @Prop()
-  content_seo: string;
+  pack: string;
 
   @Prop()
-  review: string;
+  promo: Number;
 
   @Prop()
-  aggregateRating: string;
-
-  @Prop({ type: Date })
-  endTime: Date;
-
-  @Prop()
-  discount: number;
-
-  // ADD THIS FIELD:
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Product' }], default: [] })
-  products: Types.ObjectId[];
+  promo_expiration_date: string;
 }
 
 export const VenteFlashSchema = SchemaFactory.createForClass(VenteFlash);
