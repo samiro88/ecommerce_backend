@@ -1329,14 +1329,13 @@ async getPromotions() {
 }
 
 async recommendProduct(exclude: string[]) {
-  const filter: any = { publier: "1" };
-  if (exclude && exclude.length > 0) {
-    filter._id = { $nin: exclude };
+  // Try to find a product not in the exclude list
+  let product = await this.productModel.findOne({ _id: { $nin: exclude } });
+  if (!product) {
+    // If all products are excluded, just return any product (fallback)
+    product = await this.productModel.findOne();
   }
-  const products = await this.productModel.find(filter);
-  if (!products.length) return null;
-  const random = products[Math.floor(Math.random() * products.length)];
-  return random;
+  return product;
 }
 }
 
