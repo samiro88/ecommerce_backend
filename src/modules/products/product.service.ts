@@ -1327,6 +1327,17 @@ async getPromotions() {
     data: products,
   };
 }
+
+async recommendProduct(exclude: string[]) {
+  const filter: any = { publier: "1" };
+  if (exclude && exclude.length > 0) {
+    filter._id = { $nin: exclude };
+  }
+  const products = await this.productModel.find(filter);
+  if (!products.length) return null;
+  const random = products[Math.floor(Math.random() * products.length)];
+  return random;
+}
 }
 
 

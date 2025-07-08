@@ -370,5 +370,17 @@ async getStoreNewArrivals() {
   );
   }
   }
-  }
 
+  @Post('recommendation')
+async recommendProduct(@Body('exclude') exclude: string[]) {
+  try {
+    return await this.productsService.recommendProduct(exclude);
+  } catch (error) {
+    throw new HttpException(
+      error.message,
+      error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+    );
+  }
+}
+
+}
