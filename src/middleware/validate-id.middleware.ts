@@ -14,24 +14,29 @@ export class ValidateObjectIdMiddleware implements NestMiddleware {
       return next();
     }
 
-    // 2. Check if body exists
+    // 2. Skip validation for recommendation endpoint
+    if (req.originalUrl.includes('/products/recommendation')) {
+      return next();
+    }
+
+    // 3. Check if body exists
     if (!req.body) {
       throw new BadRequestException('Request body is missing');
     }
 
     const { categoryId, subCategoryIds } = req.body;
 
-    // 3. Validate that at least one ID is provided
+    // 4. Validate that at least one ID is provided
     if (!categoryId && !subCategoryIds) {
       throw new BadRequestException('Either categoryId or subCategoryIds must be provided');
     }
 
-    // 4. Validate categoryId if provided
+    // 5. Validate categoryId if provided
     if (categoryId && !Types.ObjectId.isValid(categoryId)) {
       throw new BadRequestException('Invalid category ID format');
     }
 
-    // 5. Validate subCategoryIds array if provided
+    // 6. Validate subCategoryIds array if provided
     if (subCategoryIds) {
       if (!Array.isArray(subCategoryIds)) {
         throw new BadRequestException('subCategoryIds must be an array');

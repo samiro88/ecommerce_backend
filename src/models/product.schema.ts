@@ -29,7 +29,7 @@ import { Client } from './client.schema';
       delete ret.prix;
       delete ret.promo;
       delete ret.publier;
-      delete ret.cover;
+      //delete ret.cover;
       delete ret.__v;
       delete ret.new_product;
       delete ret.best_seller;
