@@ -1329,13 +1329,23 @@ async getPromotions() {
 }
 
 async recommendProduct(exclude: string[]) {
-  // Try to find a product not in the exclude list
-  let product = await this.productModel.findOne({ _id: { $nin: exclude } });
+  // Try to find a random published product not in the exclude list
+  let products = await this.productModel.aggregate([
+    { $match: { _id: { $nin: exclude.map(id => new mongoose.Types.ObjectId(id)) }, publier: "1" } },
+    { $sample: { size: 1 } }
+  ]);
+  let product = products[0];
+
+  // If no product found (all are excluded), pick any random published product
   if (!product) {
-    // If all products are excluded, just return any product (fallback)
-    product = await this.productModel.findOne();
+    products = await this.productModel.aggregate([
+      { $match: { publier: "1" } },
+      { $sample: { size: 1 } }
+    ]);
+    product = products[0] || null;
   }
-  return product;
+
+  return { product };
 }
 }
 
