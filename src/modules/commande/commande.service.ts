@@ -3,15 +3,33 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, isValidObjectId, Document } from 'mongoose';
 import { Commande } from '../../models/commande.schema';
+import { NotificationService } from '../../services/notification.service'; // Add this import
 
 @Injectable()
 export class CommandeService {
-  constructor(@InjectModel(Commande.name) private commandeModel: Model<Commande>) {}
+  constructor(@InjectModel(Commande.name) private commandeModel: Model<Commande>, private notificationService: NotificationService) {}
 
   // Create
   async create(data: Partial<Commande>) {
     const created = new this.commandeModel(data);
-    return created.save();
+    const savedOrder = await created.save();
+
+    // Send notifications (email + SMS)
+   // Send notifications (email + SMS)
+try {
+  await this.notificationService.sendOrderNotifications(
+    savedOrder.email,                      // toEmail
+    savedOrder.phone,                      // toPhone
+    `${savedOrder.prenom} ${savedOrder.nom}`, // customerName
+    savedOrder.numero                      // orderNumber
+  );
+} catch (err) {
+  // Log but do not block order creation if notification fails
+  console.error('Order notification failed:', err);
+}
+
+    return savedOrder;
+   // return created.save();
   }
 
   // Find all
