@@ -16,7 +16,10 @@ export class CategoryService {
   ) {}
 
   async getAllCategories() {
-    return this.categoryModel.find().sort('-createdAt').populate('subCategories', 'designation').exec();
+    return this.categoryModel.find()
+  .sort('-createdAt')
+  .populate('subCategories', '_id designation designation_fr name slug')
+  .exec();
   }
 
   async createCategory(file: Express.Multer.File, designation: string) {
