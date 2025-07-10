@@ -26,41 +26,37 @@ export class NotificationService {
 
     // Send Email
     try {
-      await this.emailService.sendOrderConfirmation(toEmail, {
-        customerName,
-        orderNumber,
-      });
-      console.log(`[Order Notification] ✅ Email sent to: ${toEmail}`);
+    await this.emailService.sendOrderConfirmation(toEmail, {
+    customerName,
+    orderNumber,
+    customerEmail: toEmail,
+    });
+    console.log(`[Order Notification] ✅ Email sent to: ${toEmail}`);
     } catch (err) {
-      console.error(`[Order Notification] ❌ Failed to send email to: ${toEmail}`, err);
+    console.error(`[Order Notification] ❌ Failed to send email to: ${toEmail}`, err);
     }
 
     // Send SMS
-    const smsMessage = `Protein.tn: Hello ${customerName}, your order #${orderNumber} is confirmed!`;
+    const smsMessage = `Protein.tn : Bonjour ${customerName}, votre commande #${orderNumber} a été confirmée !`;
     try {
-      await this.smsService.sendSms(toPhone, smsMessage);
-      console.log(`[Order Notification] ✅ SMS sent to: ${toPhone}`);
+    await this.smsService.sendSms(toPhone, smsMessage);
+    console.log(`[Order Notification] ✅ SMS sent to: ${toPhone}`);
     } catch (err) {
-      console.error(`[Order Notification] ❌ Failed to send SMS to: ${toPhone}`, err);
+    console.error(`[Order Notification] ❌ Failed to send SMS to: ${toPhone}`, err);
     }
-
+    
     console.log('[Order Notification] Notification process completed.');
-  }
-
-  async sendWeeklyPromotions(
+    }
+    
+    async sendWeeklyPromotions(
     toEmail: string,
     toPhone: string,
     customerName: string,
-  ): Promise<void> {
-    // Send Promotional Email
+    ): Promise<void> {
+    // Send Promotional Email only
     await this.emailService.sendWeeklyPromotion(toEmail, {
-      customerName,
+    customerName,
     });
-
-    // Send Promotional SMS
-    const promoSms = `Protein.tn Promo: New deals for you! 🏋️‍♂️ Visit: https://protein.tn`;
-    await this.smsService.sendSms(toPhone, promoSms);
-
-    console.log('✅ Weekly promotions sent successfully.');
-  }
+    console.log('✅ Weekly promotions email sent successfully.');
+    }
 }
