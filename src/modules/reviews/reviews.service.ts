@@ -9,9 +9,32 @@ export class ReviewsService {
     @InjectModel(Review.name) private readonly reviewModel: Model<Review>,
   ) {}
 
-  async findAll(publishedOnly = false): Promise<Review[]> {
+  async findAll(publishedOnly = false): Promise<any[]> {
     const filter = publishedOnly ? { publier: '1' } : {};
-    return this.reviewModel.find(filter).sort({ created_at: -1 }).exec();
+    return this.reviewModel.aggregate([
+      { $match: filter },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: 'id',
+          as: 'user'
+        }
+      },
+      { $unwind: { path: '$user', preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          comment: 1,
+          stars: 1,
+          created_at: 1,
+          user: {
+            name: '$user.name',
+            role: '$user.role_id',
+            avatar: '$user.avatar'
+          }
+        }
+      }
+    ]).exec();
   }
 
   async findById(id: string): Promise<Review> {
@@ -51,5 +74,37 @@ export class ReviewsService {
   // Find all reviews by a specific user
   async findByUser(user_id: string): Promise<Review[]> {
     return this.reviewModel.find({ user_id }).sort({ created_at: -1 }).exec();
+  }
+
+  // Fetch reviews with user info for testimonials
+  async findAllWithUser(publishedOnly = false): Promise<any[]> {
+    const filter = publishedOnly ? { publier: '1', comment: { $ne: null } } : { comment: { $ne: null } };
+    console.log('Aggregation filter:', filter);
+    const reviews = await this.reviewModel.aggregate([
+      { $match: filter },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: 'id',
+          as: 'user'
+        }
+      },
+      { $unwind: { path: '$user', preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          comment: 1,
+          stars: 1,
+          created_at: 1,
+          user: {
+            name: '$user.name',
+            role: '$user.role_id',
+            avatar: '$user.avatar'
+          }
+        }
+      }
+    ]).exec();
+    console.log('Aggregated reviews:', reviews);
+    return reviews || [];
   }
 }

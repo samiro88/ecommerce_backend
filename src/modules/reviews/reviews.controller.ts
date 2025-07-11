@@ -6,6 +6,18 @@ import { Review, ReviewSchema } from '../../models/reviews.schema';
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
+
+    // GET /reviews/testimonials?publishedOnly=true
+  @Get('testimonials')
+  async getTestimonials(
+    @Query('publishedOnly', new DefaultValuePipe('false'), ParseBoolPipe) publishedOnly: boolean,
+  ): Promise<any[]> {
+    console.log('Received GET /reviews/testimonials with publishedOnly:', publishedOnly);
+    const result = await this.reviewsService.findAllWithUser(publishedOnly);
+    console.log('Result from findAllWithUser:', result);
+    return result || [];
+  }
+
   // GET /reviews?publishedOnly=true
   @Get()
   async getAll(
@@ -49,4 +61,6 @@ export class ReviewsController {
   async getByUser(@Param('user_id') user_id: string): Promise<Review[]> {
     return this.reviewsService.findByUser(user_id);
   }
+
+
 }
