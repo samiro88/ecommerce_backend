@@ -15,13 +15,15 @@ export class EmailController {
   }
 
 @Post('send-weekly-promotion')
-async sendWeeklyPromotion(@Body() body: { to: string; customerName: string }) {
-  console.log('--- TOP OF sendWeeklyPromotion ---');
-  console.log('[sendWeeklyPromotion] Received body:', body);
-  await this.emailService.sendWeeklyPromotion(body.to, {
-    customerName: body.customerName,
-  });
-  return { message: '✅ Weekly promotion email sent successfully!' };
+async sendWeeklyPromotion(@Body() body: { to: string; customerName: string; customerEmail: string; unsubscribeLink: string }) {
+console.log('--- TOP OF sendWeeklyPromotion ---');
+console.log('[sendWeeklyPromotion] Received body:', body);
+await this.emailService.sendWeeklyPromotion(body.to, {
+customerName: body.customerName,
+customerEmail: body.customerEmail,
+unsubscribeLink: body.unsubscribeLink,
+});
+return { message: '✅ Weekly promotion email sent successfully!' };
 }
 
   @Post('send-order-shipped')
