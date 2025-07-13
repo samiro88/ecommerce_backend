@@ -287,6 +287,7 @@ async getStoreNewArrivals() {
   /* Common Routes (merged from both) */
   @Get()
   async getProducts(@Query() query: ProductQueryDto) {
+     console.log('CONTROLLER QUERY:', query);
     try {
       return await this.productsService.getProducts(query);
     } catch (error) {

@@ -732,6 +732,8 @@ const reviews = await this.reviewModel.find({ product_id: businessId, publier: "
   }
 
   async getProducts(query: ProductQueryDto) {
+    console.log('RAW QUERY:', query);
+    console.log('QUERY:', query);
     try {
       const {
         sort = "-created_at",
@@ -745,9 +747,22 @@ const reviews = await this.reviewModel.find({ product_id: businessId, publier: "
         page = 1,
         limit = 10,
         brand,
+        //zdnah hahi for filter 
+        sous_categorie_id, 
       } = query;
 
       let queryObj: any = {};
+
+
+       // --- ADD THIS BLOCK ---
+    if (sous_categorie_id) {
+      if (Array.isArray(sous_categorie_id)) {
+        queryObj.sous_categorie_id = { $in: sous_categorie_id.map(String) };
+      } else {
+        queryObj.sous_categorie_id = String(sous_categorie_id);
+      }
+    }
+    // --- END BLOCK ---
 
 
       // Handle category filtering using designation
@@ -817,7 +832,7 @@ if (brand) {
       // Get total matching products
       const totalProducts = await this.productModel.countDocuments(queryObj);
       const skip = (Number(page) - 1) * Number(limit);
-
+      console.log('QUERY OBJ:', queryObj);
       // Fetch products with populated category and subcategory designations
       const products = await this.productModel.find(queryObj)
         .populate("category", "designation")

@@ -52,5 +52,12 @@ export class ProductQueryDto {
   @IsOptional()
   @IsString()
   promo?: string;
+
+
+  @IsOptional()
+@IsString()
+sous_categorie_id?: string;
+
+
 }
 
