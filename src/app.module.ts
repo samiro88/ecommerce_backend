@@ -23,6 +23,7 @@ import { ProductsModule } from './modules/products/products.module';
 import { PromoCodesModule } from './routes/promo-codes/promo-codes.module';
 import { SubCategoriesModule } from './routes/subcategories/subcategories.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
+import { TopPromotionModule } from './modules/top-promotion/top-promotion.module';// NEW MODULE top promo 
 import { VentesModule } from './routes/ventes/ventes.module';
 import { DatabaseModule } from './db/database.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
@@ -142,6 +143,7 @@ import { DashboardModule } from './modules/analytics/dashboard.module';
     PromoCodesModule,
     SubCategoriesModule,
     TasksModule, // NEW
+    TopPromotionModule, // NEW MODULE top promo
     VentesModule,
     MediaCompressionModule, // NEW
     VenteFlashModule, //new 
