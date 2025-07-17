@@ -15,14 +15,23 @@ export class TopPromotionService {
   }
 
   async getActiveTopPromotions() {
-    const now = new Date();
-    const promotions = await this.topPromotionModel.find({
-      active: true,
-      startDate: { $lte: now },
-      endDate: { $gte: now },
-    }).sort('-createdAt').exec();
-    return { message: 'Success', data: promotions };
-  }
+  const now = new Date();
+  const promotions = await this.topPromotionModel.find({
+    active: true,
+    startDate: { $lte: now },
+    endDate: { $gte: now },
+  })
+    .sort('-createdAt')
+    .populate('productId') // <-- This will now work!
+    .exec();
+
+  const mapped = promotions.map((promo: any) => ({
+    ...promo.toObject(),
+    product: promo.productId ? promo.productId.toObject?.() || promo.productId : null,
+  }));
+
+  return { message: 'Success', data: mapped };
+}
 
   async getTopPromotionById(id: string) {
     if (!isValidObjectId(id)) {

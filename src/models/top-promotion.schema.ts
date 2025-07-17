@@ -3,7 +3,7 @@ import { Document, Types } from 'mongoose';
 
 @Schema({ timestamps: true, collection: 'top_promotions' })
 export class TopPromotion extends Document {
-  @Prop({ type: Types.ObjectId, required: true })
+  @Prop({ type: Types.ObjectId, ref: 'Product', required: true }) // <-- Add ref: 'Product'
   productId: Types.ObjectId;
 
   @Prop({ required: true })
