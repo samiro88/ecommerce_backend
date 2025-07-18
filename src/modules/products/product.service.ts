@@ -1298,26 +1298,20 @@ if (brand) {
    * Autocomplete product names for search bar suggestions
    * Returns up to 10 products with designation and slug matching the query.
    */
- async autocompleteProducts(query: string) {
+async autocompleteProducts(query: string) {
   console.log("autocompleteProducts called with query:", query);
   try {
-    const filter: any = { publier: "1" }; // Only published products
+    const filter: any = { publier: "1" };
     if (query && query.trim()) {
       filter.$or = [
         { designation: { $regex: query, $options: "i" } },
         { designation_fr: { $regex: query, $options: "i" } }
       ];
     }
-    const products = await this.productModel.find(
-      filter,
-      { designation: 1, designation_fr: 1, slug: 1, _id: 0 }
-    ).lean(); // No .limit()
+    // Return all fields for matched products
+    const products = await this.productModel.find(filter).limit(10); // No field selection, no .lean()
 
-    // Return only the fields needed for autocomplete
-    return products.map(p => ({
-      name: p.designation_fr || p.designation,
-      slug: p.slug
-    }));
+    return products; // Return full product documents
   } catch (err) {
     console.error("Autocomplete error:", err);
     throw new InternalServerErrorException('Autocomplete failed', err.message);
