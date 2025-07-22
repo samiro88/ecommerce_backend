@@ -36,11 +36,11 @@ import { AromasModule } from './modules/aromas/aromas.module';
 import { UserModule } from './modules/user/user.module';
 import { BannerModule } from './modules/banner/banner.module';
 // ======================
-// NEW MODULES ADDED HERE (PRESERVING ALPHABETICAL ORDER)
+// NEW MODULES ADDED HERE
 // ======================
 import { ExportModule } from './export/export.module';
 import { TasksModule } from './tasks/tasks.module';
-
+import { FaqsModule } from './modules/faqs/faqs.module';
 // ======================
 // MIDDLEWARES (ORIGINAL)
 // ======================
@@ -165,7 +165,7 @@ import { DashboardModule } from './modules/analytics/dashboard.module';
     // EMAIL SYSTEM MODULES demo 
     // ======================
     PreviewModule, // NEW
-
+    FaqsModule,
     // ======================
     // PAYMENTS MODULES
     // ======================
