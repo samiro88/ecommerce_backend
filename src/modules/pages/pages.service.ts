@@ -19,7 +19,7 @@ import {
         const pages = await this.pageModel
           .find({})
           .sort('-createdAt')
-          .select('title cover.url createdAt updatedAt content slug status')
+          .select('title cover.url createdAt updatedAt body excerpt meta_description meta_keywords author_id image slug status')
           .exec();
         return {
           message: 'Pages fetched successfully',
@@ -32,8 +32,8 @@ import {
   
     async createPage(createPageDto: CreatePageDto, file: Express.Multer.File) {
       try {
-        if (!createPageDto.title || !createPageDto.content) {
-          throw new BadRequestException('Title and content are required');
+        if (!createPageDto.title || !createPageDto.body) {
+          throw new BadRequestException('Title and body are required');
         }
   
         let cover: { url: string; img_id: string } | undefined = undefined;
@@ -52,7 +52,12 @@ import {
   
         const newPage = new this.pageModel({
           title: createPageDto.title,
-          content: createPageDto.content,
+          body: createPageDto.body,
+          excerpt: createPageDto.excerpt,
+          meta_description: createPageDto.meta_description,
+          meta_keywords: createPageDto.meta_keywords,
+          author_id: createPageDto.author_id,
+          image: createPageDto.image,
           cover: cover,
           status: createPageDto.status,
         });
@@ -98,7 +103,7 @@ import {
       file: Express.Multer.File,
     ) {
       try {
-        const allowedFields = ['title', 'content', 'status'];
+        const allowedFields = ['title', 'body', 'excerpt', 'meta_description', 'meta_keywords', 'author_id', 'image', 'status'];
         const updateFields = Object.keys(updatePageDto);
   
         const invalidFields = updateFields.filter(

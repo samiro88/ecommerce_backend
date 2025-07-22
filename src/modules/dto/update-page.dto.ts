@@ -7,9 +7,29 @@ export class UpdatePageDto {
 
   @IsOptional()
   @IsString()
-  content?: string;
+  body?: string;
 
   @IsOptional()
   @IsString()
-  status?: string; // Changed from boolean to string
+  excerpt?: string;
+
+  @IsOptional()
+  @IsString()
+  meta_description?: string;
+
+  @IsOptional()
+  @IsString()
+  meta_keywords?: string;
+
+  @IsOptional()
+  @IsString()
+  author_id?: string;
+
+  @IsOptional()
+  @IsString()
+  image?: string;
+
+  @IsOptional()
+  @IsString()
+  status?: string;
 }

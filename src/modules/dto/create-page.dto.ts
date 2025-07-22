@@ -7,9 +7,29 @@ export class CreatePageDto {
 
   @IsString()
   @IsNotEmpty()
-  content: string;
+  body: string;
 
   @IsOptional()
   @IsString()
-  status?: string; // Changed from boolean to string to match your Page model
+  excerpt?: string;
+
+  @IsOptional()
+  @IsString()
+  meta_description?: string;
+
+  @IsOptional()
+  @IsString()
+  meta_keywords?: string;
+
+  @IsOptional()
+  @IsString()
+  author_id?: string;
+
+  @IsOptional()
+  @IsString()
+  image?: string;
+
+  @IsOptional()
+  @IsString()
+  status?: string;
 }

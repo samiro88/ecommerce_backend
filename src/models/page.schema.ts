@@ -22,10 +22,25 @@ export class Page extends Document {
   };
 
   @Prop()
-  content: string;
+  body: string;
 
-  @Prop({ default: true })
-  status: boolean;
+  @Prop()
+  excerpt: string;
+
+  @Prop()
+  meta_description: string;
+
+  @Prop()
+  meta_keywords: string;
+
+  @Prop()
+  author_id: string;
+
+  @Prop()
+  image: string;
+
+  @Prop({ default: 'ACTIVE' })
+  status: string;
 }
 
 export const PageSchema = SchemaFactory.createForClass(Page);
