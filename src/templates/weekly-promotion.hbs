@@ -1,11 +1,76 @@
-<div style="background: #f4f4f4; padding: 20px;">
-  <div style="max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; font-family: Arial, sans-serif;">
-    <img src="https://protein.tn/images/logo/logo.png" alt="Protein Tunisia" style="width: 150px; margin-bottom: 20px;">
-    <h2 style="color: #FF4301; font-size: 1.6em; margin-bottom: 0.5em;">Bonjour !</h2>
-    <p>Découvrez les promotions de la semaine en exclusivité sur Protein Tunisie 🔥</p>
-    <a href="https://protein.tn" style="display: inline-block; margin-top: 20px; background: #FF4301; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Voir les promotions</a>
-    <p style="margin-top: 30px; font-size: 12px; color: #999;">Protein Tunisie © 2025. Tous droits réservés.</p>
+<div style="background-color:#f9f9f9;padding:30px;font-family:Arial, sans-serif;">
+  <div style="max-width:600px;margin:auto;background-color:#fff;border-radius:8px;padding:30px;box-shadow:0 0 10px rgba(0,0,0,0.05);">
+
+    <img src="cid:logo-cid" alt="Protein Tunisia" style="display:block;margin:0 auto 20px auto;max-width:150px;"/>
+
+    <h2 style="text-align:center;color:#FF4301;margin-bottom:20px;">
+      Bonjour {{customerName}} !
+    </h2>
+
+    <p style="font-size:16px;color:#555;text-align:center;">
+      Découvrez les promotions exclusives de la semaine sur <strong>Protein Tunisie</strong> 🔥
+    </p>
+
+    {{#if promotions}}
+    <table style="width:100%;border-collapse:collapse;margin-top:20px;font-size:14px;">
+      <thead>
+        <tr style="background:#f4f4f4;">
+          <th style="padding:10px;border:1px solid #ddd;text-align:left;">Produit</th>
+          <th style="padding:10px;border:1px solid #ddd;text-align:center;">Ancien prix</th>
+          <th style="padding:10px;border:1px solid #ddd;text-align:center;">Prix promo</th>
+          <th style="padding:10px;border:1px solid #ddd;text-align:center;">Réduction</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each promotions}}
+        <tr>
+          <td style="padding:10px;border:1px solid #ddd;">{{name}}</td>
+          <td style="padding:10px;border:1px solid #ddd;text-align:center;text-decoration:line-through;color:#999;">
+            {{oldPrice}} TND
+          </td>
+          <td style="padding:10px;border:1px solid #ddd;text-align:center;color:#FF4301;font-weight:bold;">
+            {{promoPrice}} TND
+          </td>
+          <td style="padding:10px;border:1px solid #ddd;text-align:center;color:#28a745;font-weight:bold;">
+            -{{discountPercentage}}%
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    {{else}}
+    <p style="font-size:14px;color:#777;text-align:center;margin-top:20px;">
+      Pas de promotions cette semaine, restez à l’affût !
+    </p>
+    {{/if}}
+
+    <div style="text-align:center;margin: 30px 0;">
+      <a href="{{promotionsLink}}" 
+         style="background:#FF4301;color:#fff;padding:12px 30px;text-decoration:none;border-radius:5px;font-weight:bold;display:inline-block;">
+        Voir les promotions
+      </a>
+    </div>
+
+    <p style="font-size:14px;color:#555;text-align:center;margin-top:10px;">
+      Profitez vite de ces offres limitées, avant qu’elles ne disparaissent !
+    </p>
+
+    <p style="font-size:14px;color:#555;text-align:center;margin-top:20px;">
+      Votre avis compte pour nous : <br/>
+      <a href="https://maps.app.goo.gl/iQa3SskkjJsDZEEe8" style="color:#FF4301;">Laissez un avis sur Google !</a>
+    </p>
+
+    <div style="text-align:center;margin-top:30px;">
+      <img src="cid:qr-code-cid" alt="QR Code Protein.tn" style="margin:0 auto;width:120px;" />
+    </div>
+
+    <hr style="margin-top:30px;border:none;border-top:1px solid #ddd;">
+
+    <p style="font-size:12px;color:#999;text-align:center;">
+      Cet email a été envoyé à {{customerEmail}}.<br/>
+      Si tu ne souhaites plus recevoir ces emails, <a href="{{unsubscribeLink}}" style="color:#FF4301;">clique ici pour te désabonner</a>.<br/>
+      Pour toute question, contacte-nous à <a href="mailto:info@protein.tn">info@protein.tn</a>.
+    </p>
+
   </div>
 </div>
-<p style="font-size: 12px; color: #999; text-align: center;">Cet email a été envoyé à {{customerEmail}}. Si vous ne souhaitez plus recevoir ces emails, vous pouvez <a href="{{unsubscribeLink}}" style="color: #FF4301;">vous désabonner</a>.</p>
-<p style="font-size: 12px; color: #999; text-align: center;">Pour toute question, contactez-nous à <a href="mailto:info@protein.tn">info@protein.tn</a>.</p>

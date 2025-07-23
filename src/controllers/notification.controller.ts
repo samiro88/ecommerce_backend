@@ -58,11 +58,40 @@ export class NotificationController {
   @Post('email/weekly-promotion')
   async sendWeeklyPromotion(@Body() sendEmailDto: SendEmailDto) {
     const context = {
+      customerName: sendEmailDto.customerName,
+      customerEmail: sendEmailDto.customerEmail,
+      promotions: sendEmailDto.promotions,
+      promotionsLink: sendEmailDto.promotionsLink,
+      unsubscribeLink: sendEmailDto.unsubscribeLink,
       subject: sendEmailDto.subject,
       html: sendEmailDto.html,
     };
-
     return this.emailService.sendWeeklyPromotion(
+      sendEmailDto.to,
+      context,
+      sendEmailDto.attachments,
+    );
+  }
+
+  @Post('email/order-shipped')
+  async sendOrderShipped(@Body() sendEmailDto: SendEmailDto) {
+    const context = {
+      customerName: sendEmailDto.customerName,
+      orderNumber: sendEmailDto.orderNumber,
+      customerEmail: sendEmailDto.customerEmail,
+      address: sendEmailDto.address,
+      city: sendEmailDto.city,
+      postalCode: sendEmailDto.postalCode,
+      phone: sendEmailDto.phone,
+      orderItems: sendEmailDto.orderItems,
+      subtotal: sendEmailDto.subtotal,
+      shippingCost: sendEmailDto.shippingCost,
+      shippingMethod: sendEmailDto.shippingMethod,
+      total: sendEmailDto.total,
+      billingLocalite: sendEmailDto.billingLocalite,
+      unsubscribeLink: sendEmailDto.unsubscribeLink,
+    };
+    return this.emailService.sendOrderShipped(
       sendEmailDto.to,
       context,
       sendEmailDto.attachments,

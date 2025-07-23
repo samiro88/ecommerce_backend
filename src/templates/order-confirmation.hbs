@@ -1,13 +1,103 @@
-<div style="background: #f4f4f4; padding: 20px;">
-  <div style="max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; font-family: Arial, sans-serif;">
-    <img src="https://protein.tn/images/logo/logo.png" alt="SOBITAS - PROTEINE TUNISIE" style="width: 150px; margin-bottom: 20px;">
-<h2 style="color: #FF4301; font-size: 22px; margin-bottom: 0.5em;">Merci pour votre confiance</h2>
-    <p>Bonjour {{customerName}},</p>
-    <p>Votre commande <strong>#{{orderNumber}}</strong> a bien été confirmée.</p>
-    <p>Nous préparons vos articles et vous serez notifié(e) dès qu'ils seront expédiés.</p>
-    <a href="https://protein.tn" style="display: inline-block; margin-top: 20px; background: #FF4301; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Voir le site</a>
-    <p style="margin-top: 30px; font-size: 12px; color: #999;">SOBITAS - PROTEINE TUNISIE © 2025. Tous droits réservés.</p>
+<div style="background-color:#f9f9f9;padding:30px;font-family:Arial, sans-serif;">
+  <div style="max-width:600px;margin:auto;background-color:#fff;border-radius:8px;padding:30px;box-shadow:0 0 10px rgba(0,0,0,0.05);">
+
+    <h2 style="text-align:center;color:#333;margin-bottom:30px;">En attente de confirmation</h2>
+
+    <div style="line-height:1.8; margin-bottom:25px;">
+      <p style="font-size:16px; margin:0;">Bonjour {{customerName}},</p>
+      <p style="font-size:14px;color:#555;margin:8px 0 0 0;">
+        Pour information – nous avons reçu votre commande n°<strong>{{orderNumber}}</strong>, elle est maintenant en cours de traitement :
+      </p>
+      <p style="font-size:14px;color:#555;margin:8px 0 0 0;">Payez en argent comptant à la livraison.</p>
+    </div>
+
+    <table style="width:100%;border-collapse:collapse;margin-top:20px;font-size:14px;">
+      <thead>
+        <tr style="background:#f4f4f4;">
+          <th style="padding:10px;border:1px solid #ddd;text-align:left;">Produit</th>
+          <th style="padding:10px;border:1px solid #ddd;text-align:center;">Quantité</th>
+          <th style="padding:10px;border:1px solid #ddd;text-align:right;">Prix</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orderItems}}
+        <tr>
+          <td style="padding:10px;border:1px solid #ddd;">{{name}}</td>
+          <td style="padding:10px;border:1px solid #ddd;text-align:center;">{{quantity}}</td>
+          <td style="padding:10px;border:1px solid #ddd;text-align:right;">{{price}} TND</td>
+        </tr>
+        {{/each}}
+        <tr>
+          <td colspan="2" style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>Sous-total :</strong></td>
+          <td style="padding:10px;border:1px solid #ddd;text-align:right;">{{subtotal}} TND</td>
+        </tr>
+        <tr>
+          <td colspan="2" style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>Expédition :</strong></td>
+          <td style="padding:10px;border:1px solid #ddd;text-align:right;">10 TND <span style="color:#888;">via ARAMEX LIVRAISON 1/2 JRS</span></td>
+        </tr>
+        <tr>
+          <td colspan="2" style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>Moyen de paiement :</strong></td>
+          <td style="padding:10px;border:1px solid #ddd;text-align:right;">Paiement à la livraison</td>
+        </tr>
+        <tr style="background:#f4f4f4;">
+          <td colspan="2" style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>Total :</strong></td>
+          <td style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>{{total}} TND</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:20px;font-size:14px;"><strong>billing_localite:</strong> {{billing_localite}}</p>
+
+    <table style="width:100%;margin-top:10px;border-collapse:collapse;font-size:14px;">
+      <tr>
+        <td style="width:50%;vertical-align:top;border:1px solid #ddd;padding:10px;">
+          <strong>Adresse de facturation</strong><br/>
+          {{customerName}}<br/>
+          {{address}}<br/>
+          {{city}}<br/>
+          {{postalCode}}<br/>
+          {{phone}}<br/>
+          <a href="mailto:{{customerEmail}}" style="color:#FF4301;">{{customerEmail}}</a>
+        </td>
+        <td style="width:50%;vertical-align:top;border:1px solid #ddd;padding:6px 10px 4px 10px;">
+          <strong>Adresse de livraison</strong><br/>
+          {{customerName}}<br/>
+          {{address}}<br/>
+          {{city}}<br/>
+          {{postalCode}}
+        </td>
+      </tr>
+    </table>
+
+    <p style="font-size:14px;margin-top:20px;">Ta commande a bien été reçue. L’équipe te contactera sous 24h pour confirmer ses termes.</p>
+
+    <p style="font-size:14px;margin-top:10px;">
+      <strong>Délai de livraison (hors week-end et jours fériés)</strong> :<br/>
+      Grand Tunis : 24h à 48h<br/>
+      Hors Tunis et régions : 48h à 72h
+    </p>
+
+    <p style="font-size:14px;margin-top:10px;">Pour accélérer le processus de traitement, tu peux répondre à l’e-mail automatique avec la mention <strong>« Commande Confirmée »</strong>. Aucune expédition n’est effectuée sans confirmation préalable !</p>
+
+    <p style="font-size:14px;margin-top:20px;"><strong>INFOLINE</strong><br/>
+    22 464 315 ou 27 612 500 ou 73 200 169.<br/>
+    En cas de non réponse, laisse un message WhatsApp avec ta demande.
+    </p>
+
+    <p style="font-size:14px;margin-top:20px;">Fais partie de notre aventure ? Ton retour nous aide à grandir : <br/>
+    <span style="color:#000;">Laisse un avis sur Google !</span><br/>
+    <a href="https://maps.app.goo.gl/iQa3SskkjJsDZEEe8" style="color:#FF4301;">https://maps.app.goo.gl/iQa3SskkjJsDZEEe8</a>
+    </p>
+
+    <div style="text-align:center;margin-top:30px;">
+      <img src="cid:qr-code-cid" alt="QR Code Protein.tn" style="margin:0 auto;width:120px;" />
+    </div>
+
+    <hr style="margin-top:30px;border:none;border-top:1px solid #ddd;">
+    <p style="font-size:12px;color:#999;text-align:center;">
+      Cet email a été envoyé à {{customerEmail}}.<br/>
+      Si tu ne souhaites plus recevoir ces emails, <a href="{{unsubscribeLink}}" style="color:#FF4301;">clique ici pour te désabonner</a>.<br/>
+      Pour toute question, contacte-nous à <a href="mailto:info@protein.tn">info@protein.tn</a>.
+    </p>
   </div>
 </div>
-<p style="font-size: 12px; color: #999; text-align: center;">Cet email a été envoyé à {{customerEmail}}. Si vous ne souhaitez plus recevoir ces emails, vous pouvez <a href="{{unsubscribeLink}}" style="color: #FF4301;">vous désabonner</a>.</p>
-<p style="font-size: 12px; color: #999; text-align: center;">Pour toute question, contactez-nous à <a href="mailto:info@protein.tn">info@protein.tn</a>.</p>

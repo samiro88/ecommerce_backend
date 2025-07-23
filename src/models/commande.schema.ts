@@ -53,6 +53,8 @@ export class Commande extends Document {
   historique?: string;
   cart?: CartProduct[]; // <-- Added cart array for products
   // ...add any other fields you use
+  billing_localite?: string;
+  gouvernorat?: string;
 }
 
 // Optionally, keep the interface for typing elsewhere
@@ -61,6 +63,9 @@ export interface CommandeDocument extends Commande {}
 // The schema definition
 export const CommandeSchema = new Schema<Commande>({
   //id: { type: String, required: true },
+
+  billing_localite: { type: String },
+  gouvernorat: { type: String },
   user_id: { type: String },
   remise: { type: String },
   prix_ht: { type: String, required: true },

@@ -13,7 +13,6 @@ export class CommandeService {
     const created = new this.commandeModel(data);
     const savedOrder = await created.save();
 
-    // Add this debug log
     console.log('DEBUG: About to call sendOrderNotifications for', savedOrder.numero);
 
     try {
@@ -21,7 +20,18 @@ export class CommandeService {
         savedOrder.email,
         savedOrder.phone,
         `${savedOrder.prenom} ${savedOrder.nom}`,
-        savedOrder.numero
+        savedOrder.numero,
+        savedOrder.billing_localite || savedOrder.livraison_ville || "",
+        savedOrder.gouvernorat || "",
+        savedOrder.code_postale || savedOrder.livraison_code_postale || "",
+        savedOrder.phone || "",
+        savedOrder.billing_localite,
+        savedOrder.gouvernorat,
+        savedOrder.cart || [],
+        savedOrder.prix_ht,
+        savedOrder.frais_livraison,
+        savedOrder.livraison,
+        savedOrder.prix_ttc
       );
     } catch (err) {
       console.error('Order notification failed:', err);
