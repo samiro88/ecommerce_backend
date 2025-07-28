@@ -2,4 +2,5 @@
 export class CreateCategoryDto {
     readonly name: string;
     readonly description?: string;
+    readonly schema_description?: string; 
   }

@@ -11,6 +11,8 @@ export class Category extends Document {
   @Prop({ unique: true })  // Added unique constraint
   slug: string;
 
+  @Prop()
+  schema_description?: string;
   @Prop({
     type: {
       url: { type: String, required: true },  

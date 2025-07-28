@@ -1,5 +1,61 @@
-<div style="background-color:#f9f9f9;padding:30px;font-family:Arial, sans-serif;">
+<div style="background-color:#f9f9f9;padding:0;font-family:Arial, sans-serif;">
   <div style="max-width:600px;margin:auto;background-color:#fff;border-radius:8px;padding:30px;box-shadow:0 0 10px rgba(0,0,0,0.05);">
+
+    <style>
+      @media only screen and (max-width: 600px) {
+        .email-table, 
+        .email-table thead, 
+        .email-table tbody, 
+        .email-table th, 
+        .email-table td, 
+        .email-table tr {
+          display: block !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        .email-table thead {
+          display: none !important;
+        }
+        .email-table tr {
+          margin-bottom: 10px !important;
+          border: 1px solid #ddd !important;
+          border-radius: 4px !important;
+          padding: 0 !important;
+          box-sizing: border-box !important;
+        }
+        .email-table td {
+          display: flex !important;
+          justify-content: space-between !important;
+          padding: 6px 8px !important;
+          text-align: left !important;
+          font-size: 13px !important;
+          border-bottom: 1px solid #eee !important;
+          box-sizing: border-box !important;
+        }
+        .email-table td::before {
+          content: attr(data-label);
+          font-weight: bold;
+          color: #333;
+        }
+        .email-table td:last-child {
+          border-bottom: none !important;
+        }
+        .address-table {
+          display: block !important;
+        }
+        .address-table tr {
+          display: block !important;
+        }
+        .address-table td {
+          display: block !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+          border: 1px solid #ddd !important;
+          margin-bottom: 10px !important;
+        }
+      }
+    </style>
 
     <img src="cid:logo-cid" alt="Protein Tunisia" style="display:block;margin:0 auto 20px auto;max-width:150px;"/>
 
@@ -11,42 +67,44 @@
       Votre commande n°<strong>{{orderNumber}}</strong> a été expédiée et est maintenant en route vers vous.
     </p>
 
-    <table style="width:100%;border-collapse:collapse;margin-top:20px;font-size:14px;">
-      <thead>
-        <tr style="background:#f4f4f4;">
-          <th style="padding:10px;border:1px solid #ddd;text-align:left;">Produit</th>
-          <th style="padding:10px;border:1px solid #ddd;text-align:center;">Quantité</th>
-          <th style="padding:10px;border:1px solid #ddd;text-align:right;">Prix</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each orderItems}}
-        <tr>
-          <td style="padding:10px;border:1px solid #ddd;">{{name}}</td>
-          <td style="padding:10px;border:1px solid #ddd;text-align:center;">{{quantity}}</td>
-          <td style="padding:10px;border:1px solid #ddd;text-align:right;">{{price}} TND</td>
-        </tr>
-        {{/each}}
-        <tr>
-          <td colspan="2" style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>Sous-total :</strong></td>
-          <td style="padding:10px;border:1px solid #ddd;text-align:right;">{{subtotal}} TND</td>
-        </tr>
-        <tr>
-          <td colspan="2" style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>Expédition :</strong></td>
-          <td style="padding:10px;border:1px solid #ddd;text-align:right;">{{shippingCost}} TND <span style="color:#888;">via {{shippingMethod}}</span></td>
-        </tr>
-        <tr style="background:#f4f4f4;">
-          <td colspan="2" style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>Total :</strong></td>
-          <td style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>{{total}} TND</strong></td>
-        </tr>
-      </tbody>
-    </table>
+    <div style="overflow-x:auto; max-width:100%;">
+      <table class="email-table" style="width:100%;border-collapse:collapse;margin-top:20px;font-size:14px;">
+        <thead>
+          <tr style="background:#f4f4f4;">
+            <th style="padding:10px;border:1px solid #ddd;text-align:left;">Produit</th>
+            <th style="padding:10px;border:1px solid #ddd;text-align:center;">Quantité</th>
+            <th style="padding:10px;border:1px solid #ddd;text-align:right;">Prix</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each orderItems}}
+          <tr>
+            <td data-label="Produit" style="padding:10px;border:1px solid #ddd;">{{name}}</td>
+            <td data-label="Quantité" style="padding:10px;border:1px solid #ddd;text-align:center;">{{quantity}}</td>
+            <td data-label="Prix" style="padding:10px;border:1px solid #ddd;text-align:right;">{{price}} TND</td>
+          </tr>
+          {{/each}}
+          <tr>
+            <td colspan="2" style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>Sous-total :</strong></td>
+            <td style="padding:10px;border:1px solid #ddd;text-align:right;">{{subtotal}} TND</td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>Expédition :</strong></td>
+            <td style="padding:10px;border:1px solid #ddd;text-align:right;">{{shippingCost}} TND <span style="color:#888;">via {{shippingMethod}}</span></td>
+          </tr>
+          <tr style="background:#f4f4f4;">
+            <td colspan="2" style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>Total :</strong></td>
+            <td style="padding:10px;border:1px solid #ddd;text-align:right;"><strong>{{total}} TND</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <p style="margin-top:20px;font-size:14px;"><strong>billing_localite:</strong> {{billingLocalite}}</p>
 
-    <table style="width:100%;margin-top:10px;border-collapse:collapse;font-size:14px;">
+    <table class="address-table" style="width:100%;margin-top:10px;border-collapse:collapse;font-size:14px;">
       <tr>
-        <td style="width:50%;vertical-align:top;border:1px solid #ddd;padding:10px;">
+        <td>
           <strong>Adresse de facturation</strong><br/>
           {{customerName}}<br/>
           {{address}}<br/>
@@ -55,7 +113,7 @@
           {{phone}}<br/>
           <a href="mailto:{{customerEmail}}" style="color:#FF4301;">{{customerEmail}}</a>
         </td>
-        <td style="width:50%;vertical-align:top;border:1px solid #ddd;padding:10px;">
+        <td>
           <strong>Adresse de livraison</strong><br/>
           {{customerName}}<br/>
           {{address}}<br/>
@@ -71,6 +129,7 @@
 
     <div style="text-align:center;margin: 20px 0;">
       <a href="https://protein.tn/suivi-commande/{{orderNumber}}" 
+         class="button-link"
          style="background:#FF4301;color:#fff;padding:12px 25px;text-decoration:none;border-radius:5px;font-weight:bold;display:inline-block;">
         Suivre ma commande
       </a>
@@ -87,7 +146,8 @@
       N’hésite pas à laisser un avis sur Google pour nous aider à grandir :
     </p>
     <p style="font-size:14px;">
-      <a href="https://maps.app.goo.gl/iQa3SskkjJsDZEEe8" style="color:#FF4301;">Laisse un avis sur Google !</a>
+      <span style="color:#000;">Laisse un avis sur Google !</span><br/>
+      <a href="https://maps.app.goo.gl/iQa3SskkjJsDZEEe8" style="color:#FF4301;">https://maps.app.goo.gl/iQa3SskkjJsDZEEe8</a>
     </p>
 
     <div style="text-align:center;margin-top:30px;">
@@ -97,9 +157,7 @@
     <hr style="margin-top:30px;border:none;border-top:1px solid #ddd;">
     <p style="font-size:12px;color:#999;text-align:center;">
       Cet email a été envoyé à {{customerEmail}}.<br/>
-      Si tu ne souhaites plus recevoir ces emails, <a href="{{unsubscribeLink}}" style="color:#FF4301;">clique ici pour te désabonner</a>.<br/>
-      Pour toute question, contacte-nous à <a href="mailto:info@protein.tn">info@protein.tn</a>.
+      Pour toute question, contacte-nous à <a href="mailto:contact@protein.tn">contact@protein.tn</a>.
     </p>
-
   </div>
 </div>

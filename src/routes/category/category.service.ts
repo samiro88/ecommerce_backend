@@ -7,6 +7,7 @@ type Category = {
   name: string;
   description?: string;
   image?: string;
+  schema_description?: string;
 };
 
 @Injectable()
