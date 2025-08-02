@@ -74,4 +74,16 @@ import {
         );
       }
     }
+
+    @Get('get/:id')
+async getSubCategoryById(@Param('id') id: string) {
+  try {
+    return await this.subCategoriesService.getSubCategoryById(id);
+  } catch (error) {
+    throw new HttpException(
+      error.message,
+      error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+    );
+  }
+}
   }
