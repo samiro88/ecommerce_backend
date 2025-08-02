@@ -156,6 +156,18 @@ import {
         session.endSession();
       }
     }
+
+
+    async getSubCategoryById(id: string) {
+  const subCategory = await this.subCategoryModel
+    .findById(id)
+    .populate('category', 'name designation designation_fr slug id');
+  if (!subCategory) throw new NotFoundException('Subcategory not found');
+  return {
+    success: true,
+    data: subCategory,
+  };
+}
   
     async getSubCategoriesByCategory(categoryId: string) {
       try {
