@@ -41,6 +41,15 @@ import { BannerModule } from './modules/banner/banner.module';
 import { ExportModule } from './export/export.module';
 import { TasksModule } from './tasks/tasks.module';
 import { FaqsModule } from './modules/faqs/faqs.module';
+import { SettingsModule } from './modules/settings/settings.module'
+import { SlidesModule } from './modules/slides/slides.module'
+import { TagsModule } from './modules/tags/tags.module'
+import { SeoPagesModule } from './modules/seo-pages/seo-pages.module'
+import { ServicesModule } from './modules/services/services.module'
+import { NewslettersModule } from './modules/newsletters/newsletters.module'
+import { CoordinatesModule } from './modules/coordinates/coordinates.module'
+import { AnnoncesModule } from './modules/annonces/annonces.module'
+import { SystemMessagesModule } from './modules/system-messages/system-messages.module'
 // ======================
 // MIDDLEWARES (ORIGINAL)
 // ======================
@@ -152,7 +161,7 @@ import { DashboardModule } from './modules/analytics/dashboard.module';
     BrandsModule, // NEW
     ReviewsModule, // NEW
     CommandeModule,
- UserModule,
+    UserModule,
     // ======================
     // NEW UTILITY MODULES
     // ======================
@@ -166,6 +175,15 @@ import { DashboardModule } from './modules/analytics/dashboard.module';
     // ======================
     PreviewModule, // NEW
     FaqsModule,
+    SettingsModule, // NEW
+    SlidesModule, // NEW
+    TagsModule, // NEW
+    SeoPagesModule, // NEW
+    ServicesModule, // NEW
+    NewslettersModule, // NEW
+    CoordinatesModule, // NEW
+    AnnoncesModule, // NEW
+    SystemMessagesModule, // NEW
     // ======================
     // PAYMENTS MODULES
     // ======================
