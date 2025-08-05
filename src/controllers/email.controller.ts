@@ -59,4 +59,11 @@ async previewTemplate(@Body() body: { type: string; payload: any }) {
 
   return { html };
 }
+
+
+@Post('create-template')
+async createTemplate(@Body() body: { type: string; html: string }) {
+  this.emailService.createTemplate(body.type, body.html);
+  return { message: 'Template créé avec succès !' };
+}
 }

@@ -147,4 +147,15 @@ export class EmailService {
       throw error;
     }
   }
+
+
+
+  public createTemplate(type: string, html: string): void {
+  const baseDir =
+    process.env.NODE_ENV === 'production'
+      ? path.join(process.cwd(), 'dist', 'templates')
+      : path.join(process.cwd(), 'src', 'templates');
+  const filePath = path.join(baseDir, `${type}.hbs`);
+  fs.writeFileSync(filePath, html, 'utf-8');
+}
 }
