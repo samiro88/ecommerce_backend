@@ -31,9 +31,23 @@ export class EmailService {
         : path.join(process.cwd(), 'src', 'templates');
     const templatePath = path.join(baseDir, `${templateName}.hbs`);
     console.log('Looking for template at:', templatePath);
-    const source = fs.readFileSync(templatePath, 'utf-8').toString();
-    const template = handlebars.compile(source);
-    return template(context);
+    try {
+      if (!fs.existsSync(templatePath)) {
+        console.error(`[EmailService] Template file not found: ${templatePath}`);
+        throw new Error(`Template file not found: ${templatePath}`);
+      }
+      const source = fs.readFileSync(templatePath, 'utf-8').toString();
+      const template = handlebars.compile(source);
+      try {
+        return template(context);
+      } catch (err) {
+        console.error('[EmailService] Handlebars render error:', err, 'Context:', context);
+        throw err;
+      }
+    } catch (err) {
+      console.error('[EmailService] compileTemplate error:', err);
+      throw err;
+    }
   }
 
   private buildSafeContext(context: any): any {
@@ -62,25 +76,37 @@ export class EmailService {
 
   async sendOrderConfirmation(to: string, context: any, attachments: any[] = []): Promise<void> {
     const safeContext = this.buildSafeContext(context);
-    const htmlContent = this.compileTemplate('order-confirmation', safeContext);
-
-    // Generate QR code buffer (based on order number or your logic)
-    const qrCodeBuffer = await QRCode.toBuffer(`https://protein.tn/track-order/${safeContext.orderNumber || 'default'}`);
-
-    // Add QR code to attachments as inline image (cid)
+    let htmlContent: string;
+    try {
+      htmlContent = this.compileTemplate('order-confirmation', safeContext);
+    } catch (err) {
+      console.error('[EmailService] Error compiling order-confirmation template:', err, 'Context:', safeContext);
+      throw err;
+    }
+    let qrCodeBuffer: Buffer;
+    try {
+      qrCodeBuffer = await QRCode.toBuffer(`https://protein.tn/track-order/${safeContext.orderNumber || 'default'}`);
+    } catch (err) {
+      console.error('[EmailService] Error generating QR code:', err, 'Context:', safeContext);
+      throw err;
+    }
     const qrAttachment = {
       filename: 'qr-code.png',
       content: qrCodeBuffer,
-      cid: 'qr-code-cid', // Use this in your HBS: <img src="cid:qr-code-cid" />
+      cid: 'qr-code-cid',
     };
-
-    await this.transporter.sendMail({
-      from: `"Protein Tunisia" <${process.env.EMAIL_USER}>`,
-      to,
-      subject: 'Order Confirmation - Protein Tunisia',
-      html: htmlContent,
-      attachments: [...attachments, qrAttachment],
-    });
+    try {
+      await this.transporter.sendMail({
+        from: `"Protein Tunisia" <${process.env.EMAIL_USER}>`,
+        to,
+        subject: 'Order Confirmation - Protein Tunisia',
+        html: htmlContent,
+        attachments: [...attachments, qrAttachment],
+      });
+    } catch (err) {
+      console.error('[EmailService] Error sending order confirmation email:', err, 'Context:', safeContext);
+      throw err;
+    }
   }
 
  async sendWeeklyPromotion(to: string, context: any, attachments: any[] = []): Promise<void> {
