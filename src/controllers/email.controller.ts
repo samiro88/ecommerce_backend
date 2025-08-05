@@ -37,7 +37,26 @@ return { message: '✅ Order shipped email sent successfully!' };
 
 @Post('preview')
 async previewTemplate(@Body() body: { type: string; payload: any }) {
-const html = this.emailService.compileTemplate(body.type, body.payload);
-return { html };
+  let html = this.emailService.compileTemplate(body.type, body.payload);
+
+  // Replace cid:logo-cid with your public logo URL (always works in browser)
+  html = html.replace(
+    /src="cid:logo-cid"/g,
+    'src="https://protein.tn/images/logo/logo.png"'
+  );
+
+  // Replace cid:qr-code-cid with a public QR code generator (fallback for preview)
+  // If you want to use the order number in the QR code, use the payload if present:
+  const qrData = body.payload?.orderNumber
+    ? `https://protein.tn/track-order/${body.payload.orderNumber}`
+    : 'https://protein.tn';
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(qrData)}`;
+
+  html = html.replace(
+    /src="cid:qr-code-cid"/g,
+    `src="${qrUrl}"`
+  );
+
+  return { html };
 }
 }
