@@ -24,7 +24,7 @@ export class EmailService {
     });
   }
 
-  private compileTemplate(templateName: string, context: any): string {
+  public compileTemplate(templateName: string, context: any): string {
     const baseDir =
       process.env.NODE_ENV === 'production'
         ? path.join(process.cwd(), 'dist', 'templates')

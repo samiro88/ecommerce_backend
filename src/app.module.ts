@@ -98,6 +98,7 @@ import { PaymentMethodsModule } from './modules/payment-methods/payment-methods.
 // ======================
 
 import { DashboardModule } from './modules/analytics/dashboard.module';
+import { ContactsModule } from './modules/contacts/contacts.module';
 
 @Module({
   imports: [
@@ -184,6 +185,7 @@ import { DashboardModule } from './modules/analytics/dashboard.module';
     CoordinatesModule, // NEW
     AnnoncesModule, // NEW
     SystemMessagesModule, // NEW
+    ContactsModule, // NEW
     // ======================
     // PAYMENTS MODULES
     // ======================
