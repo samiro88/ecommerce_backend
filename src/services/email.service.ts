@@ -36,11 +36,36 @@ export class EmailService {
     return template(context);
   }
 
+  private buildSafeContext(context: any): any {
+    return {
+      customerName: context.customerName || '',
+      orderNumber: context.orderNumber || '',
+      customerEmail: context.customerEmail || '',
+      address: context.address || '',
+      city: context.city || '',
+      postalCode: context.postalCode || '',
+      phone: context.phone || '',
+      orderItems: context.orderItems || [],
+      subtotal: context.subtotal || '0',
+      shippingCost: context.shippingCost || '0',
+      shippingMethod: context.shippingMethod || '',
+      total: context.total || '0',
+      billingLocalite: context.billingLocalite || '',
+      unsubscribeLink: context.unsubscribeLink || '',
+      promotions: context.promotions || [],
+      promotionsLink: context.promotionsLink || '',
+      subject: context.subject || '',
+      html: context.html || '',
+      ...context // allow any extra fields
+    };
+  }
+
   async sendOrderConfirmation(to: string, context: any, attachments: any[] = []): Promise<void> {
-    const htmlContent = this.compileTemplate('order-confirmation', context);
+    const safeContext = this.buildSafeContext(context);
+    const htmlContent = this.compileTemplate('order-confirmation', safeContext);
 
     // Generate QR code buffer (based on order number or your logic)
-    const qrCodeBuffer = await QRCode.toBuffer(`https://protein.tn/track-order/${context.orderNumber || 'default'}`);
+    const qrCodeBuffer = await QRCode.toBuffer(`https://protein.tn/track-order/${safeContext.orderNumber || 'default'}`);
 
     // Add QR code to attachments as inline image (cid)
     const qrAttachment = {
@@ -59,10 +84,11 @@ export class EmailService {
   }
 
  async sendWeeklyPromotion(to: string, context: any, attachments: any[] = []): Promise<void> {
-    const htmlContent = this.compileTemplate('weekly-promotion', context);
+    const safeContext = this.buildSafeContext(context);
+    const htmlContent = this.compileTemplate('weekly-promotion', safeContext);
     const fs = require('fs');
     // Generate QR code (matches template's cid:qr-code-cid)
-    const qrCodeBuffer = await QRCode.toBuffer(context.promotionsLink || 'https://protein.tn');
+    const qrCodeBuffer = await QRCode.toBuffer(safeContext.promotionsLink || 'https://protein.tn');
     const qrAttachment = {
       filename: 'qr-code.png',
       content: qrCodeBuffer,
@@ -88,7 +114,7 @@ export class EmailService {
     await this.transporter.sendMail({
       from: `"Protein Tunisia" <${process.env.EMAIL_USER}>`,
       to,
-      subject: context.subject || 'This Week’s Offers - Protein Tunisia',
+      subject: safeContext.subject || 'This Week’s Offers - Protein Tunisia',
       html: htmlContent,
       attachments: allAttachments, // Preserves existing attachments and adds logo
     });
@@ -97,19 +123,20 @@ export class EmailService {
   async sendOrderShipped(to: string, context: any, attachments: any[] = []): Promise<void> {
     console.log('Shipped Context:', context); // Logging for verification
     try {
+      const safeContext = this.buildSafeContext(context);
       // Calculate subtotal, shippingCost, and total
-      const subtotal = context.orderItems.reduce((sum: number, item: any) => sum + (item.quantity * item.price), 0);
+      const subtotal = safeContext.orderItems.reduce((sum: number, item: any) => sum + (item.quantity * item.price), 0);
       const shippingCost = 10;
       const total = subtotal + shippingCost;
       // Override context values
       const updatedContext = {
-        ...context,
+        ...safeContext,
         subtotal: subtotal.toString(),
         shippingCost: shippingCost.toString(),
         total: total.toString(),
       };
       // Generate QR code (same as order confirmation)
-      const qrCodeBuffer = await QRCode.toBuffer(`https://protein.tn/track-order/${context.orderNumber || 'default'}`);
+      const qrCodeBuffer = await QRCode.toBuffer(`https://protein.tn/track-order/${updatedContext.orderNumber || 'default'}`);
       const qrAttachment = {
         filename: 'qr-code.png',
         content: qrCodeBuffer,
@@ -137,7 +164,7 @@ export class EmailService {
       const info = await this.transporter.sendMail({
         from: `"Protein Tunisia" <${process.env.EMAIL_USER}>`,
         to,
-        subject: context.subject || 'Votre commande a été expédiée - Protein Tunisia', // Uses French subject from request or falls back
+        subject: updatedContext.subject || 'Votre commande a été expédiée - Protein Tunisia', // Uses French subject from request or falls back
         html: htmlContent,
         attachments: allAttachments, // Merge existing attachments + QR code + logo
       });
