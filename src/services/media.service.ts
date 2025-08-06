@@ -47,7 +47,12 @@ export class MediaService {
   }
 
   // NEW: List media by folder
- async findByFolderId(folderId: string): Promise<Media[]> {
-  return this.mediaModel.find({ id: { $regex: `^public/${folderId}/` } }).sort({ id: -1 }).exec();
-}
+  async findByFolderId(folderId: string): Promise<Media[]> {
+  return this.mediaModel.find({
+  $or: [
+  { folderId: folderId },
+  { id: { $regex: `^public/${folderId}/` } }
+  ]
+  }).sort({ id: -1 }).exec();
+  }
 }

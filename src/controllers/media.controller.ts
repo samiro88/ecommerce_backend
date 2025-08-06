@@ -1,18 +1,20 @@
 import { Controller, Get, Param, Query, Req, Res, Patch, Body, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { MediaService } from '../services/media.service';
 import { Request, Response } from 'express';
+
 @Controller('media')
 export class MediaController {
   constructor(
     private readonly mediaService: MediaService,
   ) {}
 
-  // NEW: List media by folder (MUST BE FIRST)@Get('/by-folder/*')
-async getMediaByFolder(@Req() req: Request, @Res() res: Response) {
-  const folderId = req.params[0];
-  const mediaList = await this.mediaService.findByFolderId(folderId);
-  return res.json(mediaList);
-}
+  // NEW: List media by folder (MUST BE FIRST)
+  @Get('/by-folder/*')
+  async getMediaByFolder(@Req() req: Request, @Res() res: Response) {
+    const folderId = req.params[0];
+    const mediaList = await this.mediaService.findByFolderId(folderId);
+    return res.json(mediaList);
+  }
 
   @Get(':mediaId')
   async getMediaMetadata(
