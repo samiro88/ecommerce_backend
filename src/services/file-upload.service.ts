@@ -19,7 +19,7 @@ export class FileUploadService {
   ) {}
 
   async uploadFile(file: Express.Multer.File, folderId: string | undefined): Promise<Attachment> {
-    const originalBuffer = await fs.readFile(file.path);
+    const originalBuffer = file.buffer;
     let uploadBuffer = originalBuffer;
     let resourceType: 'image' | 'video' | 'raw' = 'raw';
     let width: number | null = null;
