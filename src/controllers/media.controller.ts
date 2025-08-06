@@ -8,7 +8,7 @@ export class MediaController {
   ) {}
 
   // NEW: List media by folder (MUST BE FIRST)
-  @Get('/by-folder/:folderId')
+  @Get('/by-folder/:folderId(*)')
   async getMediaByFolder(@Param('folderId') folderId: string, @Res() res: Response) {
     const mediaList = await this.mediaService.findByFolderId(folderId);
     return res.json(mediaList);
