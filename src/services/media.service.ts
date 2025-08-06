@@ -48,11 +48,24 @@ export class MediaService {
 
   // NEW: List media by folder
   async findByFolderId(folderId: string): Promise<Media[]> {
-  return this.mediaModel.find({
-  $or: [
-  { folderId: folderId },
-  { id: { $regex: `^public/${folderId}/` } }
-  ]
-  }).sort({ id: -1 }).exec();
+    // Log the database and collection name
+    const dbName = this.mediaModel.db.name;
+    const collectionName = this.mediaModel.collection.name;
+    console.log('DB NAME:', dbName);
+    console.log('COLLECTION NAME:', collectionName);
+    // Log all documents in the collection (limit to 10 for safety)
+    const sampleDocs = await this.mediaModel.find().limit(10).lean();
+    console.log('SAMPLE DOCS:', sampleDocs);
+    // Log the folderId param
+    console.log('FOLDER ID PARAM:', folderId);
+    // Log the query results
+    const results = await this.mediaModel.find({
+      $or: [
+        { folderId: folderId },
+        { id: { $regex: `^public/${folderId}/` } }
+      ]
+    }).sort({ id: -1 }).exec();
+    console.log('QUERY RESULTS:', results);
+    return results;
   }
 }
