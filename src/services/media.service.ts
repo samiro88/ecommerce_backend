@@ -5,9 +5,9 @@ import { Media, MediaDocument } from '../models/media.schema';
 
 @Injectable()
 export class MediaService {
-  constructor(
-    @InjectModel(Media.name) private readonly mediaModel: Model<MediaDocument>,
-  ) {}
+ constructor(
+  @InjectModel('Media') private readonly mediaModel: Model<MediaDocument>,
+) {}
 
   async findById(mediaId: string): Promise<Media> {
     const media = await this.mediaModel.findOne({ id: mediaId });

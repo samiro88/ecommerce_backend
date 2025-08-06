@@ -1,14 +1,12 @@
-import { Injectable, NotFoundException, BadRequestException, Inject, forwardRef } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Folder, FolderDocument } from '../models/folder.schema';
-import { Media, MediaDocument } from '../models/media.schema';
 
 @Injectable()
 export class FolderService {
   constructor(
     @InjectModel(Folder.name) private readonly folderModel: Model<FolderDocument>,
-    @InjectModel(Media.name) private readonly mediaModel: Model<MediaDocument>,
   ) {}
 
   async createFolder(data: { id: string; name: string; parentId?: string | null }): Promise<Folder> {
@@ -25,7 +23,7 @@ export class FolderService {
       parentId: data.parentId ?? null,
     });
 
-    return folder.save();
+    return await folder.save();
   }
 
   async getFolderById(id: string): Promise<Folder> {
@@ -37,10 +35,16 @@ export class FolderService {
   }
 
   async listFolders(parentId: string | null = null): Promise<Folder[]> {
+    // Debug: log all folders
+    const allFolders = await this.folderModel.find().lean();
+    console.log('All folders in DB:', allFolders);
     return this.folderModel.find({ parentId }).sort({ name: 1 }).exec();
   }
 
-  async updateFolder(id: string, updateData: Partial<{ name: string; parentId: string | null }>): Promise<Folder> {
+  async updateFolder(
+    id: string,
+    updateData: Partial<{ name: string; parentId: string | null }>,
+  ): Promise<Folder> {
     const folder = await this.getFolderById(id);
 
     if (updateData.parentId) {
@@ -56,37 +60,51 @@ export class FolderService {
     if (updateData.name !== undefined) folder.name = updateData.name;
     if (updateData.parentId !== undefined) folder.parentId = updateData.parentId;
 
-    return folder.save();
+    // Only call save() if folder is a Mongoose document
+    if (typeof (folder as any).save === 'function') {
+      return await (folder as any).save();
+    } else {
+      throw new Error('Folder is not a Mongoose document');
+    }
   }
 
   async deleteFolder(id: string): Promise<void> {
-    // Optional: you might want to check if folder has children or media before deleting
     const folder = await this.getFolderById(id);
     await this.folderModel.deleteOne({ id });
   }
 
-  // NEW: Recursively build the folder tree with images
-  async getFolderTreeWithImages(parentId: string | null = null): Promise<any[]> {
-    const folders = await this.folderModel.find({ parentId }).sort({ name: 1 }).lean();
-    const result: any[] = [];
-    for (const folder of folders) {
-      // Get images for this folder
-      const images = await this.mediaModel.find({ folderId: folder.id }).lean();
-      // Recursively get children
-      const children = await this.getFolderTreeWithImages(folder.id);
-      const folderNode: any = {
-        id: folder.id,
-        name: folder.name,
-        parentId: folder.parentId,
-      };
-      if (images.length > 0) {
-        folderNode.images = images.map(img => img.id ? `public/${folder.id}/${img.id}` : null).filter(Boolean);
-      }
-      if (children.length > 0) {
-        folderNode.children = children;
-      }
-      result.push(folderNode);
+  async getFolderTreeWithImages(): Promise<any[]> {
+    // FULL DEBUG: log all collections, all folders, types, and a test query
+    const collections = await this.folderModel.db!.db!.listCollections().toArray();
+    console.log('Collections in DB:', collections.map(c => c.name));
+    const allFolders = await this.folderModel.find().lean();
+    console.log('All folders in DB (tree):', allFolders);
+    console.log('Number of folders:', allFolders.length);
+    if (allFolders.length > 0) {
+      allFolders.forEach(f => {
+        console.log(`id: ${f.id}, name: ${f.name}, parentId:`, f.parentId, 'type:', typeof f.parentId);
+      });
     }
-    return result;
+    const test = await this.folderModel.findOne({ id: 'annonces' }).lean();
+    console.log('Test findOne annonces:', test);
+    if (!allFolders.length) return [];
+
+    // Build a map for quick lookup
+    const folderMap: Record<string, any> = {};
+    allFolders.forEach(folder => {
+      (folder as any).children = [];
+      folderMap[folder.id] = folder;
+    });
+
+    // Build the tree
+    const tree: any[] = [];
+    allFolders.forEach(folder => {
+      if (folder.parentId) {
+        folderMap[folder.parentId]?.children?.push(folder);
+      } else {
+        tree.push(folder);
+      }
+    });
+    return tree;
   }
 }

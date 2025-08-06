@@ -11,10 +11,9 @@ import { FolderController } from '../controllers/folder.controller';
 
 @Module({
   imports: [
-    RedisModule,
     MongooseModule.forFeature([
-      { name: Media.name, schema: MediaSchema },
-      { name: Folder.name, schema: FolderSchema },
+    { name: 'Media', schema: MediaSchema, collection: 'media' },
+    { name: 'Folder', schema: FolderSchema }, // Uses 'folders' collection as per schema
     ]),
   ],
   controllers: [MediaController, FolderController],

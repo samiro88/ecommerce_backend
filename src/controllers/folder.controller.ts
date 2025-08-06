@@ -24,6 +24,12 @@ export class FolderController {
     return this.folderService.createFolder(body);
   }
 
+  // Place this route BEFORE @Get(':id')
+  @Get('tree')
+  async getFullFolderTree() {
+    return this.folderService.getFolderTreeWithImages();
+  }
+
   @Get(':id')
   async getFolderById(@Param('id') id: string): Promise<Folder> {
     return this.folderService.getFolderById(id);
@@ -47,11 +53,5 @@ export class FolderController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteFolder(@Param('id') id: string): Promise<void> {
     await this.folderService.deleteFolder(id);
-  }
-
-  // NEW: Get the full folder tree with images (hierarchical)
-  @Get('tree')
-  async getFolderTreeWithImages() {
-    return this.folderService.getFolderTreeWithImages();
   }
 }

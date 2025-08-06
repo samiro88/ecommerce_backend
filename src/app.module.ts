@@ -35,6 +35,7 @@ import { BrandsModule } from './modules/brands/brands.module';
 import { AromasModule } from './modules/aromas/aromas.module';
 import { UserModule } from './modules/user/user.module';
 import { BannerModule } from './modules/banner/banner.module';
+import { MediaModule } from './services/media.module';
 // ======================
 // NEW MODULES ADDED HERE
 // ======================
@@ -196,7 +197,7 @@ import { ContactsModule } from './modules/contacts/contacts.module';
  BannerModule,
     //dahboard module 
     DashboardModule, // NEW
-    
+     MediaModule,
     // ======================
     // ATTACHMENT MODEL
     // ======================

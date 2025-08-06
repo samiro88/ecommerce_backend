@@ -1,13 +1,11 @@
 import { Controller, Get, Param, Query, Req, Res, Patch, Body, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { MediaService } from '../services/media.service';
-import { RedisService } from 'nestjs-redis';
 import { Request, Response } from 'express';
 
 @Controller('media')
 export class MediaController {
   constructor(
     private readonly mediaService: MediaService,
-    private readonly redisService: RedisService,
   ) {}
 
   @Get(':mediaId')
@@ -19,13 +17,6 @@ export class MediaController {
     if (!mediaId) {
       return res.status(400).json({ error: 'Media ID is required' });
     }
-
-    const redisClient = this.redisService.getClient('default');
-    const cachedMetadata = await redisClient.get(`media:${mediaId}:metadata`);
-    if (cachedMetadata) {
-      return res.json(JSON.parse(cachedMetadata));
-    }
-
     try {
       const media = await this.mediaService.findById(mediaId);
       const metadata = {
@@ -33,7 +24,6 @@ export class MediaController {
         height: media.height,
         fileSize: media.fileSize,
       };
-      await redisClient.set(`media:${mediaId}:metadata`, JSON.stringify(metadata), 'EX', 3600);
       return res.json(metadata);
     } catch (err) {
       return res.status(404).json({ error: 'Media not found' });
@@ -46,14 +36,6 @@ export class MediaController {
     @Query('limit') limit = 10,
     @Res() res: Response,
   ): Promise<any> {
-    const redisClient = this.redisService.getClient('default');
-    const cacheKey = `media:page:${page}:limit:${limit}`;
-
-    const cached = await redisClient.get(cacheKey);
-    if (cached) {
-      return res.json(JSON.parse(cached));
-    }
-
     const offset = (Number(page) - 1) * Number(limit);
     const [mediaList, totalCount] = await this.mediaService.findAllWithPagination(offset, Number(limit));
 
@@ -69,8 +51,6 @@ export class MediaController {
       total: totalCount,
       totalPages: Math.ceil(totalCount / Number(limit)),
     };
-
-    await redisClient.set(cacheKey, JSON.stringify(result), 'EX', 3600);
 
     return res.json(result);
   }
