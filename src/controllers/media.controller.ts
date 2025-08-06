@@ -12,7 +12,7 @@ export class MediaController {
   @Get('/by-folder/*')
   async getMediaByFolder(@Req() req: Request, @Res() res: Response) {
     console.log('REQ.PARAMS:', req.params);
-    const folderId = req.params[0];
+    const folderId = Array.isArray(req.params.path) ? req.params.path.join('/') : req.params.path;
     console.log('FOLDER ID in controller:', folderId);
     const mediaList = await this.mediaService.findByFolderId(folderId);
     return res.json(mediaList);
