@@ -1,4 +1,13 @@
-import { Controller, Post, UploadedFile, UseInterceptors, Get, Param, Res } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+  Get,
+  Param,
+  Res,
+  Body, // ← Added
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileUploadService } from '../services/file-upload.service';
 import { multerOptions } from '../routes/blog/config/multer.config';
@@ -10,8 +19,11 @@ export class FileUploadController {
 
   @Post()
   @UseInterceptors(FileInterceptor('file', multerOptions))
-  async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return this.fileUploadService.uploadFile(file);
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Body('folderId') folderId?: string // ← Accept folderId from body
+  ) {
+    return this.fileUploadService.uploadFile(file, folderId); // ← Pass it to service
   }
 
   @Get('download/:filename')
@@ -19,4 +31,3 @@ export class FileUploadController {
     return this.fileUploadService.getFile(filename, res);
   }
 }
-

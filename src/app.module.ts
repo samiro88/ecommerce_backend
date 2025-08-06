@@ -65,6 +65,7 @@ import { StatisticsModule } from './shared/utils/statistics/statistics.module';
 import { GeneratorsModule } from './shared/utils/generators/reference/generators.module';
 import { SlugModule } from './shared/utils/generators/slug/slug.module';
 import { Attachment, AttachmentSchema } from './models/attachment.schema';
+import { Media, MediaSchema } from './models/media.schema';
 import { MediaCompressionModule } from './shared/utils/media-compression/media-compression.module';
 import { CommandeModule } from './modules/commande/commande.module';
 import { AramexModule } from './modules/aramex/aramex.module';
@@ -201,6 +202,7 @@ import { ContactsModule } from './modules/contacts/contacts.module';
     // ======================
     MongooseModule.forFeature([
       { name: Attachment.name, schema: AttachmentSchema },
+      { name: Media.name, schema: MediaSchema },
       { name: 'VenteFlash', schema: VenteFlashSchema },
     ]),
   ],

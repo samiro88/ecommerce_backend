@@ -1,29 +1,53 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Media } from '../entities/media.entity';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Media, MediaDocument } from '../models/media.schema';
 
 @Injectable()
 export class MediaService {
   constructor(
-    @InjectRepository(Media)
-    private readonly mediaRepository: Repository<Media>,
+    @InjectModel(Media.name) private readonly mediaModel: Model<MediaDocument>,
   ) {}
 
   async findById(mediaId: string): Promise<Media> {
-    const media = await this.mediaRepository.findOne({ where: { id: +mediaId } });
+    const media = await this.mediaModel.findOne({ id: mediaId });
     if (!media) {
-      throw new Error(`Media not found with id ${mediaId}`);
+      throw new NotFoundException(`Media not found with id ${mediaId}`);
     }
     return media;
   }
 
   async findAllWithPagination(offset: number, limit: number): Promise<[Media[], number]> {
-    const [data, total] = await this.mediaRepository.findAndCount({
-      skip: offset,
-      take: limit,
-      order: { id: 'DESC' }, 
-    });
+    const data = await this.mediaModel.find().skip(offset).limit(limit).sort({ id: -1 }).exec();
+    const total = await this.mediaModel.countDocuments();
     return [data, total];
+  }
+
+  // NEW: Update media (move, metadata)
+  async updateMedia(mediaId: string, updateData: Partial<{ width: number; height: number; fileSize: number; folderId: string }>): Promise<Media> {
+    const media = await this.mediaModel.findOne({ id: mediaId });
+    if (!media) {
+      throw new NotFoundException(`Media not found with id ${mediaId}`);
+    }
+    if (updateData.width !== undefined) media.width = updateData.width;
+    if (updateData.height !== undefined) media.height = updateData.height;
+    if (updateData.fileSize !== undefined) media.fileSize = updateData.fileSize;
+    if (updateData.folderId !== undefined) media.folderId = updateData.folderId;
+    await media.save();
+    return media;
+  }
+
+  // NEW: Delete media
+  async deleteMedia(mediaId: string): Promise<void> {
+    const media = await this.mediaModel.findOne({ id: mediaId });
+    if (!media) {
+      throw new NotFoundException(`Media not found with id ${mediaId}`);
+    }
+    await this.mediaModel.deleteOne({ id: mediaId });
+  }
+
+  // NEW: List media by folder
+  async findByFolderId(folderId: string): Promise<Media[]> {
+    return this.mediaModel.find({ folderId }).sort({ id: -1 }).exec();
   }
 }

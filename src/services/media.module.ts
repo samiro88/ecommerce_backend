@@ -1,16 +1,23 @@
 import { Module } from '@nestjs/common';
 import { MediaController } from '../controllers/media.controller';
-import { MediaService } from './media.service';
-import { MediaCompressionService } from './media-compression.service';
+import { MediaService } from '../services/media.service';
+import { MediaCompressionService } from '../shared/utils/media-compression/media-compression.service';
 import { RedisModule } from 'nestjs-redis';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Media } from '../entities/media.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Media, MediaSchema } from '../models/media.schema';
+import { Folder, FolderSchema } from '../models/folder.schema';
+import { FolderService } from '../services/folder.service';
+import { FolderController } from '../controllers/folder.controller';
+
 @Module({
   imports: [
     RedisModule,
-    TypeOrmModule.forFeature([Media]),
+    MongooseModule.forFeature([
+      { name: Media.name, schema: MediaSchema },
+      { name: Folder.name, schema: FolderSchema },
+    ]),
   ],
-  controllers: [MediaController],
-  providers: [MediaService, MediaCompressionService],
+  controllers: [MediaController, FolderController],
+  providers: [MediaService, MediaCompressionService, FolderService],
 })
 export class MediaModule {}
