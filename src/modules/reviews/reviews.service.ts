@@ -26,6 +26,7 @@ export class ReviewsService {
         $project: {
           comment: 1,
           stars: 1,
+          publier: 1,
           created_at: 1,
           user: {
             name: '$user.name',
@@ -95,6 +96,7 @@ export class ReviewsService {
         $project: {
           comment: 1,
           stars: 1,
+          publier: 1,
           created_at: 1,
           user: {
             name: '$user.name',
