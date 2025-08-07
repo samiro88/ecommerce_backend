@@ -1,16 +1,9 @@
-import { diskStorage } from 'multer';
+import { memoryStorage } from 'multer'; // Change from diskStorage to memoryStorage
 import { extname } from 'path';
 import { BadRequestException } from '@nestjs/common';
 
 export const multerOptions = {
-  storage: diskStorage({
-    destination: './uploads/attachments', // Update the destination to store attachments
-    filename: (req, file, callback) => {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-      const ext = extname(file.originalname);
-      callback(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-    },
-  }),
+  storage: memoryStorage(), // Use memoryStorage for in-memory file buffer
   fileFilter: (req, file, callback) => {
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp|pdf|docx|doc|xls|xlsx|ppt|pptx)$/i)) {
       return callback(
@@ -21,6 +14,6 @@ export const multerOptions = {
     callback(null, true);
   },
   limits: {
-    fileSize: 10 * 1024 * 1024, // Update the file size limit to 10MB
+    fileSize: 10 * 1024 * 1024, // 10MB limit
   },
 };
