@@ -34,7 +34,7 @@ export class AuthController {
   @Post('admin/login')
   @UsePipes(new ValidationPipe(AdminLoginDto))
   async adminLogin(@Body() loginData: AdminLoginDto) {
-      return this.authService.adminLogin(loginData);
+      return this.authService.adminLogin(loginData.identifier, loginData.password);
   }
 
   @Get('admin/logout/:token')
@@ -143,7 +143,14 @@ export class AuthController {
   @UsePipes(new ValidationPipe(ClientRegisterDto))
   async clientRegister(@Body() registerData: ClientRegisterDto) {
       try {
-        return await this.authService.clientRegister(registerData);
+        return await this.authService.clientRegister(
+          registerData.name,
+          registerData.email,
+          registerData.password,
+          registerData.phone1,
+          registerData.ville,
+          registerData.address
+        );
       } catch (error) {
           if (error.message === 'EMAIL_EXISTS') {
               throw new HttpException(
