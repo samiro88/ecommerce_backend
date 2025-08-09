@@ -11,7 +11,7 @@ export class ClientLoginDto {
 
 export class AdminLoginDto {
   @IsString()
-  username: string;
+  identifier: string; // username or email
 
   @IsString()
   password: string;
@@ -40,6 +40,9 @@ export class ClientRegisterDto {
 export class AdminRegisterDto {
   @IsString()
   username: string;
+
+  @IsEmail()
+  email: string;
 
   @IsString()
   password: string;

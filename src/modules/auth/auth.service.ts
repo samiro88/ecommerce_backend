@@ -52,10 +52,12 @@ export class AuthService {
     }
   }
 
-  // Admin Login
-  async adminLogin(username: string, password: string) {
+  // Admin Login (username or email)
+  async adminLogin(identifier: string, password: string) {
     try {
-      const adminUser = await this.adminUserModel.findOne({ userName: username });
+      const adminUser = await this.adminUserModel.findOne({
+        $or: [{ userName: identifier }, { email: identifier }]
+      });
 
       if (!adminUser) {
         throw new HttpException(
@@ -72,7 +74,7 @@ export class AuthService {
         );
       }
 
-      const tokenExpiration = '7d'; // Admins get a shorter token expiration
+      const tokenExpiration = '7d';
       const token = this.tokenService.createToken(adminUser._id.toString(), adminUser.role, tokenExpiration);
       return {
         message: 'Logged in successfully',
@@ -87,6 +89,36 @@ export class AuthService {
         HttpStatus.INTERNAL_SERVER_ERROR
       );
     }
+  }
+
+  // Admin Register (username and email must be unique)
+  async adminRegister(registerData: { username: string; email: string; password: string; role?: string }) {
+    const { username, email, password, role = "admin" } = registerData;
+    // Check if username or email already exists
+    const existing = await this.adminUserModel.findOne({
+      $or: [{ userName: username }, { email }]
+    });
+    if (existing) {
+      throw new HttpException(
+        { status: 'error', code: 'USERNAME_OR_EMAIL_EXISTS', message: 'Username or email already exists' },
+        HttpStatus.BAD_REQUEST
+      );
+    }
+    const hashedPassword = await hash(password, 10);
+    const newAdmin = new this.adminUserModel({
+      userName: username,
+      email,
+      password: hashedPassword,
+      role,
+    });
+    await newAdmin.save();
+    const token = this.tokenService.createToken(newAdmin._id.toString(), newAdmin.role, '7d');
+    return {
+      message: 'Admin registered successfully',
+      adminUsername: newAdmin.userName,
+      adminRole: newAdmin.role,
+      token,
+    };
   }
 
   // Admin Logout
