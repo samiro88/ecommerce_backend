@@ -16,6 +16,13 @@ export class AdminUser extends Document {
   @Prop({
     type: String,
     required: true,
+    unique: true,
+  })
+  email: string;
+
+  @Prop({
+    type: String,
+    required: true,
   })
   password: string;
 

@@ -1,4 +1,3 @@
-
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
@@ -19,9 +18,11 @@ export class AuthService {
     // Implement your existing verifyAdminUser logic here
   }
 
-  async adminLogin(loginData: { username: string; password: string }) {
-    const { username, password } = loginData;
-    const adminUser = await this.adminUserModel.findOne({ userName: username });
+  async adminLogin(loginData: { identifier: string; password: string }) {
+    const { identifier, password } = loginData;
+    const adminUser = await this.adminUserModel.findOne({
+      $or: [{ userName: identifier }, { email: identifier }]
+    });
     if (!adminUser) {
       throw new HttpException(
         { status: 'error', code: 'USER_NOT_FOUND', message: 'User not registered' },
