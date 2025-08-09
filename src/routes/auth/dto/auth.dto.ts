@@ -1,5 +1,5 @@
 // auth.dto.ts
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsString, IsOptional } from 'class-validator';
 
 export class ClientLoginDto {
   @IsEmail()
@@ -47,6 +47,7 @@ export class AdminRegisterDto {
   @IsString()
   password: string;
 
+  @IsOptional()
   @IsString()
   role?: string;
 }

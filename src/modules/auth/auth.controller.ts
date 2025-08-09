@@ -16,7 +16,6 @@ export class AuthService {
     private tokenService: TokenService,
   ) {}
   
-  
   async validateRefreshToken(refreshToken: string) {
     try {
       const payload = await this.tokenService.verifyToken(refreshToken);
@@ -85,10 +84,12 @@ export class AuthService {
     }
   }
 
-  // Admin Login
-  async adminLogin(username: string, password: string) {
+  // Admin Login (username or email)
+  async adminLogin(identifier: string, password: string) {
     try {
-      const adminUser = await this.adminUserModel.findOne({ userName: username });
+      const adminUser = await this.adminUserModel.findOne({
+        $or: [{ userName: identifier }, { email: identifier }]
+      });
 
       if (!adminUser) {
         throw new Error('User not registered');
@@ -110,6 +111,33 @@ export class AuthService {
       this.logger.error('Error during admin login', error);
       throw new Error('Internal Server Error');
     }
+  }
+
+  // Admin Register (username and email must be unique)
+  async adminRegister(registerData: { username: string; email: string; password: string; role?: string }) {
+    const { username, email, password, role = "admin" } = registerData;
+    // Check if username or email already exists
+    const existing = await this.adminUserModel.findOne({
+      $or: [{ userName: username }, { email }]
+    });
+    if (existing) {
+      throw new Error('Username or email already exists');
+    }
+    const hashedPassword = await hash(password, 10);
+    const newAdmin = new this.adminUserModel({
+      userName: username,
+      email,
+      password: hashedPassword,
+      role,
+    });
+    await newAdmin.save();
+    const tokens = await this.generateToken(newAdmin);
+    return {
+      message: 'Admin registered successfully',
+      adminUsername: newAdmin.userName,
+      adminRole: newAdmin.role,
+      ...tokens,
+    };
   }
 
   // Admin Logout
@@ -240,8 +268,7 @@ export class AuthService {
       return { status: 'ok', message: 'Logged out successfully' };
     } catch (error) {
       this.logger.error('Error during client logout', error);
-      throw new Error('Internal Server Error');
+      throw new Error('Internal Server Error');  
     }
   }
 }
-
