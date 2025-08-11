@@ -24,20 +24,32 @@ export class ValidateObjectIdMiddleware implements NestMiddleware {
       throw new BadRequestException('Request body is missing');
     }
 
-    const { categoryId, subCategoryIds } = req.body;
+    let { categoryId, subCategoryIds } = req.body;
 
-    // 4. Validate that at least one ID is provided
-    if (!categoryId && !subCategoryIds) {
-      throw new BadRequestException('Either categoryId or subCategoryIds must be provided');
+    // 4. Parse subCategoryIds if it's a JSON string
+    if (typeof subCategoryIds === 'string') {
+      try {
+        subCategoryIds = JSON.parse(subCategoryIds);
+        req.body.subCategoryIds = subCategoryIds; // Update the request body
+      } catch {
+        subCategoryIds = [];
+        req.body.subCategoryIds = [];
+      }
     }
 
-    // 5. Validate categoryId if provided
+    // 5. Validate that at least one ID is provided (make optional)
+    // Remove this strict requirement - allow products without categories
+    // if (!categoryId && !subCategoryIds) {
+    //   throw new BadRequestException('Either categoryId or subCategoryIds must be provided');
+    // }
+
+    // 6. Validate categoryId if provided
     if (categoryId && !Types.ObjectId.isValid(categoryId)) {
       throw new BadRequestException('Invalid category ID format');
     }
 
-    // 6. Validate subCategoryIds array if provided
-    if (subCategoryIds) {
+    // 7. Validate subCategoryIds array if provided
+    if (subCategoryIds && subCategoryIds.length > 0) {
       if (!Array.isArray(subCategoryIds)) {
         throw new BadRequestException('subCategoryIds must be an array');
       }
@@ -46,6 +58,7 @@ export class ValidateObjectIdMiddleware implements NestMiddleware {
         throw new BadRequestException('One or more subcategory IDs are invalid');
       }
     }
+
     // If everything is valid, proceed to the next middleware/controller
     next();
   }
