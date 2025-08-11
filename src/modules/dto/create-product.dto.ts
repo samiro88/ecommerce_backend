@@ -6,46 +6,42 @@ export class CreateProductDto {
   designation: string;
 
   @IsOptional()
-  @IsNumber()
-  @Type(() => Number)
+  @Transform(({ value }) => parseFloat(value) || 10)
   prix?: number = 10;
 
   @IsOptional()
-  @IsNumber()
-  @Type(() => Number)
-  promo?: number;
+  @Transform(({ value }) => parseFloat(value) || 0)
+  promo?: number = 0;
 
   @IsOptional()
   @IsString()
-  smallDescription?: string;
+  smallDescription?: string = 'Description courte';
 
   @IsOptional()
   @IsString()
-  brand?: string;
+  brand?: string = '';
 
   @IsOptional()
-  @IsBoolean()
-  @Type(() => Boolean)
+  @Transform(({ value }) => value === 'true' || value === true)
   status?: boolean = true;
 
   @IsOptional()
   @IsString()
-  description?: string;
+  description?: string = 'Description du produit';
 
   @IsOptional()
   @IsString()
-  question?: string;
+  question?: string = '';
 
   @IsOptional()
   @IsString()
-  venteflashDate?: string;
+  venteflashDate?: string = '';
 
   @IsOptional()
   @IsString()
   categoryId?: string;
 
   @IsOptional()
-  @IsArray()
   @Transform(({ value }) => {
     if (typeof value === 'string') {
       try {
@@ -59,7 +55,6 @@ export class CreateProductDto {
   subCategoryIds?: string[] = [];
 
   @IsOptional()
-  @IsArray()
   @Transform(({ value }) => {
     if (typeof value === 'string') {
       try {
@@ -73,7 +68,6 @@ export class CreateProductDto {
   features?: any[] = [];
 
   @IsOptional()
-  @IsArray()
   @Transform(({ value }) => {
     if (typeof value === 'string') {
       try {
@@ -87,7 +81,6 @@ export class CreateProductDto {
   nutritionalValues?: any[] = [];
 
   @IsOptional()
-  @IsArray()
   @Transform(({ value }) => {
     if (typeof value === 'string') {
       try {
@@ -105,10 +98,10 @@ export class CreateProductDto {
   codaBar?: string = '';
 
   @IsOptional()
-  @IsBoolean()
-  @Type(() => Boolean)
-  inStock?: boolean = false;
+  @Transform(({ value }) => value === 'true' || value === true)
+  inStock?: boolean = true;
 
+  // Legacy field support
   price?: number;
   oldPrice?: number;
 }

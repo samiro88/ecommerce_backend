@@ -191,12 +191,8 @@ export class ProductsService {
         codaBar = '',
       } = createProductDto;
 
-      // Only validate designation as required
-      if (!designation) {
-        throw new BadRequestException('Designation is required');
-      }
-
-      // Set defaults for missing fields
+      // Set defaults for missing fields - no validation errors
+      const finalDesignation = designation || 'Nouveau Produit';
       const finalPrice = parseFloat(price as any) || 10;
       const finalOldPrice = parseFloat(oldPrice as any) || 0;
       const finalInStock = inStock !== undefined ? inStock : true;
@@ -253,7 +249,7 @@ export class ProductsService {
         }
       }
 
-      const finalVariant = parsedVariant.length > 0 ? parsedVariant : [{title: designation, inStock: true}];
+      const finalVariant = parsedVariant.length > 0 ? parsedVariant : [{title: finalDesignation, inStock: true}];
 
       // Upload main image (optional)
       let mainImageResult: any = null;
@@ -291,7 +287,7 @@ export class ProductsService {
       const newProduct = await this.productModel.create(
         [{
           // Schema fields
-          designation,
+          designation: finalDesignation,
           description: finalDescription,
           smallDescription: finalSmallDescription,
           price: finalPrice,
@@ -300,7 +296,7 @@ export class ProductsService {
           taxRate: 19, // Default tax rate
           
           // Database fields
-          designation_fr: designation,
+          designation_fr: finalDesignation,
           description_fr: finalDescription,
           prix: finalPrice,
           promo: finalOldPrice,
@@ -491,10 +487,8 @@ export class ProductsService {
         throw new NotFoundException('Product not found');
       }
 
-      // Only validate designation as required
-      if (!designation) {
-        throw new BadRequestException('Designation is required');
-      }
+      // No validation - accept any designation
+      const finalDesignationUpdate = designation || existingProduct.designation || 'Produit';
 
       // Set defaults for missing fields
       const finalPrice = parseFloat(price as any) || existingProduct.price || 10;
@@ -553,7 +547,7 @@ export class ProductsService {
         }
       }
 
-      const finalVariant = parsedVariant.length > 0 ? parsedVariant : existingProduct.variant || [{title: designation, inStock: true}];
+      const finalVariant = parsedVariant.length > 0 ? parsedVariant : existingProduct.variant || [{title: finalDesignationUpdate, inStock: true}];
 
       // CATEGORY VALIDATION (optional, ignore errors)
       let newCategory: CategoryDocument | null = null;
@@ -572,7 +566,7 @@ export class ProductsService {
       // Prepare update payload
       const updatePayload = {
         // Schema fields
-        designation,
+        designation: finalDesignationUpdate,
         description: finalDescription,
         smallDescription: finalSmallDescription,
         price: finalPrice,
@@ -581,7 +575,7 @@ export class ProductsService {
         status: finalStatus,
         
         // Database fields
-        designation_fr: designation,
+        designation_fr: finalDesignationUpdate,
         description_fr: finalDescription,
         prix: finalPrice,
         promo: finalOldPrice,
