@@ -55,7 +55,13 @@ export class CategoryService {
     const category = await this.categoryModel.findById(id).populate('subCategories');
     if (!category) throw new NotFoundException('Category not found');
 
-    await this.cloudinaryService.deleteImage(category.image.img_id); // ✅ FIXED METHOD NAME
+    if (category.image?.img_id) {
+      try {
+        await this.cloudinaryService.deleteImage(category.image.img_id);
+      } catch (e) {
+        // Ignore cloudinary delete errors
+      }
+    }
     await this.categoryModel.findByIdAndDelete(id);
 
     return { message: 'Category deleted successfully' };

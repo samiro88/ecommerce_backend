@@ -215,7 +215,10 @@ import { ContactsModule } from './modules/contacts/contacts.module';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(bodyParser.json(), bodyParser.urlencoded({ extended: true }))
+      .apply(
+        bodyParser.json({ limit: '50mb' }), 
+        bodyParser.urlencoded({ extended: true, limit: '50mb' })
+      )
       .forRoutes('*');
 
     consumer

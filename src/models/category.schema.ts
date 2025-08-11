@@ -15,12 +15,13 @@ export class Category extends Document {
   schema_description?: string;
   @Prop({
     type: {
-      url: { type: String, required: true },  
-      img_id: { type: String, required: true }  
+      url: { type: String, required: false },  
+      img_id: { type: String, required: false }  
     },
-    _id: false  
+    _id: false,
+    required: false
   })
-  image: {
+  image?: {
     url: string;
     img_id: string;
   };

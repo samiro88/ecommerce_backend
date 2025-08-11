@@ -352,6 +352,12 @@ export class ProductsService {
       };
     } catch (error) {
       await session.abortTransaction();
+      console.error('Product creation error details:', {
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
+        createProductDto
+      });
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;
       }

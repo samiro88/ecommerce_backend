@@ -38,8 +38,7 @@ import { Client } from './client.schema';
   }
 })
 export class Product extends Document {
-  @Prop({ required: true, unique: true })
-  @Prop() 
+  @Prop({ required: true })
   designation: string;
 
   @Prop() 
