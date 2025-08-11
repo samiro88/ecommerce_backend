@@ -436,9 +436,6 @@ export class ProductsService {
     updateProductDto: UpdateProductDto,
     files: Express.Multer.File[],
   ) {
-    const session = await mongoose.startSession();
-    session.startTransaction();
-
     try {
       const {
         designation,
@@ -467,8 +464,7 @@ export class ProductsService {
           { id: id }
         ]
       })
-      .populate("category subCategory")
-      .session(session);
+      .populate("category subCategory");
 
       if (!existingProduct) {
         throw new NotFoundException('Product not found');
@@ -539,7 +535,7 @@ export class ProductsService {
       // CATEGORY VALIDATION (optional, ignore errors)
       let newCategory: CategoryDocument | null = null;
       if (categoryId) {
-        newCategory = await this.categoryModel.findById(categoryId).session(session).catch(() => null) as CategoryDocument | null;
+        newCategory = await this.categoryModel.findById(categoryId).catch(() => null) as CategoryDocument | null;
       }
 
       // IMAGE HANDLING
@@ -593,7 +589,7 @@ export class ProductsService {
           ]
         },
         updatePayload,
-        { new: true, session }
+        { new: true }
       ).populate("category subCategory");
 
       // HANDLE CATEGORY RELATIONSHIPS (ignore errors)
@@ -601,18 +597,14 @@ export class ProductsService {
         existingProduct,
         updatedProduct,
         newCategory,
-        parsedSubCategoryIds,
-        session
+        parsedSubCategoryIds
       ).catch(() => {});
-
-      await session.commitTransaction();
 
       return {
         message: "Product updated successfully",
         data: updatedProduct,
       };
     } catch (error) {
-      await session.abortTransaction();
       console.error('Product update service error:', {
         message: error.message,
         stack: error.stack,
@@ -623,8 +615,6 @@ export class ProductsService {
         throw error;
       }
       throw new InternalServerErrorException('Error updating product', error.message);
-    } finally {
-      session.endSession();
     }
   }
 
@@ -700,8 +690,7 @@ export class ProductsService {
     existingProduct: any,
     updatedProduct: any,
     newCategory: any,
-    newSubCategoryIds: string[],
-    session: mongoose.ClientSession
+    newSubCategoryIds: string[]
   ) {
     // Handle category changes
     if (
@@ -711,8 +700,7 @@ export class ProductsService {
       if (existingProduct.category) {
         await this.categoryModel.findByIdAndUpdate(
           existingProduct.category,
-          { $pull: { products: existingProduct._id } },
-          { session }
+          { $pull: { products: existingProduct._id } }
         );
       }
 
@@ -720,8 +708,7 @@ export class ProductsService {
       if (newCategory) {
         await this.categoryModel.findByIdAndUpdate(
           newCategory._id,
-          { $addToSet: { products: updatedProduct._id } },
-          { session }
+          { $addToSet: { products: updatedProduct._id } }
         );
       }
     }
@@ -739,8 +726,7 @@ export class ProductsService {
     if (subToRemove.length > 0) {
       await this.subCategoryModel.updateMany(
         { _id: { $in: subToRemove } },
-        { $pull: { products: updatedProduct._id } },
-        { session }
+        { $pull: { products: updatedProduct._id } }
       );
     }
 
@@ -748,8 +734,7 @@ export class ProductsService {
     if (subToAdd.length > 0) {
       await this.subCategoryModel.updateMany(
         { _id: { $in: subToAdd } },
-        { $addToSet: { products: updatedProduct._id } },
-        { session }
+        { $addToSet: { products: updatedProduct._id } }
       );
     }
   }
