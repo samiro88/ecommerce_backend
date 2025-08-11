@@ -27,7 +27,7 @@ export const ClientSchema = new Schema({
 
 export interface Client extends Document {
   email: string;
-  password: string;
+  password?: string;
   isGuest: boolean;
   name: string;
   phone_1: string;
