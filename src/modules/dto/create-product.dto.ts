@@ -44,9 +44,9 @@ export class CreateProductDto {
   categoryId?: string;
 
   @IsOptional()
-  @IsArray()
-  @Type(() => String)
-  subCategoryIds?: string[] = [];
+@IsArray()
+@Type(() => String)
+subCategoryIds?: string[] = [];
 
   @IsOptional()
   @IsArray()

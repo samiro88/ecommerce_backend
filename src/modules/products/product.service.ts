@@ -205,15 +205,17 @@ export class ProductsService {
         }
       }
 
-      // Validate subCategoryIds
-      if (!Array.isArray(subCategoryIds)) {
-        throw new BadRequestException('subCategoryIds must be an array');
+     // Validate subCategoryIds - allow empty or missing
+if (subCategoryIds && subCategoryIds.length > 0 && !Array.isArray(subCategoryIds)) {
+  throw new BadRequestException('subCategoryIds must be an array');
       }
 
-      const isValidSubCategoryIds = subCategoryIds.every(id => mongoose.Types.ObjectId.isValid(id));
-      if (!isValidSubCategoryIds) {
-        throw new BadRequestException('Invalid subCategoryIds');
-      }
+      if (subCategoryIds && subCategoryIds.length > 0) {
+  const isValidSubCategoryIds = subCategoryIds.every(id => mongoose.Types.ObjectId.isValid(id));
+  if (!isValidSubCategoryIds) {
+    throw new BadRequestException('Invalid subCategoryIds');
+  }
+}
 
       // Validate all subcategories if provided
       if (subCategoryIds.length > 0) {
