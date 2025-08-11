@@ -50,6 +50,12 @@ export class ClientsController {
     return this.clientsService.getAllClients();
   }
 
+
+    @Post()
+  async createClient(@Body() body: any) {
+    return this.clientsService.createGuestClient(body);
+  }
+
   @Post('sms/send')
   async sendSms(@Body() body: { to: string; message: string }) {
     await this.smsService.sendSms(body.to, body.message);

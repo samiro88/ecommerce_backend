@@ -4,7 +4,7 @@ export const ClientSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, select: false },
   isGuest: { type: Boolean, default: true },
-    name: String,
+  name: String,
   phone_1: String,
   phone_2: String,
   ville: String,
@@ -22,13 +22,14 @@ export const ClientSchema = new Schema({
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
   sms: { type: String, default: "0" },
+  subscriber: { type: Boolean, default: false }, // ADD THIS LINE
 });
 
 export interface Client extends Document {
   email: string;
   password: string;
   isGuest: boolean;
-    name: string;
+  name: string;
   phone_1: string;
   phone_2: string;
   ville: string;
@@ -41,4 +42,5 @@ export interface Client extends Document {
   created_at?: Date;
   updated_at?: Date;
   sms?: string;
+  subscriber?: boolean; // ADD THIS LINE
 }
