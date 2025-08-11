@@ -105,8 +105,11 @@ async getStoreNewArrivals() {
     @UploadedFiles() files: Express.Multer.File[],
   ) {
     try {
-      return await this.productsService.updateProduct(id, updateProductDto, files);
+      // Handle both JSON and multipart requests
+      const filesArray = files || [];
+      return await this.productsService.updateProduct(id, updateProductDto, filesArray);
     } catch (error) {
+      console.error('Product update controller error:', error);
       throw new HttpException(
         error.message,
         error.status || HttpStatus.INTERNAL_SERVER_ERROR,

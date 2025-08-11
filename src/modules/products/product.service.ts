@@ -257,7 +257,7 @@ export class ProductsService {
 
       // Upload main image (optional)
       let mainImageResult: any = null;
-      const mainImageFile = files?.find(f => f.fieldname === 'mainImage');
+      const mainImageFile = files?.find?.(f => f.fieldname === 'mainImage');
       if (mainImageFile) {
         const mainImageStr = mainImageFile.buffer.toString('base64');
         const mainImageDataUri = `data:${mainImageFile.mimetype};base64,${mainImageStr}`;
@@ -269,7 +269,7 @@ export class ProductsService {
 
       // Upload additional images
       const images: CloudinaryImage[] = [];
-      const additionalImages = files.filter(f => f.fieldname === 'images');
+      const additionalImages = files?.filter?.(f => f.fieldname === 'images') || [];
       if (additionalImages.length > 0) {
         for (const imageFile of additionalImages) {
           const imageStr = imageFile.buffer.toString('base64');
@@ -562,10 +562,10 @@ export class ProductsService {
       }
 
       // IMAGE HANDLING
-      const mainImage = await this.handleMainImageUpdate(existingProduct, files?.find(f => f.fieldname === 'mainImage'));
+      const mainImage = await this.handleMainImageUpdate(existingProduct, files?.find?.(f => f.fieldname === 'mainImage'));
       const images = await this.handleGalleryImagesUpdate(
         existingProduct,
-        files?.filter(f => f.fieldname === 'images'),
+        files?.filter?.(f => f.fieldname === 'images') || [],
         deletedImages,
       );
 
@@ -632,6 +632,12 @@ export class ProductsService {
       };
     } catch (error) {
       await session.abortTransaction();
+      console.error('Product update service error:', {
+        message: error.message,
+        stack: error.stack,
+        updateProductDto,
+        productId: id
+      });
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;
       }
