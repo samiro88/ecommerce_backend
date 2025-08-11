@@ -161,6 +161,9 @@ export class ProductsService {
     }
   }
 
+
+
+
   async createProduct(
     createProductDto: CreateProductDto,
     files: Express.Multer.File[],
@@ -188,71 +191,81 @@ export class ProductsService {
         codaBar = '',
       } = createProductDto;
 
-      // Validate required fields
-      if (!designation || !price || !files?.find(f => f.fieldname === 'mainImage')) {
-        throw new BadRequestException(
-          `Required fields are missing: ${!designation ? 'designation, ' : ''}${
-            !price ? 'price, ' : ''
-          }${!files?.find(f => f.fieldname === 'mainImage') ? 'mainImage' : ''}`.replace(/,\s*$/, '')
-        );
+      // Only validate designation as required
+      if (!designation) {
+        throw new BadRequestException('Designation is required');
       }
 
-      // Validate category exists if provided
-      if (categoryId) {
-        const category = await this.categoryModel.findById(categoryId).session(session);
-        if (!category) {
-          throw new NotFoundException('Category not found');
+      // Set defaults for missing fields
+      const finalPrice = parseFloat(price as any) || 10;
+      const finalOldPrice = parseFloat(oldPrice as any) || 0;
+      const finalInStock = inStock !== undefined ? inStock : true;
+      const finalStatus = status !== undefined ? status : true;
+      const finalDescription = description || 'Description du produit';
+      const finalSmallDescription = smallDescription || 'Description courte';
+      const finalBrand = brand || '';
+      const finalVenteflashDate = venteflashDate || '';
+      const finalQuestion = question || '';
+      const finalCodaBar = codaBar || `SBT-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+
+      // Parse arrays safely
+      let parsedSubCategoryIds: any[] = [];
+      if (Array.isArray(subCategoryIds)) {
+        parsedSubCategoryIds = subCategoryIds;
+      } else if (typeof subCategoryIds === 'string' && subCategoryIds) {
+        try {
+          parsedSubCategoryIds = JSON.parse(subCategoryIds);
+        } catch {
+          parsedSubCategoryIds = [];
         }
       }
 
-     // Validate subCategoryIds - allow empty or missing
-if (subCategoryIds && subCategoryIds.length > 0 && !Array.isArray(subCategoryIds)) {
-  throw new BadRequestException('subCategoryIds must be an array');
-      }
-
-      if (subCategoryIds && subCategoryIds.length > 0) {
-  const isValidSubCategoryIds = subCategoryIds.every(id => mongoose.Types.ObjectId.isValid(id));
-  if (!isValidSubCategoryIds) {
-    throw new BadRequestException('Invalid subCategoryIds');
-  }
-}
-
-      // Validate all subcategories if provided
-      if (subCategoryIds.length > 0) {
-        const subCategories = await this.subCategoryModel.find({
-          _id: { $in: subCategoryIds },
-        }).session(session);
-
-        if (subCategories.length !== subCategoryIds.length) {
-          throw new NotFoundException('One or more sub-categories not found');
-        }
-
-        if (categoryId) {
-          const invalidSubCategories = subCategories.filter(
-            subCat => subCat.category && subCat.category.toString() !== categoryId
-          );
-
-          if (invalidSubCategories.length > 0) {
-            throw new BadRequestException({
-              message: 'Some sub-categories do not belong to the specified category',
-              invalidSubCategories: invalidSubCategories.map(sc => sc._id),
-            });
-          }
+      let parsedFeatures: any[] = [];
+      if (Array.isArray(features)) {
+        parsedFeatures = features;
+      } else if (typeof features === 'string' && features) {
+        try {
+          parsedFeatures = JSON.parse(features);
+        } catch {
+          parsedFeatures = [];
         }
       }
 
-      // Upload main image
-      const mainImageFile = files.find(f => f.fieldname === 'mainImage');
-      if (!mainImageFile) {
-        throw new BadRequestException('Main image is required');
+      let parsedNutritionalValues: any[] = [];
+      if (Array.isArray(nutritionalValues)) {
+        parsedNutritionalValues = nutritionalValues;
+      } else if (typeof nutritionalValues === 'string' && nutritionalValues) {
+        try {
+          parsedNutritionalValues = JSON.parse(nutritionalValues);
+        } catch {
+          parsedNutritionalValues = [];
+        }
       }
-      const mainImageStr = mainImageFile.buffer.toString('base64');
-      const mainImageDataUri = `data:${mainImageFile.mimetype};base64,${mainImageStr}`;
 
-      const mainImageResult = await cloudinary.uploader.upload(mainImageDataUri, {
-        folder: "products/main",
-        resource_type: "auto",
-      });
+      let parsedVariant: any[] = [];
+      if (Array.isArray(variant)) {
+        parsedVariant = variant;
+      } else if (typeof variant === 'string' && variant) {
+        try {
+          parsedVariant = JSON.parse(variant);
+        } catch {
+          parsedVariant = [];
+        }
+      }
+
+      const finalVariant = parsedVariant.length > 0 ? parsedVariant : [{title: designation, inStock: true}];
+
+      // Upload main image (optional)
+      let mainImageResult: any = null;
+      const mainImageFile = files?.find(f => f.fieldname === 'mainImage');
+      if (mainImageFile) {
+        const mainImageStr = mainImageFile.buffer.toString('base64');
+        const mainImageDataUri = `data:${mainImageFile.mimetype};base64,${mainImageStr}`;
+        mainImageResult = await cloudinary.uploader.upload(mainImageDataUri, {
+          folder: "products/main",
+          resource_type: "auto",
+        });
+      }
 
       // Upload additional images
       const images: CloudinaryImage[] = [];
@@ -279,54 +292,55 @@ if (subCategoryIds && subCategoryIds.length > 0 && !Array.isArray(subCategoryIds
         [{
           // Schema fields
           designation,
-          description,
-          smallDescription,
-          price,
-          oldPrice: parseFloat(oldPrice as any) || 0,
-          status,
+          description: finalDescription,
+          smallDescription: finalSmallDescription,
+          price: finalPrice,
+          oldPrice: finalOldPrice,
+          status: finalStatus,
           
           // Database fields
           designation_fr: designation,
-          description_fr: description,
-          prix: price,
-          promo: parseFloat(oldPrice as any) || 0,
-          publier: status ? "1" : "0",
+          description_fr: finalDescription,
+          prix: finalPrice,
+          promo: finalOldPrice,
+          publier: finalStatus ? "1" : "0",
           
           // Common fields
-          inStock,
-          brand,
-          venteflashDate,
-          features,
-          mainImage: {
+          inStock: finalInStock,
+          brand: finalBrand,
+          venteflashDate: finalVenteflashDate,
+          question: finalQuestion,
+          features: parsedFeatures,
+          mainImage: mainImageResult ? {
             url: mainImageResult.secure_url,
             img_id: mainImageResult.public_id,
-          },
+          } : null,
           images,
-          nutritionalValues,
-          variant,
+          nutritionalValues: parsedNutritionalValues,
+          variant: finalVariant,
           category: categoryId || null,
-          subCategory: subCategoryIds,
-          codaBar,
+          subCategory: parsedSubCategoryIds,
+          codaBar: finalCodaBar,
         }],
         { session }
       );
 
-      // Update category if provided
+      // Update category if provided (ignore errors)
       if (categoryId) {
         await this.categoryModel.findByIdAndUpdate(
           categoryId,
           { $push: { products: newProduct[0]._id } },
           { session }
-        );
+        ).catch(() => {});
       }
 
-      // Update all subcategories if provided
-      if (subCategoryIds.length > 0) {
+      // Update all subcategories if provided (ignore errors)
+      if (parsedSubCategoryIds.length > 0) {
         await this.subCategoryModel.updateMany(
-          { _id: { $in: subCategoryIds } },
+          { _id: { $in: parsedSubCategoryIds } },
           { $push: { products: newProduct[0]._id } },
           { session }
-        );
+        ).catch(() => {});
       }
 
       await session.commitTransaction();
@@ -346,6 +360,11 @@ if (subCategoryIds && subCategoryIds.length > 0 && !Array.isArray(subCategoryIds
     }
   }
 
+
+
+
+
+  
   async deleteProduct(id: string) {
     try {
       const product = await this.productModel.findOne({
@@ -451,12 +470,7 @@ if (subCategoryIds && subCategoryIds.length > 0 && !Array.isArray(subCategoryIds
         deletedImages = [],
       } = updateProductDto;
 
-      // Validate required fields
-      if (!designation || !price) {
-        throw new BadRequestException('Designation and price are required fields');
-      }
-
-      // Get existing product with relationships
+      // Get existing product with relationships first
       const existingProduct = await this.productModel.findOne({
         $or: [
           { _id: id },
@@ -470,35 +484,74 @@ if (subCategoryIds && subCategoryIds.length > 0 && !Array.isArray(subCategoryIds
         throw new NotFoundException('Product not found');
       }
 
-      // CATEGORY VALIDATION
-      let newCategory: CategoryDocument | null = null;
-      if (categoryId) {
-        newCategory = await this.categoryModel.findById(categoryId).session(session) as CategoryDocument | null;
-        if (!newCategory) {
-          throw new NotFoundException('New category not found');
+      // Only validate designation as required
+      if (!designation) {
+        throw new BadRequestException('Designation is required');
+      }
+
+      // Set defaults for missing fields
+      const finalPrice = parseFloat(price as any) || existingProduct.price || 10;
+      const finalOldPrice = parseFloat(oldPrice as any) || existingProduct.oldPrice || 0;
+      const finalInStock = inStock !== undefined ? inStock : existingProduct.inStock || true;
+      const finalStatus = status !== undefined ? status : existingProduct.status || true;
+      const finalDescription = description || existingProduct.description || 'Description du produit';
+      const finalSmallDescription = smallDescription || existingProduct.smallDescription || 'Description courte';
+      const finalBrand = brand !== undefined ? brand : existingProduct.brand || '';
+      const finalVenteflashDate = venteflashDate !== undefined ? venteflashDate : existingProduct.venteflashDate || '';
+      const finalQuestion = question !== undefined ? question : existingProduct.question || '';
+      const finalCodaBar = codaBar || (existingProduct as any).codaBar || `SBT-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+
+      // Parse arrays safely
+      let parsedSubCategoryIds: any[] = existingProduct.subCategory || [];
+      if (Array.isArray(subCategoryIds)) {
+        parsedSubCategoryIds = subCategoryIds;
+      } else if (typeof subCategoryIds === 'string' && subCategoryIds) {
+        try {
+          parsedSubCategoryIds = JSON.parse(subCategoryIds);
+        } catch {
+          parsedSubCategoryIds = existingProduct.subCategory || [];
         }
       }
 
-      // SUBCATEGORY VALIDATION
-      if (subCategoryIds.length > 0) {
-        const validObjectIds = subCategoryIds.every(id =>
-          mongoose.Types.ObjectId.isValid(id)
-        );
-
-        if (!validObjectIds) {
-          throw new BadRequestException('Invalid subcategory IDs format');
+      let parsedFeatures: any[] = existingProduct.features || [];
+      if (Array.isArray(features)) {
+        parsedFeatures = features;
+      } else if (typeof features === 'string' && features) {
+        try {
+          parsedFeatures = JSON.parse(features);
+        } catch {
+          parsedFeatures = existingProduct.features || [];
         }
+      }
 
-        const subCategories = await this.subCategoryModel.find({
-          _id: { $in: subCategoryIds },
-          category: categoryId || existingProduct.category._id,
-        }).session(session);
-
-        if (subCategories.length !== subCategoryIds.length) {
-          throw new BadRequestException(
-            'Some subcategories don\'t exist or don\'t belong to the selected category'
-          );
+      let parsedNutritionalValues: any[] = existingProduct.nutritionalValues || [];
+      if (Array.isArray(nutritionalValues)) {
+        parsedNutritionalValues = nutritionalValues;
+      } else if (typeof nutritionalValues === 'string' && nutritionalValues) {
+        try {
+          parsedNutritionalValues = JSON.parse(nutritionalValues);
+        } catch {
+          parsedNutritionalValues = existingProduct.nutritionalValues || [];
         }
+      }
+
+      let parsedVariant: any[] = existingProduct.variant || [];
+      if (Array.isArray(variant)) {
+        parsedVariant = variant;
+      } else if (typeof variant === 'string' && variant) {
+        try {
+          parsedVariant = JSON.parse(variant);
+        } catch {
+          parsedVariant = existingProduct.variant || [];
+        }
+      }
+
+      const finalVariant = parsedVariant.length > 0 ? parsedVariant : existingProduct.variant || [{title: designation, inStock: true}];
+
+      // CATEGORY VALIDATION (optional, ignore errors)
+      let newCategory: CategoryDocument | null = null;
+      if (categoryId) {
+        newCategory = await this.categoryModel.findById(categoryId).session(session).catch(() => null) as CategoryDocument | null;
       }
 
       // IMAGE HANDLING
@@ -513,33 +566,33 @@ if (subCategoryIds && subCategoryIds.length > 0 && !Array.isArray(subCategoryIds
       const updatePayload = {
         // Schema fields
         designation,
-        description,
-        smallDescription,
-        price,
-        oldPrice,
-        inStock,
-        status,
+        description: finalDescription,
+        smallDescription: finalSmallDescription,
+        price: finalPrice,
+        oldPrice: finalOldPrice,
+        inStock: finalInStock,
+        status: finalStatus,
         
         // Database fields
         designation_fr: designation,
-        description_fr: description,
-        prix: price,
-        promo: oldPrice,
-        publier: status ? "1" : "0",
+        description_fr: finalDescription,
+        prix: finalPrice,
+        promo: finalOldPrice,
+        publier: finalStatus ? "1" : "0",
         
         // Common fields
-        codaBar,
-        question,
-        venteflashDate,
-        features,
-        variant,
-        nutritionalValues,
-        brand,
+        codaBar: finalCodaBar,
+        question: finalQuestion,
+        venteflashDate: finalVenteflashDate,
+        features: parsedFeatures,
+        variant: finalVariant,
+        nutritionalValues: parsedNutritionalValues,
+        brand: finalBrand,
         mainImage: mainImage || existingProduct.mainImage,
         images: images || existingProduct.images,
         category: categoryId || existingProduct.category._id,
-        subCategory: subCategoryIds.length > 0
-          ? subCategoryIds
+        subCategory: parsedSubCategoryIds.length > 0
+          ? parsedSubCategoryIds
           : existingProduct.subCategory.map((sub: any) => sub._id),
       };
 
@@ -555,14 +608,14 @@ if (subCategoryIds && subCategoryIds.length > 0 && !Array.isArray(subCategoryIds
         { new: true, session }
       ).populate("category subCategory");
 
-      // HANDLE CATEGORY RELATIONSHIPS
+      // HANDLE CATEGORY RELATIONSHIPS (ignore errors)
       await this.handleCategoryRelationships(
         existingProduct,
         updatedProduct,
         newCategory,
-        subCategoryIds,
+        parsedSubCategoryIds,
         session
-      );
+      ).catch(() => {});
 
       await session.commitTransaction();
 

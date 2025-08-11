@@ -23,13 +23,17 @@ export class CategoryService {
   }
 
   async createCategory(file: Express.Multer.File, designation: string) {
-    if (!file) throw new BadRequestException('No file uploaded');
+    if (!designation) throw new BadRequestException('Designation is required');
 
-    const result = await this.cloudinaryService.uploadImage(file); // ✅ FIXED METHOD NAME
+    let imageData: { url: string; img_id: string } | null = null;
+    if (file) {
+      const result = await this.cloudinaryService.uploadImage(file);
+      imageData = { url: result.secure_url, img_id: result.public_id };
+    }
 
     const newCategory = new this.categoryModel({
       designation,
-      image: { url: result.secure_url, img_id: result.public_id },
+      image: imageData,
     });
 
     return newCategory.save();
@@ -51,13 +55,20 @@ export class CategoryService {
 
     let newImage = category.image;
     if (file) {
-      await this.cloudinaryService.deleteImage(category.image.img_id); // ✅ FIXED METHOD NAME
-      const result = await this.cloudinaryService.uploadImage(file); // ✅ FIXED METHOD NAME
+      if (category.image?.img_id) {
+        await this.cloudinaryService.deleteImage(category.image.img_id);
+      }
+      const result = await this.cloudinaryService.uploadImage(file);
       newImage = { url: result.secure_url, img_id: result.public_id };
     }
 
-    category.designation = designation || category.designation;
-    category.image = newImage;
+    if (designation) {
+      category.designation = designation;
+    }
+    if (newImage) {
+      category.image = newImage;
+    }
+    
     return category.save();
   }
 

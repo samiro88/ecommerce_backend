@@ -1,18 +1,19 @@
-import { IsString, IsNumber, IsOptional, IsArray, IsBoolean,  } from 'class-validator';
-import { Type, Transform} from 'class-transformer';
+import { IsString, IsNumber, IsOptional, IsArray, IsBoolean } from 'class-validator';
+import { Type, Transform } from 'class-transformer';
 
 export class CreateProductDto {
   @IsString()
   designation: string;
 
+  @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  prix: number;
+  prix?: number = 10;
 
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  promo: number;
+  promo?: number;
 
   @IsOptional()
   @IsString()
@@ -59,14 +60,44 @@ export class CreateProductDto {
 
   @IsOptional()
   @IsArray()
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      try {
+        return JSON.parse(value);
+      } catch {
+        return [];
+      }
+    }
+    return Array.isArray(value) ? value : [];
+  })
   features?: any[] = [];
 
   @IsOptional()
   @IsArray()
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      try {
+        return JSON.parse(value);
+      } catch {
+        return [];
+      }
+    }
+    return Array.isArray(value) ? value : [];
+  })
   nutritionalValues?: any[] = [];
 
   @IsOptional()
   @IsArray()
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      try {
+        return JSON.parse(value);
+      } catch {
+        return [];
+      }
+    }
+    return Array.isArray(value) ? value : [];
+  })
   variant?: any[] = [];
 
   @IsOptional()
@@ -78,8 +109,6 @@ export class CreateProductDto {
   @Type(() => Boolean)
   inStock?: boolean = false;
 
-  price: number;
-  oldPrice: number;
-
-  
+  price?: number;
+  oldPrice?: number;
 }
