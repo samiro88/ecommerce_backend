@@ -5,10 +5,10 @@ import { handleSlug } from '../shared/utils/generators/slug/slug-generator.servi
 
 @Schema({ timestamps: true })
 export class Category extends Document {
-  @Prop({ required: true, unique: true })  // Added unique constraint
+  @Prop()  // No constraints
   designation: string;
 
-  @Prop({ unique: true })  // Added unique constraint
+  @Prop()  // No constraints
   slug: string;
 
   @Prop()

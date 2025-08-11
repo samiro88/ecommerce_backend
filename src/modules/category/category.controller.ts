@@ -15,8 +15,7 @@ export class CategoryController {
   @UseInterceptors(FileInterceptor('file'))
   async createCategory(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
     try {
-      const designation = body.designation || body.designation_fr || 'Nouvelle Catégorie';
-      return this.categoryService.createCategory(file, designation);
+      return this.categoryService.createCategory(file, body);
     } catch (error) {
       console.error('Create category error:', error);
       throw error;
@@ -31,8 +30,7 @@ export class CategoryController {
   @Patch(':id')
   @UseInterceptors(FileInterceptor('file'))
   async updateCategory(@Param('id') id: string, @UploadedFile() file: Express.Multer.File, @Body() body: any) {
-    const designation = body.designation || body.designation_fr;
-    return this.categoryService.updateCategory(id, file, designation);
+    return this.categoryService.updateCategory(id, file, body);
   }
 
   @Get(':id')

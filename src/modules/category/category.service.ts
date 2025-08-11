@@ -22,11 +22,27 @@ export class CategoryService {
   .exec();
   }
 
-  async createCategory(file: Express.Multer.File, designation: string) {
+  async createCategory(file: Express.Multer.File, categoryData: any) {
     try {
-      if (!designation || designation.trim() === '') {
-        throw new BadRequestException('Designation is required');
-      }
+      // Accept all fields with defaults
+      const categoryPayload = {
+        designation: categoryData.designation || categoryData.designation_fr || 'Nouvelle Catégorie',
+        designation_fr: categoryData.designation_fr || categoryData.designation || '',
+        description_fr: categoryData.description_fr || '',
+        alt_cover: categoryData.alt_cover || '',
+        description_cover: categoryData.description_cover || '',
+        meta: categoryData.meta || '',
+        content_seo: categoryData.content_seo || '',
+        review: categoryData.review || '',
+        aggregateRating: categoryData.aggregateRating || '',
+        nutrition_values: categoryData.nutrition_values || '',
+        questions: categoryData.questions || '',
+        more_details: categoryData.more_details || '',
+        zone1: categoryData.zone1 || '',
+        zone2: categoryData.zone2 || '',
+        zone3: categoryData.zone3 || '',
+        schema_description: categoryData.schema_description || '',
+      };
 
       let imageData: { url: string; img_id: string } | null = null;
       if (file) {
@@ -35,12 +51,11 @@ export class CategoryService {
           imageData = { url: result.secure_url, img_id: result.public_id };
         } catch (error) {
           console.error('Image upload error:', error);
-          // Continue without image if upload fails
         }
       }
 
       const newCategory = new this.categoryModel({
-        designation: designation.trim(),
+        ...categoryPayload,
         image: imageData,
       });
 
@@ -67,10 +82,17 @@ export class CategoryService {
     return { message: 'Category deleted successfully' };
   }
 
-  async updateCategory(id: string, file: Express.Multer.File, designation?: string) {
+  async updateCategory(id: string, file: Express.Multer.File, categoryData: any) {
     try {
       const category = await this.categoryModel.findById(id);
       if (!category) throw new NotFoundException('Category not found');
+
+      // Update all fields
+      Object.keys(categoryData).forEach(key => {
+        if (categoryData[key] !== undefined && categoryData[key] !== null && key !== '_id') {
+          category[key] = categoryData[key];
+        }
+      });
 
       let newImage = category.image;
       if (file) {
@@ -83,12 +105,6 @@ export class CategoryService {
         }
         const result = await this.cloudinaryService.uploadImage(file);
         newImage = { url: result.secure_url, img_id: result.public_id };
-      }
-
-      if (designation) {
-        category.designation = designation;
-      }
-      if (newImage) {
         category.image = newImage;
       }
       

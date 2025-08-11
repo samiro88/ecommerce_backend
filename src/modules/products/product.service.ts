@@ -168,9 +168,6 @@ export class ProductsService {
     createProductDto: CreateProductDto,
     files: Express.Multer.File[],
   ) {
-    const session = await mongoose.startSession();
-    session.startTransaction();
-
     try {
       const {
         designation,
@@ -284,50 +281,46 @@ export class ProductsService {
       }
       
       // Create the product with both schema and database fields
-      const newProduct = await this.productModel.create(
-        [{
-          // Schema fields
-          designation: finalDesignation,
-          description: finalDescription,
-          smallDescription: finalSmallDescription,
-          price: finalPrice,
-          oldPrice: finalOldPrice,
-          status: finalStatus,
-          taxRate: 19, // Default tax rate
-          
-          // Database fields
-          designation_fr: finalDesignation,
-          description_fr: finalDescription,
-          prix: finalPrice,
-          promo: finalOldPrice,
-          publier: finalStatus ? "1" : "0",
-          
-          // Common fields
-          inStock: finalInStock,
-          brand: finalBrand,
-          venteflashDate: finalVenteflashDate,
-          question: finalQuestion,
-          features: parsedFeatures,
-          mainImage: mainImageResult ? {
-            url: mainImageResult.secure_url,
-            img_id: mainImageResult.public_id,
-          } : null,
-          images,
-          nutritionalValues: parsedNutritionalValues,
-          variant: finalVariant,
-          category: categoryId || null,
-          subCategory: parsedSubCategoryIds,
-          codaBar: finalCodaBar,
-        }],
-        { session }
-      );
+      const newProduct = await this.productModel.create({
+        // Schema fields
+        designation: finalDesignation,
+        description: finalDescription,
+        smallDescription: finalSmallDescription,
+        price: finalPrice,
+        oldPrice: finalOldPrice,
+        status: finalStatus,
+        taxRate: 19, // Default tax rate
+        
+        // Database fields
+        designation_fr: finalDesignation,
+        description_fr: finalDescription,
+        prix: finalPrice,
+        promo: finalOldPrice,
+        publier: finalStatus ? "1" : "0",
+        
+        // Common fields
+        inStock: finalInStock,
+        brand: finalBrand,
+        venteflashDate: finalVenteflashDate,
+        question: finalQuestion,
+        features: parsedFeatures,
+        mainImage: mainImageResult ? {
+          url: mainImageResult.secure_url,
+          img_id: mainImageResult.public_id,
+        } : null,
+        images,
+        nutritionalValues: parsedNutritionalValues,
+        variant: finalVariant,
+        category: categoryId || null,
+        subCategory: parsedSubCategoryIds,
+        codaBar: finalCodaBar,
+      });
 
       // Update category if provided (ignore errors)
       if (categoryId) {
         await this.categoryModel.findByIdAndUpdate(
           categoryId,
-          { $push: { products: newProduct[0]._id } },
-          { session }
+          { $push: { products: newProduct._id } }
         ).catch(() => {});
       }
 
@@ -335,19 +328,15 @@ export class ProductsService {
       if (parsedSubCategoryIds.length > 0) {
         await this.subCategoryModel.updateMany(
           { _id: { $in: parsedSubCategoryIds } },
-          { $push: { products: newProduct[0]._id } },
-          { session }
+          { $push: { products: newProduct._id } }
         ).catch(() => {});
       }
 
-      await session.commitTransaction();
-
       return {
         message: "Product created successfully",
-        data: newProduct[0],
+        data: newProduct,
       };
     } catch (error) {
-      await session.abortTransaction();
       console.error('Product creation error details:', {
         message: error.message,
         stack: error.stack,
@@ -358,8 +347,6 @@ export class ProductsService {
         throw error;
       }
       throw new InternalServerErrorException('Error creating product', error.message);
-    } finally {
-      session.endSession();
     }
   }
 
