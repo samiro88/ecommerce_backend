@@ -1,5 +1,5 @@
-import { IsString, IsNumber, IsOptional, IsArray, IsBoolean } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsString, IsNumber, IsOptional, IsArray, IsBoolean,  } from 'class-validator';
+import { Type, Transform} from 'class-transformer';
 
 export class CreateProductDto {
   @IsString()
@@ -44,9 +44,18 @@ export class CreateProductDto {
   categoryId?: string;
 
   @IsOptional()
-@IsArray()
-@Type(() => String)
-subCategoryIds?: string[] = [];
+  @IsArray()
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      try {
+        return JSON.parse(value);
+      } catch {
+        return [];
+      }
+    }
+    return Array.isArray(value) ? value : [];
+  })
+  subCategoryIds?: string[] = [];
 
   @IsOptional()
   @IsArray()
