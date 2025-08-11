@@ -30,6 +30,7 @@ export class ClientsService {
         email,
         isGuest: true,
         sms: "1",
+        password: null,
       });
       await client.save();
     }
@@ -60,7 +61,7 @@ export class ClientsService {
       return { success: true, data: updatedGuest };
     }
 
-    const guestClient = new this.clientModel({ ...createClientDto, isGuest: true });
+    const guestClient = new this.clientModel({ ...createClientDto, isGuest: true, password: null });
     const savedGuestClient = await guestClient.save();
     return { success: true, data: savedGuestClient };
   }
