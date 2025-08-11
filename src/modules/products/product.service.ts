@@ -574,10 +574,10 @@ export class ProductsService {
         brand: finalBrand,
         mainImage: mainImage || existingProduct.mainImage,
         images: images || existingProduct.images,
-        category: categoryId || existingProduct.category._id,
+        category: categoryId || existingProduct.category?._id || null,
         subCategory: parsedSubCategoryIds.length > 0
           ? parsedSubCategoryIds
-          : existingProduct.subCategory.map((sub: any) => sub._id),
+          : existingProduct.subCategory?.map((sub: any) => sub._id) || [],
       };
 
       // Update product
@@ -714,7 +714,7 @@ export class ProductsService {
     }
 
     // Handle subcategory changes
-    const existingSubIds = existingProduct.subCategory.map((id: any) =>
+    const existingSubIds = (existingProduct.subCategory || []).map((id: any) =>
       id instanceof mongoose.Types.ObjectId ? id.toString() : id
     );
     const newSubIds = newSubCategoryIds.map((id) => id.toString());
