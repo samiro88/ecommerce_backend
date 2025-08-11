@@ -35,6 +35,25 @@ export class ClientsController {
     return this.clientsService.login(body.email, body.password);
   }
 
+  @Post('sms/send')
+  async sendSms(@Body() body: { to: string; message: string }) {
+    await this.smsService.sendSms(body.to, body.message);
+    return { success: true };
+  }
+
+  @Post('sms/send-bulk')
+  async sendBulkSms(@Body() body: { to: string[]; message: string }) {
+    for (const phone of body.to) {
+      await this.smsService.sendSms(phone, body.message);
+    }
+    return { success: true, count: body.to.length };
+  }
+
+  @Post()
+  async createClient(@Body() body: any) {
+    return this.clientsService.createGuestClient(body);
+  }
+
   @Get('profile')
   async getProfile(@Req() req) {
     return this.clientsService.getProfile(req.user.id); // assuming req.user.id is set by a guard
@@ -50,30 +69,10 @@ export class ClientsController {
     return this.clientsService.getAllClients();
   }
 
-
-    @Post()
-  async createClient(@Body() body: any) {
-    return this.clientsService.createGuestClient(body);
-  }
-
-  @Post('sms/send')
-  async sendSms(@Body() body: { to: string; message: string }) {
-    await this.smsService.sendSms(body.to, body.message);
-    return { success: true };
-  }
-
   @Put(':id')
-async updateClient(@Param('id') id: string, @Body() body: any) {
-  return this.clientsService.updateProfile(id, body);
-}
-
-
-@Post('sms/send-bulk')
-async sendBulkSms(@Body() body: { to: string[]; message: string }) {
-  for (const phone of body.to) {
-    await this.smsService.sendSms(phone, body.message);
+  async updateClient(@Param('id') id: string, @Body() body: any) {
+    return this.clientsService.updateProfile(id, body);
   }
-  return { success: true, count: body.to.length };
-}
+
   // Other methods...
 }
