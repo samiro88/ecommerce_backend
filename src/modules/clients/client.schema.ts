@@ -2,7 +2,7 @@ import { Schema, Document } from 'mongoose';
 
 export const ClientSchema = new Schema({
   email: { type: String, required: true, unique: true },
-  password: { type: String, select: false },
+  password: { type: String, select: false, required: false },
   isGuest: { type: Boolean, default: true },
   name: String,
   phone_1: String,
