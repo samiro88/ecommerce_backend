@@ -14,6 +14,9 @@ export const multerOptions = {
     callback(null, true);
   },
   limits: {
-    fileSize: 10 * 1024 * 1024, // 10MB limit
+    fileSize: 50 * 1024 * 1024, // 50MB limit
+    fieldSize: 10 * 1024 * 1024, // 10MB per field
+    fields: 100, // Max number of fields
+    files: 20, // Max number of files
   },
 };

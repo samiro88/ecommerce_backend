@@ -297,6 +297,7 @@ export class ProductsService {
           price: finalPrice,
           oldPrice: finalOldPrice,
           status: finalStatus,
+          taxRate: 19, // Default tax rate
           
           // Database fields
           designation_fr: designation,

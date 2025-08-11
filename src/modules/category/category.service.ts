@@ -23,20 +23,32 @@ export class CategoryService {
   }
 
   async createCategory(file: Express.Multer.File, designation: string) {
-    if (!designation) throw new BadRequestException('Designation is required');
+    try {
+      if (!designation || designation.trim() === '') {
+        throw new BadRequestException('Designation is required');
+      }
 
-    let imageData: { url: string; img_id: string } | null = null;
-    if (file) {
-      const result = await this.cloudinaryService.uploadImage(file);
-      imageData = { url: result.secure_url, img_id: result.public_id };
+      let imageData: { url: string; img_id: string } | null = null;
+      if (file) {
+        try {
+          const result = await this.cloudinaryService.uploadImage(file);
+          imageData = { url: result.secure_url, img_id: result.public_id };
+        } catch (error) {
+          console.error('Image upload error:', error);
+          // Continue without image if upload fails
+        }
+      }
+
+      const newCategory = new this.categoryModel({
+        designation: designation.trim(),
+        image: imageData,
+      });
+
+      return await newCategory.save();
+    } catch (error) {
+      console.error('Category creation error:', error);
+      throw error;
     }
-
-    const newCategory = new this.categoryModel({
-      designation,
-      image: imageData,
-    });
-
-    return newCategory.save();
   }
 
   async deleteCategory(id: string) {
@@ -50,26 +62,35 @@ export class CategoryService {
   }
 
   async updateCategory(id: string, file: Express.Multer.File, designation?: string) {
-    const category = await this.categoryModel.findById(id);
-    if (!category) throw new NotFoundException('Category not found');
+    try {
+      const category = await this.categoryModel.findById(id);
+      if (!category) throw new NotFoundException('Category not found');
 
-    let newImage = category.image;
-    if (file) {
-      if (category.image?.img_id) {
-        await this.cloudinaryService.deleteImage(category.image.img_id);
+      let newImage = category.image;
+      if (file) {
+        if (category.image?.img_id) {
+          try {
+            await this.cloudinaryService.deleteImage(category.image.img_id);
+          } catch (e) {
+            // Ignore cloudinary delete errors
+          }
+        }
+        const result = await this.cloudinaryService.uploadImage(file);
+        newImage = { url: result.secure_url, img_id: result.public_id };
       }
-      const result = await this.cloudinaryService.uploadImage(file);
-      newImage = { url: result.secure_url, img_id: result.public_id };
-    }
 
-    if (designation) {
-      category.designation = designation;
+      if (designation) {
+        category.designation = designation;
+      }
+      if (newImage) {
+        category.image = newImage;
+      }
+      
+      return await category.save();
+    } catch (error) {
+      console.error('Category update error:', error);
+      throw error;
     }
-    if (newImage) {
-      category.image = newImage;
-    }
-    
-    return category.save();
   }
 
   async getCategoryById(id: string) {

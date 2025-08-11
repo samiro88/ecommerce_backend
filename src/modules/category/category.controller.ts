@@ -14,8 +14,13 @@ export class CategoryController {
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async createCategory(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
-    const designation = body.designation || body.designation_fr || 'Nouvelle Catégorie';
-    return this.categoryService.createCategory(file, designation);
+    try {
+      const designation = body.designation || body.designation_fr || 'Nouvelle Catégorie';
+      return this.categoryService.createCategory(file, designation);
+    } catch (error) {
+      console.error('Create category error:', error);
+      throw error;
+    }
   }
 
   @Delete(':id')
