@@ -112,42 +112,21 @@ export class Category extends Document {
 export const CategorySchema = SchemaFactory.createForClass(Category);
 export type CategoryDocument = Category & Document;
 
-// Enhanced pre-save hook with validation
-CategorySchema.pre('save', async function (next) {
-  try {
-    // Ensure designation exists
-    if (!this.designation || this.designation.trim() === '') {
-      this.designation = this.designation_fr || `category-${Date.now()}`;
-    }
-    
-    // Generate slug from designation
-    if (this.designation && (this.isModified('designation') || !this.slug)) {
-      try {
-        this.slug = await handleSlug(
-          this as any, 
-          'designation', 
-          this.constructor as Model<any>
-        );
-      } catch (error) {
-        // Fallback slug generation
-        this.slug = this.designation.toLowerCase()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-+|-+$/g, '') + `-${Date.now()}`;
-      }
-    }
-    
-    if (!this.slug) {
-      this.slug = `category-${Date.now()}`;
-    }
-    
-    next();
-  } catch (error) {
-    console.error('Pre-save hook error:', error);
-    // Ensure we have basic required fields
-    if (!this.designation) this.designation = `category-${Date.now()}`;
-    if (!this.slug) this.slug = `category-${Date.now()}`;
-    next();
+// Simple pre-save hook
+CategorySchema.pre('save', function (next) {
+  // Ensure designation exists
+  if (!this.designation || this.designation.trim() === '') {
+    this.designation = this.designation_fr || `category-${Date.now()}`;
   }
+  
+  // Simple slug generation without external dependencies
+  if (!this.slug || this.slug.trim() === '') {
+    this.slug = this.designation.toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || `category-${Date.now()}`;
+  }
+  
+  next();
 });
 
-CategorySchema.index({ designation: 1, slug: 1 }, { sparse: true });
+CategorySchema.index({ slug: 1 }, { unique: true, sparse: true });
