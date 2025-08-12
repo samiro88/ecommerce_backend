@@ -30,12 +30,24 @@ async findBySlug(slug: string): Promise<Brand[]> {
   }
 
   async create(data: Partial<Brand>): Promise<Brand> {
-    const created = new this.brandModel(data);
+    // Generate ID if not provided
+    const brandData = {
+      ...data,
+      id: data.id || Math.random().toString(36).substr(2, 9),
+      designation_fr: data.designation_fr || 'Untitled Brand',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+    const created = new this.brandModel(brandData);
     return created.save();
   }
 
   async update(id: string, data: Partial<Brand>): Promise<Brand> {
-    const updated = await this.brandModel.findByIdAndUpdate(id, data, { new: true }).exec();
+    const updateData = {
+      ...data,
+      updated_at: new Date().toISOString(),
+    };
+    const updated = await this.brandModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
     if (!updated) throw new NotFoundException('Brand not found');
     return updated;
   }

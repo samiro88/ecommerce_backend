@@ -22,34 +22,44 @@ import {
       session.startTransaction();
   
       try {
-        // Same validation as original
         const { name, categoryId } = body;
-        if (!name || !categoryId) {
-          throw new BadRequestException('Name and category ID are required');
+        let category: any = null;
+        
+        // Only validate category if provided
+        if (categoryId) {
+          category = await this.categoryModel
+            .findById(categoryId)
+            .session(session);
+          if (!category) {
+            throw new NotFoundException('Category not found');
+          }
         }
   
-        // Check if category exists (same as original)
-        const category = await this.categoryModel
-          .findById(categoryId)
-          .session(session);
-        if (!category) {
-          throw new NotFoundException('Category not found');
-        }
+        // Create subcategory with all provided fields
+        const subcategoryData = {
+          name: name || 'Untitled',
+          designation: body.designation || '',
+          designation_fr: body.designation_fr || '',
+          description_fr: body.description_fr || '',
+          slug: body.slug || (name ? name.toLowerCase().replace(/\s+/g, '-') : 'untitled'),
+          category: categoryId || null,
+          categorie_id: category?.id || null,
+          alt_cover: body.alt_cover || '',
+          description_cove: body.description_cove || '',
+          meta: body.meta || '',
+          content_seo: body.content_seo || '',
+          review: body.review || '',
+          aggregateRating: body.aggregateRating || '',
+          nutrition_values: body.nutrition_values || '',
+          questions: body.questions || '',
+          more_details: body.more_details || '',
+          zone1: body.zone1 || '',
+          zone2: body.zone2 || '',
+          zone3: body.zone3 || '',
+          zone4: body.zone4 || '',
+        };
   
-        // Check for duplicate subcategory name (same as original)
-        const existingSubCategory = await this.subCategoryModel
-          .findOne({ name, category: categoryId })
-          .session(session);
-        if (existingSubCategory) {
-          throw new BadRequestException('Subcategory already exists for this category');
-        }
-  
-        // Same creation logic
-        const newSubCategory = await this.subCategoryModel.create([{
-          name,
-          category: categoryId,
-          slug: name.toLowerCase().replace(/\s+/g, '-'),
-        }], { session });
+        const newSubCategory = await this.subCategoryModel.create([subcategoryData], { session });
   
         await session.commitTransaction();
         return {
@@ -59,7 +69,7 @@ import {
         };
       } catch (error) {
         await session.abortTransaction();
-        if (error instanceof BadRequestException || error instanceof NotFoundException) {
+        if (error instanceof NotFoundException) {
           throw error;
         }
         throw new InternalServerErrorException('Error creating subcategory');
@@ -101,7 +111,6 @@ import {
       session.startTransaction();
   
       try {
-        // Check if subcategory exists (same as original)
         const subCategory = await this.subCategoryModel
           .findById(id)
           .session(session);
@@ -109,33 +118,34 @@ import {
           throw new NotFoundException('Subcategory not found');
         }
   
-        // Same update logic
-        if (body.name) {
-          // Check for duplicate name (same as original)
-          const existingSubCategory = await this.subCategoryModel
-            .findOne({ 
-              name: body.name, 
-              category: subCategory.category,
-              _id: { $ne: id } // Exclude current document
-            })
-            .session(session);
-          if (existingSubCategory) {
-            throw new BadRequestException('Subcategory name already exists for this category');
-          }
-  
-          subCategory.name = body.name;
-          subCategory.slug = body.name.toLowerCase().replace(/\s+/g, '-');
-        }
+        // Update all provided fields
+        if (body.name !== undefined) subCategory.name = body.name;
+        if (body.designation !== undefined) subCategory.designation = body.designation;
+        if (body.designation_fr !== undefined) subCategory.designation_fr = body.designation_fr;
+        if (body.description_fr !== undefined) subCategory.description_fr = body.description_fr;
+        if (body.slug !== undefined) subCategory.slug = body.slug;
+        if (body.alt_cover !== undefined) subCategory.alt_cover = body.alt_cover;
+        if (body.description_cove !== undefined) subCategory.description_cove = body.description_cove;
+        if (body.meta !== undefined) subCategory.meta = body.meta;
+        if (body.content_seo !== undefined) subCategory.content_seo = body.content_seo;
+        if (body.review !== undefined) subCategory.review = body.review;
+        if (body.aggregateRating !== undefined) subCategory.aggregateRating = body.aggregateRating;
+        if (body.nutrition_values !== undefined) subCategory.nutrition_values = body.nutrition_values;
+        if (body.questions !== undefined) subCategory.questions = body.questions;
+        if (body.more_details !== undefined) subCategory.more_details = body.more_details;
+        if (body.zone1 !== undefined) subCategory.zone1 = body.zone1;
+        if (body.zone2 !== undefined) subCategory.zone2 = body.zone2;
+        if (body.zone3 !== undefined) subCategory.zone3 = body.zone3;
+        if (body.zone4 !== undefined) subCategory.zone4 = body.zone4;
   
         if (body.categoryId) {
-          // Verify new category exists (same as original)
           const category = await this.categoryModel
             .findById(body.categoryId)
             .session(session);
-          if (!category) {
-            throw new NotFoundException('New category not found');
+          if (category) {
+            subCategory.category = body.categoryId;
+            subCategory.categorie_id = category?.id;
           }
-          subCategory.category = body.categoryId;
         }
   
         await subCategory.save({ session });
@@ -148,7 +158,7 @@ import {
         };
       } catch (error) {
         await session.abortTransaction();
-        if (error instanceof NotFoundException || error instanceof BadRequestException) {
+        if (error instanceof NotFoundException) {
           throw error;
         }
         throw new InternalServerErrorException('Error updating subcategory');
