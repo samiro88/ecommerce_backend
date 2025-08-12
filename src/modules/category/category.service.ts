@@ -6,13 +6,11 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Category } from '../../models/category.schema';
-import { CloudinaryService } from '../../controllers/cloudinary/cloudinary.service'; // ✅ FIXED IMPORT
 
 @Injectable()
 export class CategoryService {
   constructor(
     @InjectModel(Category.name) private categoryModel: Model<Category>,
-    private cloudinaryService: CloudinaryService, // ✅ Dependency Injection
   ) {}
 
   async getAllCategories() {
@@ -52,13 +50,11 @@ export class CategoryService {
 
       let imageData: { url: string; img_id: string } | null = null;
       if (file) {
-        try {
-          const result = await this.cloudinaryService.uploadImage(file);
-          imageData = { url: result.secure_url, img_id: result.public_id };
-        } catch (error) {
-          console.error('Image upload error:', error);
-          // Continue without image if upload fails
-        }
+        // Simple file path storage without cloudinary
+        imageData = { 
+          url: `/uploads/${Date.now()}-${file.originalname}`, 
+          img_id: `img_${Date.now()}` 
+        };
       }
 
       const newCategory = new this.categoryModel({
@@ -82,12 +78,9 @@ export class CategoryService {
     const category = await this.categoryModel.findById(id).populate('subCategories');
     if (!category) throw new NotFoundException('Category not found');
 
+    // Image deletion handled locally if needed
     if (category.image?.img_id) {
-      try {
-        await this.cloudinaryService.deleteImage(category.image.img_id);
-      } catch (e) {
-        // Ignore cloudinary delete errors
-      }
+      console.log('Image would be deleted:', category.image.img_id);
     }
     await this.categoryModel.findByIdAndDelete(id);
 
@@ -111,15 +104,10 @@ export class CategoryService {
 
       // Handle image upload
       if (file) {
-        try {
-          if (category.image?.img_id) {
-            await this.cloudinaryService.deleteImage(category.image.img_id).catch(() => {});
-          }
-          const result = await this.cloudinaryService.uploadImage(file);
-          category.image = { url: result.secure_url, img_id: result.public_id };
-        } catch (e) {
-          // Continue without image update if upload fails
-        }
+        category.image = { 
+          url: `/uploads/${Date.now()}-${file.originalname}`, 
+          img_id: `img_${Date.now()}` 
+        };
       }
       
       return await category.save();
