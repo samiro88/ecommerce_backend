@@ -26,10 +26,11 @@ export class CategoryService {
     try {
       // Accept all fields with defaults
       const categoryPayload = {
-        designation: categoryData.designation || categoryData.designation_fr || 'Nouvelle Catégorie',
+        designation: categoryData.designation || categoryData.designation_fr || `category-${Date.now()}`,
         designation_fr: categoryData.designation_fr || categoryData.designation || '',
         cover: categoryData.cover || '',
         cover_liste_produits: categoryData.cover_liste_produits || '',
+        product_liste_cover: categoryData.product_liste_cover || '',
         description_fr: categoryData.description_fr || '',
         alt_cover: categoryData.alt_cover || '',
         description_cover: categoryData.description_cover || '',
@@ -44,6 +45,8 @@ export class CategoryService {
         zone2: categoryData.zone2 || '',
         zone3: categoryData.zone3 || '',
         schema_description: categoryData.schema_description || '',
+        created_by: '',
+        updated_by: '',
       };
 
       let imageData: { url: string; img_id: string } | null = null;
@@ -91,17 +94,19 @@ export class CategoryService {
 
       // Update all fields safely
       const allowedFields = [
-        'designation', 'designation_fr', 'cover', 'cover_liste_produits',
+        'designation', 'designation_fr', 'cover', 'cover_liste_produits', 'product_liste_cover',
         'description_fr', 'alt_cover', 'description_cover', 'meta',
         'content_seo', 'review', 'aggregateRating', 'nutrition_values',
         'questions', 'more_details', 'zone1', 'zone2', 'zone3', 'schema_description'
       ];
       
       allowedFields.forEach(key => {
-        if (categoryData[key] !== undefined && categoryData[key] !== null) {
-          category[key] = categoryData[key];
+        if (categoryData[key] !== undefined) {
+          category[key] = categoryData[key] || '';
         }
       });
+      
+      category.updated_by = '';
 
       let newImage = category.image;
       if (file) {

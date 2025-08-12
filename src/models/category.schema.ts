@@ -5,11 +5,11 @@ import { handleSlug } from '../shared/utils/generators/slug/slug-generator.servi
 
 @Schema({ timestamps: true })
 export class Category extends Document {
-  @Prop()  // No constraints
-  designation: string;
+  @Prop()
+  designation?: string;
 
-  @Prop()  // No constraints
-  slug: string;
+  @Prop()
+  slug?: string;
 
   @Prop()
   designation_fr?: string;
@@ -19,6 +19,9 @@ export class Category extends Document {
 
   @Prop()
   cover_liste_produits?: string;
+
+  @Prop()
+  product_liste_cover?: string;
 
   @Prop()
   alt_cover?: string;
@@ -62,6 +65,18 @@ export class Category extends Document {
   @Prop()
   schema_description?: string;
 
+  @Prop()
+  created_by?: string;
+
+  @Prop()
+  updated_by?: string;
+
+  @Prop()
+  created_at?: string;
+
+  @Prop()
+  updated_at?: string;
+
   @Prop({
     type: {
       url: { type: String, required: false },  
@@ -99,13 +114,13 @@ export type CategoryDocument = Category & Document;
 
 // Enhanced pre-save hook with validation
 CategorySchema.pre('save', async function (next) {
-  if (!this.isModified('designation')) return next();
+  if (!this.designation || !this.isModified('designation')) return next();
 
   try {
     this.slug = await handleSlug(
-      this, 
+      this as any, 
       'designation', 
-      this.constructor as Model<Category>
+      this.constructor as Model<any>
     );
     next();
   } catch (error) {
