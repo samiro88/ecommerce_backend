@@ -28,6 +28,8 @@ export class CategoryService {
       const categoryPayload = {
         designation: categoryData.designation || categoryData.designation_fr || 'Nouvelle Catégorie',
         designation_fr: categoryData.designation_fr || categoryData.designation || '',
+        cover: categoryData.cover || '',
+        cover_liste_produits: categoryData.cover_liste_produits || '',
         description_fr: categoryData.description_fr || '',
         alt_cover: categoryData.alt_cover || '',
         description_cover: categoryData.description_cover || '',
@@ -87,9 +89,16 @@ export class CategoryService {
       const category = await this.categoryModel.findById(id);
       if (!category) throw new NotFoundException('Category not found');
 
-      // Update all fields
-      Object.keys(categoryData).forEach(key => {
-        if (categoryData[key] !== undefined && categoryData[key] !== null && key !== '_id') {
+      // Update all fields safely
+      const allowedFields = [
+        'designation', 'designation_fr', 'cover', 'cover_liste_produits',
+        'description_fr', 'alt_cover', 'description_cover', 'meta',
+        'content_seo', 'review', 'aggregateRating', 'nutrition_values',
+        'questions', 'more_details', 'zone1', 'zone2', 'zone3', 'schema_description'
+      ];
+      
+      allowedFields.forEach(key => {
+        if (categoryData[key] !== undefined && categoryData[key] !== null) {
           category[key] = categoryData[key];
         }
       });

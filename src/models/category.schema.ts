@@ -12,7 +12,56 @@ export class Category extends Document {
   slug: string;
 
   @Prop()
+  designation_fr?: string;
+
+  @Prop()
+  cover?: string;
+
+  @Prop()
+  cover_liste_produits?: string;
+
+  @Prop()
+  alt_cover?: string;
+
+  @Prop()
+  description_fr?: string;
+
+  @Prop()
+  description_cover?: string;
+
+  @Prop()
+  meta?: string;
+
+  @Prop()
+  content_seo?: string;
+
+  @Prop()
+  review?: string;
+
+  @Prop()
+  aggregateRating?: string;
+
+  @Prop()
+  nutrition_values?: string;
+
+  @Prop()
+  questions?: string;
+
+  @Prop()
+  more_details?: string;
+
+  @Prop()
+  zone1?: string;
+
+  @Prop()
+  zone2?: string;
+
+  @Prop()
+  zone3?: string;
+
+  @Prop()
   schema_description?: string;
+
   @Prop({
     type: {
       url: { type: String, required: false },  
