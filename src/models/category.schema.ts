@@ -114,19 +114,14 @@ export type CategoryDocument = Category & Document;
 
 // Simple pre-save hook
 CategorySchema.pre('save', function (next) {
-  // Ensure designation exists
-  if (!this.designation || this.designation.trim() === '') {
-    this.designation = this.designation_fr || `category-${Date.now()}`;
-  }
-  
-  // Simple slug generation without external dependencies
-  if (!this.slug || this.slug.trim() === '') {
+  // Generate slug only if designation exists
+  if (this.designation && this.designation.trim() !== '' && (!this.slug || this.slug.trim() === '')) {
     this.slug = this.designation.toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '') || `category-${Date.now()}`;
+      .replace(/^-+|-+$/g, '');
   }
   
   next();
 });
 
-CategorySchema.index({ slug: 1 }, { unique: true, sparse: true });
+CategorySchema.index({ slug: 1 }, { sparse: true });

@@ -1,10 +1,10 @@
 
-import { IsNotEmpty, IsString, IsOptional, IsMongoId } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class CreateSubCategoryDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  designation: string;
+  designation?: string;
 
   @IsOptional()
   @IsString()
@@ -14,14 +14,13 @@ export class CreateSubCategoryDto {
   @IsString()
   name?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  slug: string;
+  slug?: string;
 
-  // Accept both ObjectId and string for category reference
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  categoryId: string;
+  categoryId?: string;
 
   @IsOptional()
   @IsString()

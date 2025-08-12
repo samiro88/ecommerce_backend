@@ -35,28 +35,29 @@ import {
           }
         }
   
-        // Create subcategory with all provided fields
+        // Create subcategory with all provided fields matching schema
         const subcategoryData = {
-          name: name || 'Untitled',
-          designation: body.designation || '',
+          designation: body.designation || body.designation_fr || 'Untitled',
           designation_fr: body.designation_fr || '',
-          description_fr: body.description_fr || '',
-          slug: body.slug || (name ? name.toLowerCase().replace(/\s+/g, '-') : 'untitled'),
+          name: body.name || body.designation_fr || '',
+          slug: body.slug || (body.name || body.designation_fr ? (body.name || body.designation_fr).toLowerCase().replace(/\s+/g, '-') : 'untitled'),
           category: categoryId || null,
           categorie_id: category?.id || null,
-          alt_cover: body.alt_cover || '',
-          description_cove: body.description_cove || '',
-          meta: body.meta || '',
-          content_seo: body.content_seo || '',
-          review: body.review || '',
-          aggregateRating: body.aggregateRating || '',
-          nutrition_values: body.nutrition_values || '',
-          questions: body.questions || '',
-          more_details: body.more_details || '',
-          zone1: body.zone1 || '',
-          zone2: body.zone2 || '',
-          zone3: body.zone3 || '',
-          zone4: body.zone4 || '',
+          cover: body.cover || null,
+          alt_cover: body.alt_cover || null,
+          description_cove: body.description_cove || null,
+          meta: body.meta || null,
+          content_seo: body.content_seo || null,
+          description_fr: body.description_fr || null,
+          review: body.review || null,
+          aggregateRating: body.aggregateRating || null,
+          nutrition_values: body.nutrition_values || null,
+          questions: body.questions || null,
+          more_details: body.more_details || null,
+          zone1: body.zone1 || null,
+          zone2: body.zone2 || null,
+          zone3: body.zone3 || null,
+          zone4: body.zone4 || null,
         };
   
         const newSubCategory = await this.subCategoryModel.create([subcategoryData], { session });
@@ -137,6 +138,9 @@ import {
         if (body.zone2 !== undefined) subCategory.zone2 = body.zone2;
         if (body.zone3 !== undefined) subCategory.zone3 = body.zone3;
         if (body.zone4 !== undefined) subCategory.zone4 = body.zone4;
+  
+        // Update timestamp
+        subCategory.updatedAt = new Date();
   
         if (body.categoryId) {
           const category = await this.categoryModel

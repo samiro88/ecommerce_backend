@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+/*import { Module } from '@nestjs/common';
 import { SubCategoriesController } from './subcategory.controller';
 import { SubCategoriesService } from './subcategory.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -19,3 +19,4 @@ import { Product, ProductSchema } from '../../models/product.schema';
   exports: [SubCategoriesService],
 })
 export class SubCategoriesModule {}
+*/

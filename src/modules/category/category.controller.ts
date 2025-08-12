@@ -18,8 +18,8 @@ export class CategoryController {
     
     // Always return success - no validation errors
     const timestamp = Date.now();
-    const designation = body.designation?.trim() || body.designation_fr?.trim() || `category-${timestamp}`;
-    const slug = designation.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || `category-${timestamp}`;
+    const designation = body.designation?.trim() || body.designation_fr?.trim() || '';
+    const slug = designation ? designation.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') : '';
     
     const result = {
       _id: timestamp.toString(),

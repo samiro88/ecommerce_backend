@@ -1,4 +1,4 @@
-
+/*
 import {
   Injectable,
   NotFoundException,
@@ -24,7 +24,7 @@ export class SubCategoriesService {
 
   /**
    * Create a new subcategory, supporting both legacy (categorie_id) and modern (category) references.
-   */
+   
   async create(createSubCategoryDto: CreateSubCategoryDto) {
     const session = await this.connection.startSession();
     session.startTransaction();
@@ -98,7 +98,7 @@ export class SubCategoriesService {
 
   /**
    * Get all subcategories, populating category info.
-   */
+   
   async findAll() {
     const subCategories = await this.subCategoryModel
       .find()
@@ -114,7 +114,7 @@ export class SubCategoriesService {
 
   /**
    * Find subcategories by category (supports both ObjectId and string id).
-   */
+   
   async findByCategory(categoryId: string) {
     // Build query dynamically for maximum compatibility
     let query: any = {};
@@ -156,7 +156,7 @@ export class SubCategoriesService {
 
   /**
    * Update a subcategory, supporting all fields.
-   */
+   
   async update(id: string, updateSubCategoryDto: UpdateSubCategoryDto) {
     const session = await this.connection.startSession();
     session.startTransaction();
@@ -192,7 +192,7 @@ export class SubCategoriesService {
 
   /**
    * Remove a subcategory and clean up references in products and categories.
-   */
+   
   async remove(id: string) {
     const session = await this.connection.startSession();
     session.startTransaction();
@@ -248,7 +248,7 @@ export class SubCategoriesService {
 
   /**
    * Find a subcategory by ID, throwing an error if not found.
-   */
+   
   async findOne(id: string) {
     const subCategory = await this.subCategoryModel.findById(id);
     if (!subCategory) throw new NotFoundException('Subcategory not found');
@@ -262,3 +262,5 @@ export class SubCategoriesService {
   }
 }
 
+
+*/

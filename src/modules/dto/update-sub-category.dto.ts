@@ -23,6 +23,10 @@ export class UpdateSubCategoryDto {
 
   @IsOptional()
   @IsString()
+  categoryId?: string;
+
+  @IsOptional()
+  @IsString()
   cover?: string;
 
   @IsOptional()

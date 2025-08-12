@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+
+/*import { Injectable } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 
@@ -63,3 +64,5 @@ export class CategoryService {
     return this.categories.find(c => c.id === id);
   }
 }
+
+*/

@@ -24,10 +24,10 @@ export class CategoryService {
     try {
       const timestamp = Date.now();
       
-      // Ensure designation is not empty
+      // Use provided designation or generate fallback
       const designation = categoryData.designation?.trim() || 
                          categoryData.designation_fr?.trim() || 
-                         `category-${timestamp}`;
+                         '';
       
       const categoryPayload = {
         designation,

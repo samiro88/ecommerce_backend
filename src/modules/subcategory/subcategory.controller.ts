@@ -1,4 +1,4 @@
-
+/*
 import {
   Controller,
   Get,
@@ -57,3 +57,4 @@ async findOne(@Param('id') id: string) {
 }
 
 
+*/

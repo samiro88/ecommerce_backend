@@ -1,3 +1,4 @@
+/*
 // src/category/controllers/category.controller.ts
 import {
     Controller, Post, Delete, Put, Get,
@@ -48,3 +49,5 @@ import { categoryMulterOptions } from './config/category-multer.config';
       return this.categoryService.getCategoryById(parseInt(id));
     }
   }
+
+  */
