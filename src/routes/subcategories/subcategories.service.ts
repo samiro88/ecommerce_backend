@@ -37,10 +37,10 @@ import {
   
         // Create subcategory with all provided fields matching schema
         const subcategoryData = {
-          designation: body.designation || body.designation_fr || 'Untitled',
+          designation: body.designation || body.designation_fr || '',
           designation_fr: body.designation_fr || '',
           name: body.name || body.designation_fr || '',
-          slug: body.slug || (body.name || body.designation_fr ? (body.name || body.designation_fr).toLowerCase().replace(/\s+/g, '-') : 'untitled'),
+          slug: body.slug || (body.name || body.designation_fr ? (body.name || body.designation_fr).toLowerCase().replace(/\s+/g, '-') : ''),
           category: categoryId || null,
           categorie_id: category?.id || null,
           cover: body.cover || null,

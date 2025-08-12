@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+/*import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PacksController } from './packs.controller';
 import { PacksService } from './packs.service';
@@ -17,3 +17,5 @@ import { memoryStorage } from 'multer';
   providers: [PacksService],
 })
 export class PacksModule {}
+
+*/

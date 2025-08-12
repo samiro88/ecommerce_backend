@@ -6,8 +6,8 @@ import { Product } from './product.schema';
 
 @Schema()
 export class SubCategory extends Document {
-  @Prop({ required: true })
-  designation: string;
+  @Prop({ required: false })
+  designation?: string;
 
   @Prop({ required: false })
   designation_fr?: string;
@@ -15,8 +15,8 @@ export class SubCategory extends Document {
   @Prop({ required: false })
   name?: string;
 
-  @Prop({ required: true, unique: true })
-  slug: string;
+  @Prop({ required: false })
+  slug?: string;
 
   // For legacy support: string category id as in your DB
   @Prop({ required: false })
@@ -93,4 +93,4 @@ export type SubCategoryDocument = SubCategory & Document;
 // Indexes for performance
 SubCategorySchema.index({ category: 1 });
 SubCategorySchema.index({ categorie_id: 1 });
-SubCategorySchema.index({ slug: 1 }, { unique: true });
+SubCategorySchema.index({ slug: 1 });

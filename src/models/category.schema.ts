@@ -114,7 +114,7 @@ export type CategoryDocument = Category & Document;
 
 // Simple pre-save hook
 CategorySchema.pre('save', function (next) {
-  // Generate slug only if designation exists
+  // Generate slug only if designation exists and slug is empty
   if (this.designation && this.designation.trim() !== '' && (!this.slug || this.slug.trim() === '')) {
     this.slug = this.designation.toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')

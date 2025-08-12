@@ -24,14 +24,13 @@ export class CategoryService {
     try {
       const timestamp = Date.now();
       
-      // Use provided designation or generate fallback
-      const designation = categoryData.designation?.trim() || 
-                         categoryData.designation_fr?.trim() || 
-                         '';
+      // Use provided designation as-is
+      const designation = categoryData.designation || '';
       
       const categoryPayload = {
-        designation,
+        designation: categoryData.designation || '',
         designation_fr: categoryData.designation_fr || '',
+        slug: categoryData.slug || '',
         cover: categoryData.cover || '',
         cover_liste_produits: categoryData.cover_liste_produits || '',
         product_liste_cover: categoryData.product_liste_cover || '',
