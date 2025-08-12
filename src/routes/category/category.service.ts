@@ -4,10 +4,25 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 
 type Category = {
   id: number;
-  name: string;
-  description?: string;
-  image?: string;
+  designation?: string;
+  designation_fr?: string;
+  cover?: string;
+  cover_liste_produits?: string;
+  description_fr?: string;
+  alt_cover?: string;
+  description_cover?: string;
+  meta?: string;
+  content_seo?: string;
+  review?: string;
+  aggregateRating?: string;
+  nutrition_values?: string;
+  questions?: string;
+  more_details?: string;
+  zone1?: string;
+  zone2?: string;
+  zone3?: string;
   schema_description?: string;
+  image?: string;
 };
 
 @Injectable()
@@ -17,6 +32,7 @@ export class CategoryService {
   async createCategory(createDto: CreateCategoryDto, image: Express.Multer.File) {
     const newCategory = {
       id: Date.now(),
+      designation: createDto.designation || 'New Category',
       ...createDto,
       image: image?.path
     };
