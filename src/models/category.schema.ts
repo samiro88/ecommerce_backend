@@ -114,17 +114,23 @@ export type CategoryDocument = Category & Document;
 
 // Enhanced pre-save hook with validation
 CategorySchema.pre('save', async function (next) {
-  if (!this.designation || !this.isModified('designation')) return next();
-
+  // Always generate a slug, even if designation is empty
   try {
-    this.slug = await handleSlug(
-      this as any, 
-      'designation', 
-      this.constructor as Model<any>
-    );
+    if (this.designation && this.isModified('designation')) {
+      this.slug = await handleSlug(
+        this as any, 
+        'designation', 
+        this.constructor as Model<any>
+      );
+    } else if (!this.slug) {
+      // Generate a random slug if none exists
+      this.slug = `category-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    }
     next();
   } catch (error) {
-    next(error instanceof Error ? error : new Error('Slug generation failed'));
+    // If slug generation fails, use a fallback
+    this.slug = `category-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    next();
   }
 });
 
