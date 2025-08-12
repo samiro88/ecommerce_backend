@@ -30,9 +30,9 @@ export class CategoryController {
       updatedAt: new Date()
     };
     
-    // Try to save but always return success
+    // Try to save to database
     try {
-      const saved = await this.categoryService.createCategory(file, { ...body, designation });
+      const saved = await this.categoryService.createCategory(file, body);
       return saved;
     } catch (error) {
       console.error('Database save failed, returning mock result:', error);

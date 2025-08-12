@@ -1,3 +1,19 @@
+// Helper to clean empty values from payload
+function cleanPayload(obj: any) {
+  Object.keys(obj).forEach(key => {
+    const value = obj[key];
+    if (
+      value === undefined ||
+      value === null ||
+      value === "" ||
+      (Array.isArray(value) && value.length === 0) ||
+      (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0)
+    ) {
+      delete obj[key];
+    }
+  });
+  return obj;
+}
 import {
   Injectable,
   NotFoundException,
@@ -23,32 +39,29 @@ export class CategoryService {
   async createCategory(file: Express.Multer.File, categoryData: any) {
     try {
       const timestamp = Date.now();
-      
-      // Use provided designation as-is
-      const designation = categoryData.designation || '';
-      
       const categoryPayload = {
-        designation: categoryData.designation || '',
-        designation_fr: categoryData.designation_fr || '',
-        slug: categoryData.slug || '',
-        cover: categoryData.cover || '',
-        cover_liste_produits: categoryData.cover_liste_produits || '',
-        product_liste_cover: categoryData.product_liste_cover || '',
-        description_fr: categoryData.description_fr || '',
-        alt_cover: categoryData.alt_cover || '',
-        description_cover: categoryData.description_cover || '',
-        meta: categoryData.meta || '',
-        content_seo: categoryData.content_seo || '',
-        review: categoryData.review || '',
-        aggregateRating: categoryData.aggregateRating || '',
-        nutrition_values: categoryData.nutrition_values || '',
-        questions: categoryData.questions || '',
-        more_details: categoryData.more_details || '',
-        zone1: categoryData.zone1 || '',
-        zone2: categoryData.zone2 || '',
-        zone3: categoryData.zone3 || '',
-        schema_description: categoryData.schema_description || '',
+        designation: categoryData.designation,
+        designation_fr: categoryData.designation_fr,
+        slug: categoryData.slug,
+        cover: categoryData.cover,
+        cover_liste_produits: categoryData.cover_liste_produits,
+        product_liste_cover: categoryData.product_liste_cover,
+        description_fr: categoryData.description_fr,
+        alt_cover: categoryData.alt_cover,
+        description_cover: categoryData.description_cover,
+        meta: categoryData.meta,
+        content_seo: categoryData.content_seo,
+        review: categoryData.review,
+        aggregateRating: categoryData.aggregateRating,
+        nutrition_values: categoryData.nutrition_values,
+        questions: categoryData.questions,
+        more_details: categoryData.more_details,
+        zone1: categoryData.zone1,
+        zone2: categoryData.zone2,
+        zone3: categoryData.zone3,
+        schema_description: categoryData.schema_description,
       };
+      cleanPayload(categoryPayload);
 
       let imageData: { url: string; img_id: string } | null = null;
       if (file) {
@@ -67,7 +80,7 @@ export class CategoryService {
       return saved;
     } catch (error) {
       console.error('Category creation error:', error);
-      throw error; // Let controller handle the error
+      throw error;
     }
   }
 
@@ -91,10 +104,14 @@ export class CategoryService {
         throw new NotFoundException('Category not found');
       }
 
-      // Update all fields - accept any value including empty strings
-      Object.keys(categoryData).forEach(key => {
+      // Clean the update payload
+      const updatePayload = { ...categoryData };
+      cleanPayload(updatePayload);
+
+      // Update all fields with cleaned values
+      Object.keys(updatePayload).forEach(key => {
         if (key !== '_id' && key !== 'id' && key !== '__v') {
-          category[key] = categoryData[key] || '';
+          category[key] = updatePayload[key];
         }
       });
 
