@@ -36,7 +36,7 @@ export class CategoryService {
   .exec();
   }
 
-  async createCategory(file: Express.Multer.File, categoryData: any) {
+  async createCategory(file: Express.Multer.File | null, categoryData: any) {
     try {
       const timestamp = Date.now();
       const categoryPayload = {
@@ -97,7 +97,7 @@ export class CategoryService {
     return { message: 'Category deleted successfully' };
   }
 
-  async updateCategory(id: string, file: Express.Multer.File, categoryData: any) {
+  async updateCategory(id: string, file: Express.Multer.File | null, categoryData: any) {
     try {
       const category = await this.categoryModel.findById(id);
       if (!category) {

@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Delete, Patch, Put, Param, UploadedFile, Body, UseInterceptors , NotFoundException  } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Patch, Put, Param, UploadedFiles, UploadedFile, Body, UseInterceptors , NotFoundException  } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('categories')
 export class CategoryController {
@@ -12,15 +12,14 @@ export class CategoryController {
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
-  async createCategory(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
+  @UseInterceptors(AnyFilesInterceptor())
+  async createCategory(@UploadedFiles() files: Array<Express.Multer.File>, @Body() body: any) {
     console.log('Creating category with data:', body);
-    
+    const file = files && files.length > 0 ? files[0] : undefined;
     // Always return success - no validation errors
     const timestamp = Date.now();
     const designation = body.designation || '';
     const slug = body.slug || '';
-    
     const result = {
       _id: timestamp.toString(),
       designation,
@@ -29,10 +28,9 @@ export class CategoryController {
       createdAt: new Date(),
       updatedAt: new Date()
     };
-    
     // Try to save to database
     try {
-      const saved = await this.categoryService.createCategory(file, body);
+      const saved = await this.categoryService.createCategory(file || null, body);
       return saved;
     } catch (error) {
       console.error('Database save failed, returning mock result:', error);
@@ -46,13 +44,13 @@ export class CategoryController {
   }
 
   @Patch(':id')
-  @UseInterceptors(FileInterceptor('file'))
-  async updateCategory(@Param('id') id: string, @UploadedFile() file: Express.Multer.File, @Body() body: any) {
+  @UseInterceptors(AnyFilesInterceptor())
+  async updateCategory(@Param('id') id: string, @UploadedFiles() files: Array<Express.Multer.File>, @Body() body: any) {
     console.log('Updating category with data:', body);
-    
+    const file = files && files.length > 0 ? files[0] : undefined;
     // Always return success - no validation errors
     try {
-      const result = await this.categoryService.updateCategory(id, file, body);
+      const result = await this.categoryService.updateCategory(id, file || null, body);
       return result;
     } catch (error) {
       console.error('Update category error:', error);
