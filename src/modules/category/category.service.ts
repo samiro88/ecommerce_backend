@@ -22,12 +22,15 @@ export class CategoryService {
 
   async createCategory(file: Express.Multer.File, categoryData: any) {
     try {
-      // Generate unique designation if empty
       const timestamp = Date.now();
-      const randomId = Math.random().toString(36).substr(2, 9);
+      
+      // Ensure designation is not empty
+      const designation = categoryData.designation?.trim() || 
+                         categoryData.designation_fr?.trim() || 
+                         `category-${timestamp}`;
       
       const categoryPayload = {
-        designation: categoryData.designation || categoryData.designation_fr || `category-${timestamp}-${randomId}`,
+        designation,
         designation_fr: categoryData.designation_fr || '',
         cover: categoryData.cover || '',
         cover_liste_produits: categoryData.cover_liste_produits || '',
@@ -50,10 +53,9 @@ export class CategoryService {
 
       let imageData: { url: string; img_id: string } | null = null;
       if (file) {
-        // Simple file path storage without cloudinary
         imageData = { 
-          url: `/uploads/${Date.now()}-${file.originalname}`, 
-          img_id: `img_${Date.now()}` 
+          url: `/uploads/${timestamp}-${file.originalname}`, 
+          img_id: `img_${timestamp}` 
         };
       }
 
@@ -62,15 +64,11 @@ export class CategoryService {
         image: imageData,
       });
 
-      return await newCategory.save();
+      const saved = await newCategory.save();
+      return saved;
     } catch (error) {
       console.error('Category creation error:', error);
-      // Return a basic category even if save fails
-      return {
-        _id: new Date().getTime().toString(),
-        designation: `category-${Date.now()}`,
-        ...categoryData
-      };
+      throw error; // Let controller handle the error
     }
   }
 

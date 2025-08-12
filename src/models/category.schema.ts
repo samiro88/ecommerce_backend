@@ -114,24 +114,40 @@ export type CategoryDocument = Category & Document;
 
 // Enhanced pre-save hook with validation
 CategorySchema.pre('save', async function (next) {
-  // Always generate a slug, even if designation is empty
   try {
-    if (this.designation && this.isModified('designation')) {
-      this.slug = await handleSlug(
-        this as any, 
-        'designation', 
-        this.constructor as Model<any>
-      );
-    } else if (!this.slug) {
-      // Generate a random slug if none exists
-      this.slug = `category-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    // Ensure designation exists
+    if (!this.designation || this.designation.trim() === '') {
+      this.designation = this.designation_fr || `category-${Date.now()}`;
     }
+    
+    // Generate slug from designation
+    if (this.designation && (this.isModified('designation') || !this.slug)) {
+      try {
+        this.slug = await handleSlug(
+          this as any, 
+          'designation', 
+          this.constructor as Model<any>
+        );
+      } catch (error) {
+        // Fallback slug generation
+        this.slug = this.designation.toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '') + `-${Date.now()}`;
+      }
+    }
+    
+    if (!this.slug) {
+      this.slug = `category-${Date.now()}`;
+    }
+    
     next();
   } catch (error) {
-    // If slug generation fails, use a fallback
-    this.slug = `category-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    console.error('Pre-save hook error:', error);
+    // Ensure we have basic required fields
+    if (!this.designation) this.designation = `category-${Date.now()}`;
+    if (!this.slug) this.slug = `category-${Date.now()}`;
     next();
   }
 });
 
-CategorySchema.index({ designation: 1, slug: 1 });
+CategorySchema.index({ designation: 1, slug: 1 }, { sparse: true });
