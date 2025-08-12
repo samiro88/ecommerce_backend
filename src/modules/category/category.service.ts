@@ -88,14 +88,13 @@ export class CategoryService {
     try {
       const category = await this.categoryModel.findById(id);
       if (!category) {
-        // If category not found, create a new one
-        return this.createCategory(file, categoryData);
+        throw new NotFoundException('Category not found');
       }
 
       // Update all fields - accept any value including empty strings
       Object.keys(categoryData).forEach(key => {
-        if (key !== '_id' && key !== 'id') {
-          category[key] = categoryData[key] ?? '';
+        if (key !== '_id' && key !== 'id' && key !== '__v') {
+          category[key] = categoryData[key] || '';
         }
       });
 
@@ -107,11 +106,11 @@ export class CategoryService {
         };
       }
       
-      return await category.save();
+      const saved = await category.save();
+      return saved;
     } catch (error) {
       console.error('Category update error:', error);
-      // Return updated data even if save fails
-      return { _id: id, ...categoryData };
+      throw error;
     }
   }
 
