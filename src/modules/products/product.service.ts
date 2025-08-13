@@ -9,7 +9,8 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { v2 as cloudinary } from 'cloudinary';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 import { Product } from '../../models/product.schema';
 import { ProductDocument } from '../../models/product.schema';
 import { Category } from '../../models/category.schema';
@@ -25,7 +26,7 @@ import { HttpStatus } from '@nestjs/common';
 import { HttpException } from '@nestjs/common';
 import { RedisService } from '../../shared/utils/redis/redis.service';
 
-export interface CloudinaryImage {
+export interface LocalImage {
   url: string;
   img_id: string;
 }
@@ -166,7 +167,7 @@ export class ProductsService {
 
   async createProduct(
     createProductDto: CreateProductDto,
-    files: Express.Multer.File[],
+    files: { mainImage?: Express.Multer.File[]; images?: Express.Multer.File[] }
   ) {
     try {
       const {
@@ -248,34 +249,34 @@ export class ProductsService {
 
       const finalVariant = parsedVariant.length > 0 ? parsedVariant : [{title: finalDesignation, inStock: true}];
 
-      // Upload main image (optional)
-      let mainImageResult: any = null;
-      const mainImageFile = files?.find?.(f => f.fieldname === 'mainImage');
-      if (mainImageFile) {
-        const mainImageStr = mainImageFile.buffer.toString('base64');
-        const mainImageDataUri = `data:${mainImageFile.mimetype};base64,${mainImageStr}`;
-        mainImageResult = await cloudinary.uploader.upload(mainImageDataUri, {
-          folder: "products/main",
-          resource_type: "auto",
-        });
+      // Use mainImageUrl from frontend if provided
+      let coverUrl = '';
+      if (createProductDto.mainImageUrl) {
+        coverUrl = createProductDto.mainImageUrl;
       }
 
-      // Upload additional images
-      const images: CloudinaryImage[] = [];
-      const additionalImages = files?.filter?.(f => f.fieldname === 'images') || [];
+      // Upload additional images to dashboard public folder
+      const images: { url: string; img_id: string; }[] = [];
+      const additionalImages = files?.images || [];
       if (additionalImages.length > 0) {
+        const now = new Date();
+        const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+        
+        // Save to dashboard public folder
+        const dashboardPublicDir = path.join(process.cwd(), '..', '..', 'sobitas-dashboard', 'dashboard-app', 'public', 'produits', monthYear);
+        await fs.mkdir(dashboardPublicDir, { recursive: true });
+        
         for (const imageFile of additionalImages) {
-          const imageStr = imageFile.buffer.toString('base64');
-          const imageDataUri = `data:${imageFile.mimetype};base64,${imageStr}`;
-
-          const imageResult = await cloudinary.uploader.upload(imageDataUri, {
-            folder: "products/additional",
-            resource_type: "auto",
-          });
-
+          const ext = path.extname(imageFile.originalname) || '.webp';
+          const baseName = path.basename(imageFile.originalname, ext);
+          const uniqueName = `${baseName}-${Date.now()}${ext}`;
+          const filePath = path.join(dashboardPublicDir, uniqueName);
+          
+          await fs.writeFile(filePath, imageFile.buffer);
+          
           images.push({
-            url: imageResult.secure_url,
-            img_id: imageResult.public_id,
+            url: `/produits/${monthYear}/${uniqueName}`,
+            img_id: uniqueName,
           });
         }
       }
@@ -304,10 +305,7 @@ export class ProductsService {
         venteflashDate: finalVenteflashDate,
         question: finalQuestion,
         features: parsedFeatures,
-        mainImage: mainImageResult ? {
-          url: mainImageResult.secure_url,
-          img_id: mainImageResult.public_id,
-        } : null,
+        cover: coverUrl,
         images,
         nutritionalValues: parsedNutritionalValues,
         variant: finalVariant,
@@ -392,7 +390,7 @@ export class ProductsService {
   async updateProduct(
     id: string,
     updateProductDto: UpdateProductDto,
-    files: Express.Multer.File[],
+    files: { mainImage?: Express.Multer.File[]; images?: Express.Multer.File[] }
   ) {
     try {
       const {
@@ -497,10 +495,10 @@ export class ProductsService {
       }
 
       // IMAGE HANDLING
-      const mainImage = await this.handleMainImageUpdate(existingProduct, files?.find?.(f => f.fieldname === 'mainImage'));
+      const mainImage = await this.handleMainImageUpdate(existingProduct, files?.mainImage?.[0]);
       const images = await this.handleGalleryImagesUpdate(
         existingProduct,
-        files?.filter?.(f => f.fieldname === 'images') || [],
+        files?.images || [],
         deletedImages,
       );
 
@@ -582,23 +580,21 @@ export class ProductsService {
   ) {
     if (!newImageFile) return null;
 
-    // Delete old main image
-    if (existingProduct.mainImage?.img_id) {
-      await cloudinary.uploader.destroy(existingProduct.mainImage.img_id);
-    }
-
-    // Upload new main image
-    const imageStr = newImageFile.buffer.toString('base64');
-    const dataUri = `data:${newImageFile.mimetype};base64,${imageStr}`;
-
-    const result = await cloudinary.uploader.upload(dataUri, {
-      folder: "products/main",
-      resource_type: "auto",
-    });
+    const now = new Date();
+    const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+    const publicDir = path.join(process.cwd(), 'public', 'produits', monthYear);
+    await fs.mkdir(publicDir, { recursive: true });
+    
+    const ext = path.extname(newImageFile.originalname) || '.webp';
+    const baseName = path.basename(newImageFile.originalname, ext);
+    const uniqueName = `${baseName}-${Date.now()}${ext}`;
+    const filePath = path.join(publicDir, uniqueName);
+    
+    await fs.writeFile(filePath, newImageFile.buffer);
 
     return {
-      url: result.secure_url,
-      img_id: result.public_id,
+      url: `produits/${monthYear}/${uniqueName}`,
+      img_id: uniqueName,
     };
   }
 
@@ -607,34 +603,26 @@ export class ProductsService {
     newImages: Express.Multer.File[],
     deletedImageUrls: string[],
   ) {
-    // Delete removed images
-    const imagesToDelete = existingProduct.images.filter((img: any) =>
-      deletedImageUrls.includes(img.url)
-    );
-
-    await Promise.all(
-      imagesToDelete.map(async (img: any) => {
-        await cloudinary.uploader.destroy(img.img_id);
-      })
-    );
+    const now = new Date();
+    const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+    const publicDir = path.join(process.cwd(), 'public', 'produits', monthYear);
+    await fs.mkdir(publicDir, { recursive: true });
 
     // Upload new images
-    const newImageUploads = (newImages || []).map(async (imageFile) => {
-      const imageStr = imageFile.buffer.toString('base64');
-      const dataUri = `data:${imageFile.mimetype};base64,${imageStr}`;
-
-      const result = await cloudinary.uploader.upload(dataUri, {
-        folder: "products/additional",
-        resource_type: "auto",
+    const uploadedImages: { url: string; img_id: string; }[] = [];
+    for (const imageFile of newImages || []) {
+      const ext = path.extname(imageFile.originalname) || '.webp';
+      const baseName = path.basename(imageFile.originalname, ext);
+      const uniqueName = `${baseName}-${Date.now()}${ext}`;
+      const filePath = path.join(publicDir, uniqueName);
+      
+      await fs.writeFile(filePath, imageFile.buffer);
+      
+      uploadedImages.push({
+        url: `produits/${monthYear}/${uniqueName}`,
+        img_id: uniqueName,
       });
-
-      return {
-        url: result.secure_url,
-        img_id: result.public_id,
-      };
-    });
-
-    const uploadedImages = await Promise.all(newImageUploads);
+    }
 
     // Combine remaining and new images
     const remainingImages = existingProduct.images.filter(
@@ -940,19 +928,7 @@ if (brand) {
 
         // Delete images from Cloudinary
         for (const product of products) {
-          // Delete main image
-          if (product.mainImage && product.mainImage.img_id) {
-            await cloudinary.uploader.destroy(product.mainImage.img_id);
-          }
-
-          // Delete additional images
-          if (product.images && product.images.length > 0) {
-            for (const image of product.images) {
-              if (image.img_id) {
-                await cloudinary.uploader.destroy(image.img_id);
-              }
-            }
-          }
+          // Images will be cleaned up by file system if needed
 
           // Collect category and subcategory IDs for reference cleanup
           if (product.category && product.category._id) {

@@ -16,20 +16,20 @@ import { Client } from './client.schema';
       ret.status = ret.publier === "1";
       ret.isNewArrival = ret.new_product === "1";
       ret.isBestSeller = ret.best_seller === "1";
-      ret.isFeatured = ret.best_seller === "1"; 
+      ret.isFeatured = ret.best_seller === "1";
       ret.smallDescription = ret.description_fr?.substring(0, 100) || '';
-      ret.mainImage = { 
-        url: ret.cover,
-        img_id: '' 
-      
-      };
+      // Always use mainImage if present, else fallback to cover
+      ret.mainImage = ret.mainImage && ret.mainImage.url
+        ? ret.mainImage
+        : { url: ret.cover || "", img_id: "" };
+      // Always set cover as string
+      ret.cover = ret.mainImage?.url || ret.cover || "";
       
       delete ret.designation_fr;
       delete ret.description_fr;
       delete ret.prix;
       delete ret.promo;
       delete ret.publier;
-      //delete ret.cover;
       delete ret.__v;
       delete ret.new_product;
       delete ret.best_seller;

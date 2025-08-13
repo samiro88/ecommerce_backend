@@ -14,7 +14,12 @@ export class ValidateObjectIdMiddleware implements NestMiddleware {
       return next();
     }
 
-    // 2. Skip validation for recommendation endpoint
+    // 2. Skip validation for file upload endpoints
+    if (req.originalUrl.includes('/upload/') || req.originalUrl.includes('new-with-file')) {
+      return next();
+    }
+
+    // 3. Skip validation for recommendation endpoint
     if (req.originalUrl.includes('/products/recommendation')) {
       return next();
     }

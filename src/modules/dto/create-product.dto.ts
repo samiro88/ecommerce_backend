@@ -104,4 +104,8 @@ export class CreateProductDto {
   // Legacy field support
   price?: number;
   oldPrice?: number;
+
+  @IsOptional()
+  @IsString()
+  mainImageUrl?: string;
 }

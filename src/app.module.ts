@@ -5,7 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import * as bodyParser from 'body-parser';
 import { FileUploadService } from './services/file-upload.service';
-import { FileUploadController } from './controllers/file-upload.controller'; 
+import { FileUploadController } from './controllers/file-upload.controller';
+import { UploadController } from './controllers/upload.controller'; 
 import { CorsMiddleware } from './cors.middleware';
 // ======================
 // ALL ORIGINAL IMPORTS PRESERVED
@@ -207,33 +208,17 @@ import { ContactsModule } from './modules/contacts/contacts.module';
       { name: 'VenteFlash', schema: VenteFlashSchema },
     ]),
   ],
-  controllers: [ AppController, FileUploadController , EmailController , NotificationController],
+  controllers: [ AppController, FileUploadController, UploadController, EmailController , NotificationController],
   // ======================   
   // ======================
   providers: [AppService, FileUploadService , EmailService, SmsService, WhatsappService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    // Remove body parser middleware - NestJS handles this automatically
+    // Only keep essential middleware
+    
     consumer
-      .apply(
-        bodyParser.json({ limit: '50mb' }), 
-        bodyParser.urlencoded({ extended: true, limit: '50mb' })
-      )
-      .forRoutes('*');
-
-    consumer
-      .apply(MulterMiddleware)
-      .forRoutes(
-        'products/*',
-        'categories/*',
-        'pages/*',
-        'blogs/*',
-        'file-upload',
-        'categories',
-        'vente-flash/*',
-        'musculation-products/*',
-       
-      )
       .apply(ValidateObjectIdMiddleware)
       .forRoutes(
         'products',
@@ -243,9 +228,9 @@ export class AppModule implements NestModule {
         'blogs',
         'blogs/*',
         'vente-flash',    
-
       );
-      consumer
+      
+    consumer
       .apply(CorsMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });
   }

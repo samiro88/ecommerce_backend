@@ -12,10 +12,10 @@ export class CategoryController {
   }
 
   @Post()
-  @UseInterceptors(AnyFilesInterceptor())
-  async createCategory(@UploadedFiles() files: Array<Express.Multer.File>, @Body() body: any) {
+  @UseInterceptors(FileInterceptor('file'))
+  async createCategory(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
     console.log('Creating category with data:', body);
-    const file = files && files.length > 0 ? files[0] : undefined;
+    console.log('Creating category with file:', file ? `File: ${file.originalname}` : 'No file');
     // Always return success - no validation errors
     const timestamp = Date.now();
     const designation = body.designation || '';

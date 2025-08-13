@@ -3,9 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Attachment } from '../models/attachment.schema';
 import { Media, MediaDocument } from '../models/media.schema';
-import { CloudinaryService } from '../shared/utils/cloudinary/cloudinary/cloudinary.service';
 import { Response } from 'express';
 import * as fs from 'fs/promises';
+import * as path from 'path';
 import sharp from 'sharp';
 import { MediaCompressionService } from '../shared/utils/media-compression/media-compression.service';
 
@@ -14,23 +14,18 @@ export class FileUploadService {
   constructor(
     @InjectModel('Attachment') private readonly attachmentModel: Model<Attachment>,
     @InjectModel(Media.name) private readonly mediaModel: Model<MediaDocument>,
-    private readonly cloudinaryService: CloudinaryService,
     private readonly mediaCompressionService: MediaCompressionService,
   ) {}
 
   async uploadFile(file: Express.Multer.File, folderId: string | undefined): Promise<Attachment> {
     const originalBuffer = file.buffer;
     let uploadBuffer = originalBuffer;
-    let resourceType: 'image' | 'video' | 'raw' = 'raw';
     let width: number | null = null;
     let height: number | null = null;
 
-    // Detect file type
+    // Detect file type and compress if image
     if (file.mimetype.startsWith('image/')) {
-      // Compress/process image
       uploadBuffer = await this.mediaCompressionService.compressImage(originalBuffer);
-      resourceType = 'image';
-      // Get image metadata
       try {
         const imageMetadata = await sharp(uploadBuffer).metadata();
         width = imageMetadata.width || null;
@@ -39,25 +34,34 @@ export class FileUploadService {
         width = null;
         height = null;
       }
-    } else if (file.mimetype.startsWith('video/')) {
-      resourceType = 'video';
-      // Optionally, extract video metadata here
-    } else {
-      resourceType = 'raw';
     }
 
-    // Upload to Cloudinary
-    const cloudinaryResult = await this.cloudinaryService.uploadBuffer(uploadBuffer, {
-      resource_type: resourceType,
-    });
+    // --- Save to /public/produits/{MonthYear}/ ---
+    const now = new Date();
+    const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+    const publicDir = path.join(process.cwd(), 'public', 'produits', monthYear);
+    await fs.mkdir(publicDir, { recursive: true });
 
-    // Save to media collection (add folderId)
+    // Generate a unique filename
+    const ext = path.extname(file.originalname) || '.webp';
+    const baseName = path.basename(file.originalname, ext);
+    const uniqueName = `${baseName}-${Date.now()}${ext}`;
+    const filePath = path.join(publicDir, uniqueName);
+
+    // Write file to disk
+    await fs.writeFile(filePath, uploadBuffer);
+
+    // Save relative URL for frontend (e.g. produits/April2024/filename.webp)
+    const relativeUrl = path.join('produits', monthYear, uniqueName).replace(/\\/g, '/');
+
+    // Save to media collection (optional)
     const media = new this.mediaModel({
-      id: cloudinaryResult.public_id,
+      id: uniqueName,
       width: width,
       height: height,
       fileSize: uploadBuffer.length,
-      folderId: folderId || null, // ← Save folderId
+      folderId: folderId || null,
+      url: relativeUrl,
     });
     await media.save();
 
@@ -66,7 +70,7 @@ export class FileUploadService {
       filename: file.originalname,
       mimetype: file.mimetype,
       size: uploadBuffer.length,
-      url: cloudinaryResult.secure_url,
+      url: relativeUrl,
     });
 
     return await attachment.save();
@@ -78,7 +82,13 @@ export class FileUploadService {
       res.status(404).send('File not found');
       return;
     }
-
-    res.redirect(file.url);
+    // Serve the file directly from public folder
+    const filePath = path.join(process.cwd(), 'public', file.url);
+    try {
+      await fs.access(filePath);
+      res.sendFile(filePath);
+    } catch {
+      res.status(404).send('File not found');
+    }
   }
 }

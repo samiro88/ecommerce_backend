@@ -44,16 +44,22 @@ export class BlogController {
   }
 
   @Post()
+  async createBlog(@Body() createBlogDto: any) {
+    console.log('Create blog - Body:', createBlogDto);
+    return await this.blogService.createBlog(createBlogDto);
+  }
+
+  @Post('upload')
   @UseInterceptors(FileInterceptor('cover', {
     storage: require('multer').memoryStorage(),
-    limits: { fileSize: 10 * 1024 * 1024 } // 10MB
+    limits: { fileSize: 10 * 1024 * 1024 }
   }))
-  async createBlog(
+  async createBlogWithFile(
     @Body() createBlogDto: CreateBlogDto,
     @UploadedFile() file?: Express.Multer.File
   ) {
-    console.log('Create blog - Body:', createBlogDto);
-    console.log('Create blog - File:', file ? `File: ${file.originalname}` : 'No file');
+    console.log('Create blog with file - Body:', createBlogDto);
+    console.log('Create blog with file - File:', file ? `File: ${file.originalname}` : 'No file');
     return await this.blogService.createBlog(createBlogDto, file);
   }
 
