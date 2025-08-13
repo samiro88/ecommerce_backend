@@ -2,12 +2,20 @@ import { IsString, IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
 
 export class CreateBlogDto {
   @IsString()
-  @IsNotEmpty()
-  title: string;
+  @IsOptional()
+  title?: string;
 
   @IsString()
-  @IsNotEmpty()
-  content: string;
+  @IsOptional()
+  designation_fr?: string;
+
+  @IsString()
+  @IsOptional()
+  content?: string;
+
+  @IsString()
+  @IsOptional()
+  description?: string;
 
   @IsOptional()
   @IsBoolean()
@@ -27,5 +35,33 @@ export class CreateBlogDto {
 
   @IsOptional()
   @IsString()
-  cover?: string; // <-- Add this line
+  cover?: string;
+
+  @IsOptional()
+  @IsString()
+  publier?: string;
+
+  @IsOptional()
+  @IsString()
+  alt_cover?: string;
+
+  @IsOptional()
+  @IsString()
+  description_cover?: string;
+
+  @IsOptional()
+  @IsString()
+  meta?: string;
+
+  @IsOptional()
+  @IsString()
+  content_seo?: string;
+
+  @IsOptional()
+  @IsString()
+  review?: string;
+
+  @IsOptional()
+  @IsString()
+  aggregateRating?: string;
 }

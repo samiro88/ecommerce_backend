@@ -24,20 +24,37 @@ export class AromasService {
   }
 
   async create(data: Partial<Aroma>): Promise<Aroma> {
-    // Ensure brand exists
-    if (!data.brand) throw new NotFoundException('Brand is required');
-    const brandExists = await this.brandModel.exists({ _id: data.brand });
-    if (!brandExists) throw new NotFoundException('Brand not found');
-    const created = new this.aromaModel(data);
+    // Generate ID if not provided
+    const aromaData = {
+      ...data,
+      id: data.id || Math.random().toString(36).substr(2, 9),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+    
+    // Only validate brand if provided
+    if (aromaData.brand) {
+      const brandExists = await this.brandModel.exists({ _id: aromaData.brand });
+      if (!brandExists) throw new NotFoundException('Brand not found');
+    }
+    
+    const created = new this.aromaModel(aromaData);
     return created.save();
   }
 
   async update(id: string, data: Partial<Aroma>): Promise<Aroma> {
-    if (data.brand) {
-      const brandExists = await this.brandModel.exists({ _id: data.brand });
+    const updateData = {
+      ...data,
+      updated_at: new Date().toISOString(),
+    };
+    
+    // Only validate brand if provided
+    if (updateData.brand) {
+      const brandExists = await this.brandModel.exists({ _id: updateData.brand });
       if (!brandExists) throw new NotFoundException('Brand not found');
     }
-    const updated = await this.aromaModel.findByIdAndUpdate(id, data, { new: true }).populate('brand').exec();
+    
+    const updated = await this.aromaModel.findByIdAndUpdate(id, updateData, { new: true }).populate('brand').exec();
     if (!updated) throw new NotFoundException('Aroma not found');
     return updated;
   }

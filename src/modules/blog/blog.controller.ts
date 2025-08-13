@@ -44,19 +44,16 @@ export class BlogController {
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('cover', multerOptions))
+  @UseInterceptors(FileInterceptor('cover', {
+    storage: require('multer').memoryStorage(),
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB
+  }))
   async createBlog(
     @Body() createBlogDto: CreateBlogDto,
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [
-          new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }), // 5MB
-          new FileTypeValidator({ fileType: /(jpg|jpeg|png|gif)$/ }),
-        ],
-        fileIsRequired: false
-      })
-    ) file: Express.Multer.File
+    @UploadedFile() file?: Express.Multer.File
   ) {
+    console.log('Create blog - Body:', createBlogDto);
+    console.log('Create blog - File:', file ? `File: ${file.originalname}` : 'No file');
     return await this.blogService.createBlog(createBlogDto, file);
   }
 
@@ -82,15 +79,7 @@ export class BlogController {
   async updateBlog(
     @Param('id') id: string,
     @Body() updateBlogDto: UpdateBlogDto,
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [
-          new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }),
-          new FileTypeValidator({ fileType: /(jpg|jpeg|png|gif)$/ }),
-        ],
-        fileIsRequired: false
-      })
-    ) file: Express.Multer.File
+    @UploadedFile() file?: Express.Multer.File
   ) {
     return await this.blogService.updateBlog(id, updateBlogDto, file);
   }

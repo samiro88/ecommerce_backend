@@ -21,20 +21,19 @@ export class CorsMiddleware implements NestMiddleware {
   constructor(private readonly configService: ConfigService) {}
 
   use(req: any, res: any, next: () => void) {
-    const allowedOrigins = [
-      this.configService.get('CORSADMIN'),
-      this.configService.get('CORSSTORE'),
-    ].filter(Boolean);
-
     const origin = req.headers.origin;
-
-    if (allowedOrigins.includes(origin)) {
-      res.header('Access-Control-Allow-Origin', origin);
+    // Allow the requesting origin
+    res.header('Access-Control-Allow-Origin', origin || '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,PUT,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+      res.status(200).end();
+      return;
     }
-
-  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Credentials', 'true');
+    
     next();
   }
 }

@@ -38,8 +38,10 @@ export class BlogService {
     file?: Express.Multer.File
   ) {
     try {
+      // Use designation_fr or title for slug generation
+      const titleForSlug = (createBlogDto as any).designation_fr || createBlogDto.title || 'blog';
       const slug = createBlogDto.slug || 
-        createBlogDto.title.toLowerCase()
+        titleForSlug.toLowerCase()
           .replace(/ /g, '-')
           .replace(/[^\w-]+/g, '');
 
@@ -56,17 +58,24 @@ export class BlogService {
         cover = createBlogDto.cover;
       }
 
-      const newBlog = new this.blogModel({
+      const blogData = {
         ...createBlogDto,
+        title: (createBlogDto as any).designation_fr || createBlogDto.title || 'Blog',
+        designation_fr: (createBlogDto as any).designation_fr || createBlogDto.title,
+        content: (createBlogDto as any).description || createBlogDto.content || '',
+        description: (createBlogDto as any).description || createBlogDto.content || '',
         slug,
         cover,
+        status: createBlogDto.status !== undefined ? createBlogDto.status : true,
         inLandingPage: createBlogDto.inLandingPage || false,
-        showOnLandingPage: createBlogDto.showOnLandingPage || false
-      });
+        publier: (createBlogDto as any).publier || '1',
+      };
 
+      const newBlog = new this.blogModel(blogData);
       await newBlog.save();
-      return newBlog.toObject(); // Always return plain object
+      return newBlog.toObject();
     } catch (error) {
+      console.error('Blog creation error:', error);
       throw new InternalServerErrorException('Failed to create blog');
     }
   }
@@ -97,16 +106,27 @@ export class BlogService {
         cover = updateBlogDto.cover;
       }
 
-      // Handle slug update if title changed
-      const slug = updateBlogDto.title 
-        ? updateBlogDto.title.toLowerCase()
+      // Handle slug update if title or designation_fr changed
+      const titleForSlug = (updateBlogDto as any).designation_fr || updateBlogDto.title || blog.title || blog.designation_fr;
+      const slug = titleForSlug 
+        ? titleForSlug.toLowerCase()
             .replace(/ /g, '-')
             .replace(/[^\w-]+/g, '')
         : blog.slug;
 
+      const updateData = {
+        ...updateBlogDto,
+        title: (updateBlogDto as any).designation_fr || updateBlogDto.title || blog.title,
+        designation_fr: (updateBlogDto as any).designation_fr || updateBlogDto.title || blog.designation_fr,
+        content: (updateBlogDto as any).description || updateBlogDto.content || blog.content,
+        description: (updateBlogDto as any).description || updateBlogDto.content || blog.description,
+        cover,
+        slug
+      };
+
       const updatedBlog = await this.blogModel.findByIdAndUpdate(
         id,
-        { ...updateBlogDto, cover, slug },
+        updateData,
         { new: true, runValidators: true }
       ).lean();
 

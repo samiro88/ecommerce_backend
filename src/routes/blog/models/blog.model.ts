@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+/*import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
@@ -23,3 +23,4 @@ export class Blog extends Document {
 }
 
 export const BlogSchema = SchemaFactory.createForClass(Blog);
+*/

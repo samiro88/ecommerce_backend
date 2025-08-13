@@ -6,8 +6,11 @@ import { model, Model } from 'mongoose';
 @Schema({ timestamps: true })
 export class Blog extends Document {
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   title: string;
+
+  @Prop({ required: false })
+  designation_fr: string;
 
   @Prop()
   slug: string;
@@ -23,11 +26,35 @@ export class Blog extends Document {
   @Prop()
   content: string;
 
+  @Prop()
+  description: string;
+
   @Prop({ default: true })
   status: boolean;
 
   @Prop({ default: false })
   inLandingPage: boolean;
+
+  @Prop()
+  publier: string;
+
+  @Prop()
+  alt_cover: string;
+
+  @Prop()
+  description_cover: string;
+
+  @Prop()
+  meta: string;
+
+  @Prop()
+  content_seo: string;
+
+  @Prop()
+  review: string;
+
+  @Prop()
+  aggregateRating: string;
 }
 
 export const BlogSchema = SchemaFactory.createForClass(Blog);

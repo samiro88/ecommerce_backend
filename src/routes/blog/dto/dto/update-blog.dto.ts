@@ -1,4 +1,4 @@
-import { PartialType } from '@nestjs/mapped-types';
+/*import { PartialType } from '@nestjs/mapped-types';
 import { CreateBlogDto } from '../../../../modules/dto/create-blog.dto';
 
 import { IsString, IsOptional } from 'class-validator';
@@ -11,3 +11,4 @@ export class UpdateBlogDto extends PartialType(CreateBlogDto) {
   @IsOptional()
   removedImages?: string[];
 }
+  */

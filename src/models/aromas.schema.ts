@@ -4,7 +4,7 @@ import { Document, Types } from 'mongoose';
 
 @Schema({ collection: 'aromas' })
 export class Aroma extends Document {
-  @Prop({ required: true })
+  @Prop({ required: false })
   declare id: string;
 
   @Prop({ required: true })
@@ -16,7 +16,7 @@ export class Aroma extends Document {
   @Prop()
   updated_at: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'Brand', required: true })
+  @Prop({ type: Types.ObjectId, ref: 'Brand', required: false })
   brand: Types.ObjectId;
 }
 

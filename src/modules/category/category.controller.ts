@@ -44,16 +44,15 @@ export class CategoryController {
   }
 
   @Patch(':id')
-  @UseInterceptors(AnyFilesInterceptor())
-  async updateCategory(@Param('id') id: string, @UploadedFiles() files: Array<Express.Multer.File>, @Body() body: any) {
-    console.log('Updating category with data:', body);
-    const file = files && files.length > 0 ? files[0] : undefined;
-    // Always return success - no validation errors
+  async updateCategory(@Param('id') id: string, @Body() body: any) {
+    console.log('PATCH Updating category with data:', body);
+    
+    // Handle JSON updates (no file)
     try {
-      const result = await this.categoryService.updateCategory(id, file || null, body);
+      const result = await this.categoryService.updateCategory(id, null, body);
       return result;
     } catch (error) {
-      console.error('Update category error:', error);
+      console.error('PATCH Update category error:', error);
       // Return success even if update fails
       return { 
         _id: id, 

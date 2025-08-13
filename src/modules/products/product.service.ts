@@ -362,68 +362,26 @@ export class ProductsService {
           { _id: id },
           { id: id }
         ]
-      })
-      .populate("category")
-      .populate("subCategory");
+      });
 
       if (!product) {
         throw new NotFoundException('Product not found');
       }
 
-      const session = await mongoose.startSession();
-      session.startTransaction();
+      // Simple delete without complex transactions or image cleanup
+      await this.productModel.deleteOne({
+        $or: [
+          { _id: id },
+          { id: id }
+        ]
+      });
 
-      try {
-        // Remove product reference from category if exists
-        if (product.category) {
-          await this.categoryModel.findByIdAndUpdate(
-            product.category._id,
-            { $pull: { products: product._id } },
-            { session }
-          );
-        }
-
-        // Remove product reference from all subcategories if exists
-        if (product.subCategory && product.subCategory.length > 0) {
-          await this.subCategoryModel.updateMany(
-            { _id: { $in: product.subCategory } },
-            { $pull: { products: product._id } },
-            { session }
-          );
-        }
-
-        // Delete product images from storage
-        if (product.mainImage) {
-          await cloudinary.uploader.destroy(product.mainImage.img_id);
-        }
-
-        if (product.images && product.images.length > 0) {
-          for (const image of product.images) {
-            await cloudinary.uploader.destroy(image.img_id);
-          }
-        }
-
-        // Delete the product
-        await this.productModel.deleteOne({
-          $or: [
-            { _id: id },
-            { id: id }
-          ]
-        }, { session });
-
-        await session.commitTransaction();
-
-        return {
-          message: "Product deleted successfully",
-          data: product,
-        };
-      } catch (error) {
-        await session.abortTransaction();
-        throw error;
-      } finally {
-        session.endSession();
-      }
+      return {
+        message: "Product deleted successfully",
+        data: product,
+      };
     } catch (error) {
+      console.error('Delete product error:', error);
       if (error instanceof NotFoundException) {
         throw error;
       }

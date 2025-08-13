@@ -18,18 +18,13 @@ import {
     ) {}
   
     async createSubCategory(body: any) {
-      const session = await mongoose.startSession();
-      session.startTransaction();
-  
       try {
         const { name, categoryId } = body;
         let category: any = null;
         
         // Only validate category if provided
         if (categoryId) {
-          category = await this.categoryModel
-            .findById(categoryId)
-            .session(session);
+          category = await this.categoryModel.findById(categoryId);
           if (!category) {
             throw new NotFoundException('Category not found');
           }
@@ -42,7 +37,7 @@ import {
           name: body.name || body.designation_fr || '',
           slug: body.slug || (body.name || body.designation_fr ? (body.name || body.designation_fr).toLowerCase().replace(/\s+/g, '-') : ''),
           category: categoryId || null,
-          categorie_id: category?.id || null,
+          categorie_id: category?.id || categoryId || null,
           cover: body.cover || null,
           alt_cover: body.alt_cover || null,
           description_cove: body.description_cove || null,
@@ -60,61 +55,45 @@ import {
           zone4: body.zone4 || null,
         };
   
-        const newSubCategory = await this.subCategoryModel.create([subcategoryData], { session });
+        const newSubCategory = await this.subCategoryModel.create(subcategoryData);
   
-        await session.commitTransaction();
         return {
           success: true,
           message: 'Subcategory created successfully',
-          data: newSubCategory[0],
+          data: newSubCategory,
         };
       } catch (error) {
-        await session.abortTransaction();
+        console.error('Subcategory creation error:', error);
         if (error instanceof NotFoundException) {
           throw error;
         }
         throw new InternalServerErrorException('Error creating subcategory');
-      } finally {
-        session.endSession();
       }
     }
   
     async deleteSubCategory(id: string) {
-      const session = await mongoose.startSession();
-      session.startTransaction();
-  
       try {
-        // Check if subcategory exists (same as original)
-        const subCategory = await this.subCategoryModel
-          .findByIdAndDelete(id)
-          .session(session);
+        // Check if subcategory exists and delete it
+        const subCategory = await this.subCategoryModel.findByIdAndDelete(id);
         if (!subCategory) {
           throw new NotFoundException('Subcategory not found');
         }
   
-        await session.commitTransaction();
         return {
           success: true,
           message: 'Subcategory deleted successfully',
           data: subCategory,
         };
       } catch (error) {
-        await session.abortTransaction();
+        console.error('Subcategory delete error:', error);
         if (error instanceof NotFoundException) throw error;
         throw new InternalServerErrorException('Error deleting subcategory');
-      } finally {
-        session.endSession();
       }
     }
   
     async updateSubCategory(id: string, body: any) {
-      const session = await mongoose.startSession();
-      session.startTransaction();
-  
       try {
-        const subCategory = await this.subCategoryModel
-          .findById(id)
-          .session(session);
+        const subCategory = await this.subCategoryModel.findById(id);
         if (!subCategory) {
           throw new NotFoundException('Subcategory not found');
         }
@@ -143,17 +122,14 @@ import {
         subCategory.updatedAt = new Date();
   
         if (body.categoryId) {
-          const category = await this.categoryModel
-            .findById(body.categoryId)
-            .session(session);
+          const category = await this.categoryModel.findById(body.categoryId);
           if (category) {
             subCategory.category = body.categoryId;
-            subCategory.categorie_id = category?.id;
+            subCategory.categorie_id = category?.id || body.categoryId;
           }
         }
   
-        await subCategory.save({ session });
-        await session.commitTransaction();
+        await subCategory.save();
   
         return {
           success: true,
@@ -161,13 +137,11 @@ import {
           data: subCategory,
         };
       } catch (error) {
-        await session.abortTransaction();
+        console.error('Subcategory update error:', error);
         if (error instanceof NotFoundException) {
           throw error;
         }
         throw new InternalServerErrorException('Error updating subcategory');
-      } finally {
-        session.endSession();
       }
     }
 
