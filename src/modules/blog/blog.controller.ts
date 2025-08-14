@@ -43,6 +43,78 @@ export class BlogController {
     return this.blogService.getAllBlogs();
   }
 
+  @Post('admin/new-with-file')
+  @UseInterceptors(FileInterceptor('file'))
+  async adminCreateBlogWithFile(
+    @Body() blogData: any,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    try {
+      console.log('=== BLOG WITH FILE ENDPOINT HIT ===');
+      console.log('Body received:', blogData);
+      console.log('File received:', file ? {
+        originalname: file.originalname,
+        mimetype: file.mimetype,
+        size: file.size
+      } : 'No file');
+
+      let imageUrl = '';
+      
+      // Upload file if provided
+      if (file) {
+        const now = new Date();
+        const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+        
+        const path = require('path');
+        const dashboardPublicDir = path.join(
+          process.cwd(), 
+          '..', 
+          '..', 
+          'sobitas-dashboard', 
+          'dashboard-app', 
+          'public', 
+          'blogs', 
+          monthYear
+        );
+        
+        const fs = require('fs/promises');
+        await fs.mkdir(dashboardPublicDir, { recursive: true });
+        
+        const ext = path.extname(file.originalname) || '.jpg';
+        const baseName = path.basename(file.originalname, ext);
+        const uniqueName = `${baseName}-${Date.now()}${ext}`;
+        const filePath = path.join(dashboardPublicDir, uniqueName);
+        
+        await fs.writeFile(filePath, file.buffer);
+        imageUrl = `/blogs/${monthYear}/${uniqueName}`;
+        
+        console.log('File saved successfully:', {
+          path: filePath,
+          url: imageUrl
+        });
+      }
+      
+      // Create blog with form data and image URL
+      const blogPayload = {
+        ...blogData,
+        cover: imageUrl || blogData.cover || ''
+      };
+      
+      const result = await this.blogService.createBlog(blogPayload);
+      console.log('Blog with file created successfully');
+      
+      return {
+        success: true,
+        message: 'Blog created successfully',
+        imageUrl: imageUrl,
+        blog: result
+      };
+    } catch (error) {
+      console.error('Blog creation error:', error);
+      throw error;
+    }
+  }
+
   @Post()
   async createBlog(@Body() createBlogDto: any) {
     console.log('Create blog - Body:', createBlogDto);
@@ -78,6 +150,80 @@ export class BlogController {
     @Body() blogData: CreateBlogDto
   ) {
     return this.blogService.createBlog(blogData, cover);
+  }
+
+  @Put('admin/update-with-file/:id')
+  @UseInterceptors(FileInterceptor('file'))
+  async adminUpdateBlogWithFile(
+    @Param('id') id: string,
+    @Body() blogData: any,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    try {
+      console.log('=== BLOG UPDATE WITH FILE ENDPOINT HIT ===');
+      console.log('ID:', id);
+      console.log('Body received:', blogData);
+      console.log('File received:', file ? {
+        originalname: file.originalname,
+        mimetype: file.mimetype,
+        size: file.size
+      } : 'No file');
+
+      let imageUrl = '';
+      
+      // Upload file if provided
+      if (file) {
+        const now = new Date();
+        const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+        
+        const path = require('path');
+        const dashboardPublicDir = path.join(
+          process.cwd(), 
+          '..', 
+          '..', 
+          'sobitas-dashboard', 
+          'dashboard-app', 
+          'public', 
+          'blogs', 
+          monthYear
+        );
+        
+        const fs = require('fs/promises');
+        await fs.mkdir(dashboardPublicDir, { recursive: true });
+        
+        const ext = path.extname(file.originalname) || '.jpg';
+        const baseName = path.basename(file.originalname, ext);
+        const uniqueName = `${baseName}-${Date.now()}${ext}`;
+        const filePath = path.join(dashboardPublicDir, uniqueName);
+        
+        await fs.writeFile(filePath, file.buffer);
+        imageUrl = `/blogs/${monthYear}/${uniqueName}`;
+        
+        console.log('File saved successfully:', {
+          path: filePath,
+          url: imageUrl
+        });
+      }
+      
+      // Update blog with form data and image URL
+      const blogPayload = {
+        ...blogData,
+        cover: imageUrl || blogData.cover || ''
+      };
+      
+      const result = await this.blogService.updateBlog(id, blogPayload);
+      console.log('Blog updated successfully');
+      
+      return {
+        success: true,
+        message: 'Blog updated successfully',
+        imageUrl: imageUrl,
+        blog: result
+      };
+    } catch (error) {
+      console.error('Blog update error:', error);
+      throw error;
+    }
   }
 
   @Put(':id')

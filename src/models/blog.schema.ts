@@ -15,13 +15,11 @@ export class Blog extends Document {
   @Prop()
   slug: string;
 
-  @Prop({
-    type: {
-      url: String,
-      img_id: String,
-    },
+  @Prop({ 
+    type: require('mongoose').Schema.Types.Mixed,
+    default: ''
   })
- cover: any;
+  cover: string | { url: string; img_id: string };
 
   @Prop()
   content: string;

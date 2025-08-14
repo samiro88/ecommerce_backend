@@ -33,7 +33,7 @@ async findBySlug(slug: string): Promise<Brand[]> {
     // Generate ID if not provided
     const brandData = {
       ...data,
-      id: data.id || Math.random().toString(36).substr(2, 9),
+      id: (data as any).id || Math.random().toString(36).substr(2, 9),
       designation_fr: data.designation_fr || 'Untitled Brand',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -43,10 +43,23 @@ async findBySlug(slug: string): Promise<Brand[]> {
   }
 
   async update(id: string, data: Partial<Brand>): Promise<Brand> {
+    // Clean the data to handle problematic fields
+    const cleanData = { ...data } as any;
+    
+    // Handle aromas field - remove if empty string or invalid
+    if (typeof cleanData.aromas === 'string' && (cleanData.aromas === '' || cleanData.aromas === "[ '' ]")) {
+      delete cleanData.aromas;
+    }
+    
+    // Remove fields that shouldn't be updated
+    delete cleanData._id;
+    delete cleanData.__v;
+    
     const updateData = {
-      ...data,
+      ...cleanData,
       updated_at: new Date().toISOString(),
     };
+    
     const updated = await this.brandModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
     if (!updated) throw new NotFoundException('Brand not found');
     return updated;

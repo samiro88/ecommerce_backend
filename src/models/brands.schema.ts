@@ -6,10 +6,10 @@ import { Document, Types } from 'mongoose';
 
 @Schema({ collection: 'brands' })
 export class Brand extends Document {
-  @Prop({ required: true })
+  @Prop({ required: false })
 declare id: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   designation_fr: string;
 
   @Prop()

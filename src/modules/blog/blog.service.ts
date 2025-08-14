@@ -48,12 +48,8 @@ export class BlogService {
       let cover: { url: string; img_id: string } | string | undefined;
       
       if (file) {
-        if (this.sharedCloudinaryService) {
-          const result = await this.controllerCloudinaryService.uploadImage(file);
-          cover = { url: result.secure_url, img_id: result.public_id };
-        } else {
-          cover = file.path; // Fallback to local storage
-        }
+        // For local file storage, use string format
+        cover = createBlogDto.cover || '';
       } else if (createBlogDto.cover) {
         cover = createBlogDto.cover;
       }
