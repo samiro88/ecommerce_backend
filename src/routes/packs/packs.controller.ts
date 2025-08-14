@@ -27,6 +27,83 @@ export class PacksController {
   
 
   /**
+   * Admin create pack with file support - working endpoint
+   */
+  @Post('admin/new-with-file')
+  @UseInterceptors(FilesInterceptor('files', 10))
+  async adminCreatePackWithFile(
+    @Body() packData: any,
+    @UploadedFiles() files: Express.Multer.File[],
+  ) {
+    try {
+      console.log('=== PACK ADMIN CREATE ENDPOINT HIT ===');
+      console.log('Body received:', packData);
+      console.log('Files received:', files ? files.length : 0);
+
+      let imageUrl = '';
+      
+      // Upload file if provided
+      if (files && files.length > 0) {
+        const file = files[0]; // Use first file as main image
+        const now = new Date();
+        const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+        
+        const path = require('path');
+        const dashboardPublicDir = path.join(
+          process.cwd(), 
+          '..', 
+          '..', 
+          'sobitas-dashboard', 
+          'dashboard-app', 
+          'public', 
+          'packs', 
+          monthYear
+        );
+        
+        const fs = require('fs/promises');
+        await fs.mkdir(dashboardPublicDir, { recursive: true });
+        
+        const ext = path.extname(file.originalname) || '.jpg';
+        const baseName = path.basename(file.originalname, ext);
+        const uniqueName = `${baseName}-${Date.now()}${ext}`;
+        const filePath = path.join(dashboardPublicDir, uniqueName);
+        
+        await fs.writeFile(filePath, file.buffer);
+        imageUrl = `/packs/${monthYear}/${uniqueName}`;
+        
+        console.log('File saved successfully:', {
+          path: filePath,
+          url: imageUrl
+        });
+      }
+      
+      // Create pack with form data and image URL
+      const packPayload = {
+        ...packData,
+        cover: imageUrl || packData.cover || '',
+        mainImage: imageUrl ? {
+          url: imageUrl,
+          img_id: `pack-${Date.now()}`
+        } : undefined
+      };
+      
+      // Use simplified creation logic
+      const result = await this.packsService.createPackSimple(packPayload);
+      console.log('Pack created successfully');
+      
+      return {
+        success: true,
+        message: 'Pack created successfully',
+        imageUrl: imageUrl,
+        data: result
+      };
+    } catch (error) {
+      console.error('Pack creation error:', error);
+      throw error;
+    }
+  }
+
+  /**
    * Create a new pack.
    * Expects multipart/form-data with images and pack data.
    */
@@ -93,6 +170,32 @@ export class PacksController {
   }
 
   /**
+   * Admin delete pack - working endpoint
+   */
+  @Delete('admin/delete/:id')
+  async adminDeletePack(@Param('id') id: string) {
+    try {
+      console.log('=== PACK ADMIN DELETE ENDPOINT HIT ===');
+      console.log('Deleting pack ID:', id);
+      
+      const result = await this.packsService.deletePackSimple(id);
+      console.log('Pack deleted successfully');
+      
+      return {
+        success: true,
+        message: 'Pack deleted successfully',
+        data: result
+      };
+    } catch (error) {
+      console.error('Pack deletion error:', error);
+      throw new HttpException(
+        error.message || 'Delete failed',
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  /**
    * Delete a pack by ID.
    */
   @Delete('delete/:id')
@@ -102,6 +205,32 @@ export class PacksController {
     } catch (error) {
       throw new HttpException(
         error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  /**
+   * Admin bulk delete packs - working endpoint
+   */
+  @Post('admin/delete/many')
+  async adminDeletePacksInBulk(@Body() body: string[]) {
+    try {
+      console.log('=== PACK ADMIN BULK DELETE ENDPOINT HIT ===');
+      console.log('Deleting pack IDs:', body);
+      
+      const result = await this.packsService.deletePacksSimple(body);
+      console.log('Packs deleted successfully');
+      
+      return {
+        success: true,
+        message: 'Packs deleted successfully',
+        data: result
+      };
+    } catch (error) {
+      console.error('Pack bulk deletion error:', error);
+      throw new HttpException(
+        error.message || 'Bulk delete failed',
         error.status || HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -118,6 +247,87 @@ export class PacksController {
     } catch (error) {
       throw new HttpException(
         error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  /**
+   * Admin update pack with file support - working endpoint
+   */
+  @Put('admin/update-with-file/:id')
+  @UseInterceptors(FilesInterceptor('files', 10))
+  async adminUpdatePackWithFile(
+    @Param('id') id: string,
+    @Body() packData: any,
+    @UploadedFiles() files: Express.Multer.File[],
+  ) {
+    try {
+      console.log('=== PACK ADMIN UPDATE ENDPOINT HIT ===');
+      console.log('ID:', id);
+      console.log('Body received:', packData);
+      console.log('Files received:', files ? files.length : 0);
+
+      let imageUrl = '';
+      
+      // Upload file if provided
+      if (files && files.length > 0) {
+        const file = files[0]; // Use first file as main image
+        const now = new Date();
+        const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+        
+        const path = require('path');
+        const dashboardPublicDir = path.join(
+          process.cwd(), 
+          '..', 
+          '..', 
+          'sobitas-dashboard', 
+          'dashboard-app', 
+          'public', 
+          'packs', 
+          monthYear
+        );
+        
+        const fs = require('fs/promises');
+        await fs.mkdir(dashboardPublicDir, { recursive: true });
+        
+        const ext = path.extname(file.originalname) || '.jpg';
+        const baseName = path.basename(file.originalname, ext);
+        const uniqueName = `${baseName}-${Date.now()}${ext}`;
+        const filePath = path.join(dashboardPublicDir, uniqueName);
+        
+        await fs.writeFile(filePath, file.buffer);
+        imageUrl = `/packs/${monthYear}/${uniqueName}`;
+        
+        console.log('File saved successfully:', {
+          path: filePath,
+          url: imageUrl
+        });
+      }
+      
+      // Update pack with form data and image URL
+      const packPayload = {
+        ...packData,
+        cover: imageUrl || packData.cover || '',
+        mainImage: imageUrl ? {
+          url: imageUrl,
+          img_id: `pack-${Date.now()}`
+        } : undefined
+      };
+      
+      const result = await this.packsService.updatePackSimple(id, packPayload);
+      console.log('Pack updated successfully');
+      
+      return {
+        success: true,
+        message: 'Pack updated successfully',
+        imageUrl: imageUrl,
+        data: result
+      };
+    } catch (error) {
+      console.error('Pack update error:', error);
+      throw new HttpException(
+        error.message || 'Update failed',
         error.status || HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

@@ -568,4 +568,189 @@ export class PacksService {
       throw new InternalServerErrorException('Error fetching raw packs');
     }
   }
+
+  /**
+   * Simplified pack creation for admin operations
+   */
+  async createPackSimple(packData: any) {
+    try {
+      // Clean the data - remove empty strings
+      const cleanData = { ...packData };
+      Object.keys(cleanData).forEach(key => {
+        if (cleanData[key] === '' || cleanData[key] === null || cleanData[key] === undefined) {
+          delete cleanData[key];
+        }
+      });
+
+      // Map frontend fields to schema fields (only if provided)
+      const finalData = { ...cleanData };
+      
+      // Map designation_fr to designation (only if provided)
+      if (cleanData.designation_fr) {
+        finalData.designation = cleanData.designation_fr;
+      }
+      
+      // Map prix to price (only if provided)
+      if (cleanData.prix) {
+        finalData.price = parseFloat(cleanData.prix);
+      }
+      
+      // Map promo to oldPrice (only if provided)
+      if (cleanData.promo) {
+        finalData.oldPrice = parseFloat(cleanData.promo);
+      }
+      
+      // Map description_fr to description (only if provided)
+      if (cleanData.description_fr) {
+        finalData.description = cleanData.description_fr;
+      }
+      
+      // Map meta_description_fr to smallDescription (only if provided)
+      if (cleanData.meta_description_fr) {
+        finalData.smallDescription = cleanData.meta_description_fr;
+      }
+      
+      // Map questions to question (only if provided)
+      if (cleanData.questions) {
+        finalData.question = cleanData.questions;
+      }
+      
+      // Set minimal defaults only
+      finalData.status = finalData.status !== undefined ? finalData.status : true;
+      finalData.inStock = finalData.inStock !== undefined ? finalData.inStock : true;
+
+      // Remove frontend-specific fields that don't exist in schema
+      delete finalData.designation_fr;
+      delete finalData.prix;
+      delete finalData.promo;
+      delete finalData.description_fr;
+      delete finalData.meta_description_fr;
+      delete finalData.questions;
+
+      const newPack = new this.packModel(finalData);
+      const savedPack = await newPack.save();
+      
+      return savedPack;
+    } catch (error) {
+      console.error('Pack creation error:', error);
+      throw new InternalServerErrorException('Error creating pack');
+    }
+  }
+
+  /**
+   * Simplified pack update for admin operations
+   */
+  async updatePackSimple(id: string, packData: any) {
+    try {
+      // Clean the data - remove empty strings and system fields
+      const cleanData = { ...packData };
+      Object.keys(cleanData).forEach(key => {
+        if (cleanData[key] === '' || cleanData[key] === null || cleanData[key] === undefined) {
+          delete cleanData[key];
+        }
+      });
+      
+      // Remove system fields that shouldn't be updated
+      delete cleanData._id;
+      delete cleanData.__v;
+      delete cleanData.createdAt;
+      delete cleanData.updatedAt;
+
+      // Map frontend fields to schema fields
+      const updateData: any = { ...cleanData };
+      
+      // Map designation_fr to designation
+      if (cleanData.designation_fr) {
+        updateData.designation = cleanData.designation_fr;
+        delete updateData.designation_fr;
+      }
+      
+      // Map prix to price
+      if (cleanData.prix) {
+        updateData.price = parseFloat(cleanData.prix);
+        delete updateData.prix;
+      }
+      
+      // Map promo to oldPrice
+      if (cleanData.promo) {
+        updateData.oldPrice = parseFloat(cleanData.promo);
+        delete updateData.promo;
+      }
+      
+      // Map description_fr to description
+      if (cleanData.description_fr) {
+        updateData.description = cleanData.description_fr;
+        delete updateData.description_fr;
+      }
+      
+      // Map meta_description_fr to smallDescription
+      if (cleanData.meta_description_fr) {
+        updateData.smallDescription = cleanData.meta_description_fr;
+        delete updateData.meta_description_fr;
+      }
+      
+      // Map questions to question
+      if (cleanData.questions) {
+        updateData.question = cleanData.questions;
+        delete updateData.questions;
+      }
+
+      // Handle other numeric fields
+      if (updateData.price) updateData.price = parseFloat(updateData.price);
+      if (updateData.oldPrice) updateData.oldPrice = parseFloat(updateData.oldPrice);
+      if (updateData.rate) updateData.rate = parseFloat(updateData.rate);
+
+      const updatedPack = await this.packModel.findByIdAndUpdate(
+        id,
+        updateData,
+        { new: true, runValidators: false }
+      );
+      
+      if (!updatedPack) {
+        throw new NotFoundException('Pack not found');
+      }
+      
+      return updatedPack;
+    } catch (error) {
+      console.error('Pack update error:', error);
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Error updating pack');
+    }
+  }
+
+  /**
+   * Simplified pack deletion for admin operations (skips image cleanup)
+   */
+  async deletePackSimple(id: string): Promise<any> {
+    try {
+      const deletedPack = await this.packModel.findByIdAndDelete(id);
+      
+      if (!deletedPack) {
+        throw new NotFoundException('Pack not found');
+      }
+      
+      return deletedPack;
+    } catch (error) {
+      console.error('Pack deletion error:', error);
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Error deleting pack');
+    }
+  }
+
+  /**
+   * Simplified bulk pack deletion for admin operations (skips image cleanup)
+   */
+  async deletePacksSimple(ids: string[]): Promise<any> {
+    try {
+      const result = await this.packModel.deleteMany({ _id: { $in: ids } });
+      return result;
+    } catch (error) {
+      console.error('Pack bulk deletion error:', error);
+      throw new InternalServerErrorException('Error deleting packs');
+    }
+  }
 }

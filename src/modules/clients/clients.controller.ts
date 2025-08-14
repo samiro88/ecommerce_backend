@@ -1,5 +1,5 @@
 // clients.controller.ts
-import { Controller, Post, Body, Get, Param, Put, Req, Inject } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Put, Delete, Req, Inject } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { SmsService } from '../../services/sms.service'; // adjust path if needed
 
@@ -49,6 +49,47 @@ export class ClientsController {
     return { success: true, count: body.to.length };
   }
 
+  @Post('admin/new-with-data')
+  async adminCreateClient(@Body() clientData: any) {
+    try {
+      console.log('=== CLIENT ADMIN CREATE ENDPOINT HIT ===');
+      console.log('Body received:', clientData);
+      
+      // Clean the data - remove empty strings and set defaults
+      const cleanData = { ...clientData };
+      Object.keys(cleanData).forEach(key => {
+        if (cleanData[key] === '' || cleanData[key] === null || cleanData[key] === undefined) {
+          delete cleanData[key];
+        }
+      });
+      
+      // Set required defaults to avoid validation errors
+      const clientPayload = {
+        ...cleanData,
+        isGuest: true,
+        sms: cleanData.sms || "0",
+        subscriber: cleanData.subscriber || false,
+        // Only set email if provided and not empty
+        ...(cleanData.email && cleanData.email.trim() !== '' && { email: cleanData.email }),
+      };
+      
+      // Create client using direct service method
+      const result = await this.clientsService.createClientDirect(clientPayload);
+      const savedClient = result.data;
+      
+      console.log('Client created successfully');
+      
+      return {
+        success: true,
+        message: 'Client created successfully',
+        data: savedClient
+      };
+    } catch (error) {
+      console.error('Client creation error:', error);
+      throw error;
+    }
+  }
+
   @Post()
   async createClient(@Body() body: any) {
     return this.clientsService.createGuestClient(body);
@@ -72,6 +113,11 @@ export class ClientsController {
   @Put(':id')
   async updateClient(@Param('id') id: string, @Body() body: any) {
     return this.clientsService.updateProfile(id, body);
+  }
+
+  @Delete(':id')
+  async deleteClient(@Param('id') id: string) {
+    return this.clientsService.deleteClient(id);
   }
 
   // Other methods...

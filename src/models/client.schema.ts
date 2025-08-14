@@ -53,6 +53,6 @@ export class Client extends Document {
 
 export const ClientSchema = SchemaFactory.createForClass(Client);
 
-export type ClientDocument = Client & Document & {
+export type ClientDocument = Client & Document & { 
   _id: Types.ObjectId;
 };

@@ -7,7 +7,7 @@ import { ClientSchema } from './client.schema';
 import { SmsService } from '../../services/sms.service';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Client', schema: ClientSchema }])],
+  imports: [MongooseModule.forFeature([{ name: 'AdminClient', schema: ClientSchema }])],
   providers: [ClientsService , SmsService],
   controllers: [ClientsController],
 })

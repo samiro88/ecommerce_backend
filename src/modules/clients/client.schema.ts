@@ -1,7 +1,7 @@
 import { Schema, Document } from 'mongoose';
 
 export const ClientSchema = new Schema({
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: false, sparse: true },
   password: { type: String, select: false, required: false },
   isGuest: { type: Boolean, default: true },
   name: String,

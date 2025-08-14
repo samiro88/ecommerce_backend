@@ -15,7 +15,7 @@ import { AuthModule } from './routes/auth/auth.module';
 import { BlogModule } from './modules/blog/blog.module';
 import { CategoryModule } from './modules/category/category.module';
 import { CloudinaryModule } from 'src/shared/utils/cloudinary/cloudinary/cloudinary.module';
-import { ClientModule } from './routes/client/client.module';
+import { ClientsModule } from './modules/clients/clients.module';
 import { InformationModule } from './routes/information/information.module';
 import { MessagesModule } from './routes/messages/messages.module';
 import { PacksModule } from './routes/packs/packs.module';
@@ -142,7 +142,7 @@ import { ContactsModule } from './modules/contacts/contacts.module';
     BlogModule,
     CategoryModule,
     AramexModule,
-    ClientModule,
+    ClientsModule,
     CloudinaryModule,
     ExportModule, // NEW
     InformationModule,

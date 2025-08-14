@@ -8,13 +8,13 @@ import { handleSlug } from '../shared/utils/generators/slug/slug-generator.servi
  */
 @Schema({ timestamps: true })
 export class Pack extends Document {
-  @Prop({ required: true })
+  @Prop({ required: false })
   designation: string;
 
   @Prop({ unique: true })
   slug: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   price: number;
 
   @Prop()

@@ -13,28 +13,33 @@ export class CommandeService {
     const created = new this.commandeModel(data);
     const savedOrder = await created.save();
 
-    console.log('DEBUG: About to call sendOrderNotifications for', savedOrder.numero);
-
-    try {
-      await this.notificationService.sendOrderNotifications(
-        savedOrder.email,
-        savedOrder.phone,
-        `${savedOrder.prenom} ${savedOrder.nom}`,
-        savedOrder.numero,
-        savedOrder.billing_localite || savedOrder.livraison_ville || "",
-        savedOrder.gouvernorat || "",
-        savedOrder.code_postale || savedOrder.livraison_code_postale || "",
-        savedOrder.phone || "",
-        savedOrder.billing_localite,
-        savedOrder.gouvernorat,
-        savedOrder.cart || [],
-        savedOrder.prix_ht,
-        savedOrder.frais_livraison,
-        savedOrder.livraison,
-        savedOrder.prix_ttc
-      );
-    } catch (err) {
-      console.error('Order notification failed:', err);
+    // Only send notifications if email or phone is provided
+    if (savedOrder.email && savedOrder.email.trim() !== '' || savedOrder.phone && savedOrder.phone.trim() !== '') {
+      console.log('DEBUG: About to call sendOrderNotifications for', savedOrder.numero);
+      
+      try {
+        await this.notificationService.sendOrderNotifications(
+          savedOrder.email,
+          savedOrder.phone,
+          `${savedOrder.prenom} ${savedOrder.nom}`,
+          savedOrder.numero,
+          savedOrder.billing_localite || savedOrder.livraison_ville || "",
+          savedOrder.gouvernorat || "",
+          savedOrder.code_postale || savedOrder.livraison_code_postale || "",
+          savedOrder.phone || "",
+          savedOrder.billing_localite,
+          savedOrder.gouvernorat,
+          savedOrder.cart || [],
+          savedOrder.prix_ht,
+          savedOrder.frais_livraison,
+          savedOrder.livraison,
+          savedOrder.prix_ttc
+        );
+      } catch (err) {
+        console.error('Order notification failed:', err);
+      }
+    } else {
+      console.log('DEBUG: Skipping notifications - no email or phone provided for order', savedOrder.numero);
     }
 
     return savedOrder;
@@ -74,6 +79,39 @@ export class CommandeService {
       ).exec();
     }
     if (!updated) throw new NotFoundException('Commande not found');
+
+    // Send notifications if email or phone is provided (same logic as create)
+    const emailToUse = updated.email || updated.livraison_email || '';
+    const phoneToUse = updated.phone || updated.livraison_phone || '';
+    
+    if (emailToUse.trim() !== '' || phoneToUse.trim() !== '') {
+      console.log('DEBUG: About to call sendOrderNotifications for updated order', updated.numero);
+      
+      try {
+        await this.notificationService.sendOrderNotifications(
+          emailToUse,
+          phoneToUse,
+          `${updated.prenom || ''} ${updated.nom || ''}`,
+          updated.numero || '',
+          updated.billing_localite || updated.livraison_ville || "",
+          updated.gouvernorat || "",
+          updated.code_postale || updated.livraison_code_postale || "",
+          phoneToUse,
+          updated.billing_localite || '',
+          updated.gouvernorat || '',
+          updated.cart || [],
+          updated.prix_ht || '',
+          updated.frais_livraison || '',
+          updated.livraison || '',
+          updated.prix_ttc || ''
+        );
+      } catch (err) {
+        console.error('Order update notification failed:', err);
+      }
+    } else {
+      console.log('DEBUG: Skipping notifications for updated order - no email or phone provided for order', updated.numero);
+    }
+
     return updated;
   }
 

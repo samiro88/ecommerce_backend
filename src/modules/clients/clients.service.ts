@@ -15,7 +15,7 @@ export interface Client {
 @Injectable()
 export class ClientsService {
   constructor(
-    @InjectModel('Client') private readonly clientModel: Model<Client>,
+    @InjectModel('AdminClient') private readonly clientModel: Model<Client>,
   ) {}
 
   async subscribeButton(email: string) {
@@ -45,23 +45,35 @@ export class ClientsService {
   }
 
   async createGuestClient(createClientDto: any) {
-    const { email } = createClientDto;
-    const existingClient = await this.clientModel.findOne({ email, isGuest: false });
-    if (existingClient) {
-      throw new Error('Email already registered. Please login to continue.');
+    // Clean the data - remove empty strings
+    const cleanData = { ...createClientDto };
+    Object.keys(cleanData).forEach(key => {
+      if (cleanData[key] === '' || cleanData[key] === null || cleanData[key] === undefined) {
+        delete cleanData[key];
+      }
+    });
+
+    const { email } = cleanData;
+    
+    // Only check for existing email if email is provided
+    if (email) {
+      const existingClient = await this.clientModel.findOne({ email, isGuest: false });
+      if (existingClient) {
+        throw new Error('Email already registered. Please login to continue.');
+      }
+
+      const existingGuest = await this.clientModel.findOne({ email, isGuest: true });
+      if (existingGuest) {
+        const updatedGuest = await this.clientModel.findByIdAndUpdate(
+          existingGuest._id,
+          cleanData,
+          { new: true }
+        );
+        return { success: true, data: updatedGuest };
+      }
     }
 
-    const existingGuest = await this.clientModel.findOne({ email, isGuest: true });
-    if (existingGuest) {
-      const updatedGuest = await this.clientModel.findByIdAndUpdate(
-        existingGuest._id,
-        createClientDto,
-        { new: true }
-      );
-      return { success: true, data: updatedGuest };
-    }
-
-    const guestClient = new this.clientModel({ ...createClientDto, isGuest: true, password: null });
+    const guestClient = new this.clientModel({ ...cleanData, isGuest: true });
     const savedGuestClient = await guestClient.save();
     return { success: true, data: savedGuestClient };
   }
@@ -158,8 +170,40 @@ export class ClientsService {
   }
 
   async getAllClients() {
-    const clients = await this.clientModel.find();
-    return { success: true, data: clients };
+    try {
+      // Get new clients from AdminClient collection
+      const newClients = await this.clientModel.find();
+      
+      // Get old clients from Client collection using connection
+      const mongoose = require('mongoose');
+      const connection = mongoose.connection;
+      const oldClients = await connection.collection('clients').find({}).toArray();
+      
+      // Merge both collections
+      const allClients = [...oldClients, ...newClients];
+      
+      console.log(`Found ${oldClients.length} old clients and ${newClients.length} new clients`);
+      
+      return { success: true, data: allClients };
+    } catch (error) {
+      console.error('Error fetching clients:', error);
+      // Fallback to just new clients if old collection fails
+      const clients = await this.clientModel.find();
+      return { success: true, data: clients };
+    }
+  }
+
+  async deleteClient(id: string) {
+    const client = await this.clientModel.findByIdAndDelete(id);
+    if (!client) throw new Error('Client not found');
+    return { success: true, message: 'Client deleted successfully' };
+  }
+
+  async createClientDirect(clientData: any) {
+    // Direct model creation for admin operations
+    const newClient = new this.clientModel(clientData);
+    const savedClient = await newClient.save();
+    return { success: true, data: savedClient };
   }
 
   // Additional methods can be added as needed...
