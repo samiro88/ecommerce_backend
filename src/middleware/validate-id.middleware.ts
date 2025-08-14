@@ -15,7 +15,7 @@ export class ValidateObjectIdMiddleware implements NestMiddleware {
     }
 
     // 2. Skip validation for file upload endpoints
-    if (req.originalUrl.includes('/upload/') || req.originalUrl.includes('new-with-file')) {
+    if (req.originalUrl.includes('/upload/') || req.originalUrl.includes('new-with-file') || req.originalUrl.includes('update-with-file')) {
       return next();
     }
 

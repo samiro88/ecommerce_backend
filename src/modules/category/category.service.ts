@@ -63,6 +63,7 @@ export class CategoryService {
       };
       cleanPayload(categoryPayload);
 
+      // Handle image data
       let imageData: { url: string; img_id: string } | null = null;
       if (file) {
         imageData = { 
@@ -74,6 +75,8 @@ export class CategoryService {
       const newCategory = new this.categoryModel({
         ...categoryPayload,
         image: imageData,
+        // Ensure cover field is set from categoryData
+        cover: categoryPayload.cover || '',
       });
 
       const saved = await newCategory.save();
