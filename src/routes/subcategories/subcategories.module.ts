@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SubCategoriesController } from './subcategories.controller';
+import { PublicSubCategoriesController } from './public-subcategories.controller';
 import { SubCategoriesService } from './subcategories.service';
 import { SubCategory, SubCategorySchema } from '../../models/sub-category.schema';;
 import { Category, CategorySchema } from '../../models/category.schema';;
@@ -12,7 +13,7 @@ import { Category, CategorySchema } from '../../models/category.schema';;
       { name: Category.name, schema: CategorySchema }, // Needed for category relations
     ]),
   ],
-  controllers: [SubCategoriesController],
+  controllers: [SubCategoriesController, PublicSubCategoriesController],
   providers: [SubCategoriesService],
   exports: [SubCategoriesService], // Export if needed by other modules
 })

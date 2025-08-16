@@ -553,4 +553,78 @@ async recommendProduct(@Body('exclude') exclude: string[]) {
   }
 }
 
+  // Best Seller Configuration Routes
+  @Get('admin/bestseller-config')
+  async getBestSellerConfig() {
+    try {
+      return await this.productsService.getBestSellerConfig();
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Post('admin/bestseller-config')
+  async updateBestSellerConfig(@Body() config: any) {
+    try {
+      return await this.productsService.updateBestSellerConfig(config);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Put('admin/bestseller-order')
+  async updateBestSellerOrder(@Body('productOrder') productOrder: string[]) {
+    try {
+      return await this.productsService.updateBestSellerOrder(productOrder);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  // New Arrival Configuration Routes
+  @Get('admin/newarrival-config')
+  async getNewArrivalConfig() {
+    try {
+      return await this.productsService.getNewArrivalConfig();
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Post('admin/newarrival-config')
+  async updateNewArrivalConfig(@Body() config: any) {
+    try {
+      return await this.productsService.updateNewArrivalConfig(config);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Put('admin/newarrival-order')
+  async updateNewArrivalOrder(@Body('productOrder') productOrder: string[]) {
+    try {
+      return await this.productsService.updateNewArrivalOrder(productOrder);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
 }

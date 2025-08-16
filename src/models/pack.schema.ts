@@ -156,6 +156,10 @@ export class Pack extends Document {
 
   @Prop()
   updated_by: string;
+
+  // Display order for frontend control
+  @Prop({ default: 0 })
+  displayOrder: number;
 }
 
 export const PackSchema = SchemaFactory.createForClass(Pack);

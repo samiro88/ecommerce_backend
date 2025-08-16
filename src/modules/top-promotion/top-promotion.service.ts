@@ -10,19 +10,25 @@ export class TopPromotionService {
   ) {}
 
   async getAllTopPromotions() {
-    const promotions = await this.topPromotionModel.find().sort('-createdAt').exec();
-    return { message: 'Success', data: promotions };
+    const promotions = await this.topPromotionModel.find()
+      .sort('-createdAt')
+      .populate('productId')
+      .exec();
+
+    const mapped = promotions.map((promo: any) => ({
+      ...promo.toObject(),
+      product: promo.productId ? promo.productId.toObject?.() || promo.productId : null,
+    }));
+
+    return { message: 'Success', data: mapped };
   }
 
   async getActiveTopPromotions() {
-  const now = new Date();
   const promotions = await this.topPromotionModel.find({
     active: true,
-    startDate: { $lte: now },
-    endDate: { $gte: now },
   })
     .sort('-createdAt')
-    .populate('productId') // <-- This will now work!
+    .populate('productId')
     .exec();
 
   const mapped = promotions.map((promo: any) => ({

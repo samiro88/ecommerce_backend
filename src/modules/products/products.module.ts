@@ -12,6 +12,8 @@ import { CloudinaryProvider } from '../../controllers/cloudinary/cloudinary.prov
 import { VentesModule } from '../ventes/vente.module';
 import { RedisService } from '../../shared/utils/redis/redis.service'; // Redis service for caching
 import { Review, ReviewSchema } from '../../models/reviews.schema';
+import { BestSellerConfig, BestSellerConfigSchema } from '../../models/bestseller-config.schema';
+import { NewArrivalConfig, NewArrivalConfigSchema } from '../../models/newarrival-config.schema';
 @Module({
   imports: [
     // Configuration (from first file)
@@ -25,7 +27,9 @@ import { Review, ReviewSchema } from '../../models/reviews.schema';
       { name: Product.name, schema: ProductSchema },
       { name: Category.name, schema: CategorySchema },
       { name: SubCategory.name, schema: SubCategorySchema },
-      { name: 'Review', schema: ReviewSchema }, // <-- ADD THIS LINE
+      { name: 'Review', schema: ReviewSchema },
+      { name: BestSellerConfig.name, schema: BestSellerConfigSchema },
+      { name: NewArrivalConfig.name, schema: NewArrivalConfigSchema },
     ]),
 
     // File upload (from second file)

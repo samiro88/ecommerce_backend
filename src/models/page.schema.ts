@@ -4,7 +4,7 @@ import { handleSlug } from '../shared/utils/generators/slug/slug-generator.servi
 
 @Schema({ timestamps: true })
 export class Page extends Document {
-  @Prop({ required: true })
+  @Prop({ required: false })
   title: string;
 
   @Prop()

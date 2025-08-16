@@ -123,4 +123,36 @@ async getSubCategoryById(@Param('id') id: string) {
     );
   }
 }
+
+@Get('slug/:slug')
+async getSubCategoryBySlug(@Param('slug') slug: string) {
+  try {
+    const subcategory = await this.subCategoriesService.getSubCategoryBySlug(slug);
+    if (!subcategory) {
+      throw new HttpException('Subcategory not found', HttpStatus.NOT_FOUND);
+    }
+    return subcategory;
+  } catch (error) {
+    throw new HttpException(
+      'Subcategory not found',
+      HttpStatus.NOT_FOUND,
+    );
+  }
+}
+
+@Get('public/slug/:slug')
+async getPublicSubCategoryBySlug(@Param('slug') slug: string) {
+  try {
+    const subcategory = await this.subCategoriesService.getSubCategoryBySlug(slug);
+    if (!subcategory) {
+      throw new HttpException('Subcategory not found', HttpStatus.NOT_FOUND);
+    }
+    return subcategory;
+  } catch (error) {
+    throw new HttpException(
+      'Subcategory not found',
+      HttpStatus.NOT_FOUND,
+    );
+  }
+}
   }

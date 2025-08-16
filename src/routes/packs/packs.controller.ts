@@ -385,6 +385,81 @@ export class PacksController {
   }
 
   /**
+   * Save pack section configuration
+   */
+  @Post('config/save')
+  async savePackConfig(@Body() config: any) {
+    try {
+      console.log('=== SAVE PACK CONFIG ENDPOINT HIT ===');
+      console.log('Config received:', config);
+      
+      const result = await this.packsService.savePackConfig(config);
+      
+      return {
+        success: true,
+        message: 'Configuration saved successfully',
+        data: result
+      };
+    } catch (error) {
+      console.error('Save config error:', error);
+      throw new HttpException(
+        error.message || 'Error saving config',
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  /**
+   * Get frontend pack configuration and data
+   */
+  @Get('frontend/config')
+  async getFrontendConfig(): Promise<any> {
+    try {
+      console.log('=== FRONTEND PACK CONFIG ENDPOINT HIT ===');
+      
+      // Get configuration and packs
+      const configResult = await this.packsService.getPackConfig();
+      const packsResult = await this.packsService.getRawPacks();
+      const allPacks = packsResult.data;
+      
+      // Sort by displayOrder, then by createdAt
+      const sortedPacks = allPacks.sort((a: any, b: any) => {
+        if (a.displayOrder !== undefined && b.displayOrder !== undefined) {
+          return a.displayOrder - b.displayOrder;
+        }
+        if (a.createdAt && b.createdAt) {
+          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        }
+        return 0;
+      });
+      
+      // Filter only published packs
+      const publishedPacks = sortedPacks.filter((pack: any) => 
+        pack.publier === "1" || pack.publier === 1 || pack.status === true
+      );
+      
+      return {
+        success: true,
+        data: {
+          packs: publishedPacks,
+          config: configResult || {
+            sectionTitle: 'Nos Packs Exclusifs',
+            sectionDescription: 'Profitez de nos packs exclusifs pour faire des économies sur vos achats !',
+            maxDisplay: 4,
+            showOnFrontend: true
+          }
+        }
+      };
+    } catch (error) {
+      console.error('Frontend config error:', error);
+      throw new HttpException(
+        error.message || 'Error fetching frontend config',
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  /**
    * Get all packs as raw documents (legacy and new fields).
    */
  @Get('raw')

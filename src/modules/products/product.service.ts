@@ -25,6 +25,8 @@ import { VentesService } from '../ventes/vente.service';
 import { HttpStatus } from '@nestjs/common';
 import { HttpException } from '@nestjs/common';
 import { RedisService } from '../../shared/utils/redis/redis.service';
+import { BestSellerConfig, BestSellerConfigDocument } from '../../models/bestseller-config.schema';
+import { NewArrivalConfig, NewArrivalConfigDocument } from '../../models/newarrival-config.schema';
 
 export interface LocalImage {
   url: string;
@@ -46,6 +48,8 @@ export class ProductsService {
     @InjectModel(SubCategory.name)
     private subCategoryModel: Model<SubCategoryDocument>,
     @InjectModel('Review') private reviewModel: Model<any>,
+    @InjectModel(BestSellerConfig.name) private bestSellerConfigModel: Model<BestSellerConfigDocument>,
+    @InjectModel(NewArrivalConfig.name) private newArrivalConfigModel: Model<NewArrivalConfigDocument>,
     @Inject(forwardRef(() => VentesService))
     private readonly ventesService: VentesService,
     private readonly redisService: RedisService,
@@ -1017,14 +1021,26 @@ if (brand) {
 
   async getProductsWithMilleurVente() {
     try {
-      const products = await this.productModel.find({
+      // Get configuration
+      const config = await this.getBestSellerConfig();
+      
+      if (!config.showOnFrontend) {
+        return {
+          success: true,
+          count: 0,
+          data: [],
+          config
+        };
+      }
+
+      let products = await this.productModel.find({
         best_seller: "1",
         publier: "1"
       })
       .select({
         designation: 1,
-          designation_fr: 1, // <-- ADD THIS
-          cover: 1,          // <-- ADD THIS
+        designation_fr: 1,
+        cover: 1,
         slug: 1,
         smallDescription: 1,
         prix: 1,
@@ -1050,12 +1066,39 @@ if (brand) {
         select: "designation -_id",
       });
 
+      // Apply custom order if exists
+      if (config.productOrder && config.productOrder.length > 0) {
+        const orderedProducts: any[] = [];
+        const productMap = new Map(products.map(p => [String(p._id), p]));
+        
+        // Add products in specified order
+        for (const id of config.productOrder) {
+          if (productMap.has(id)) {
+            const product = productMap.get(id);
+            if (product) {
+              orderedProducts.push(product);
+              productMap.delete(id);
+            }
+          }
+        }
+        
+        // Add remaining products
+        orderedProducts.push(...Array.from(productMap.values()));
+        products = orderedProducts;
+      }
+
+      // Limit products based on config
+      if (config.maxDisplay && config.maxDisplay < products.length) {
+        products = products.slice(0, config.maxDisplay);
+      }
+
       const productsWithReviews = await this.attachReviews(products);
 
       return {
         success: true,
         count: productsWithReviews.length,
         data: productsWithReviews,
+        config
       };
     } catch (error) {
       throw new InternalServerErrorException('Error fetching best seller products', error.message);
@@ -1064,12 +1107,26 @@ if (brand) {
 
   async getProductsWithNewVente() {
     try {
-      const products = await this.productModel.find({
+      // Get configuration
+      const config = await this.getNewArrivalConfig();
+      
+      if (!config.showOnFrontend) {
+        return {
+          success: true,
+          count: 0,
+          data: [],
+          config
+        };
+      }
+
+      let products = await this.productModel.find({
         new_product: "1",
         publier: "1"
       })
       .select({
         designation: 1,
+        designation_fr: 1,
+        cover: 1,
         slug: 1,
         smallDescription: 1,
         prix: 1,
@@ -1095,12 +1152,37 @@ if (brand) {
         select: "designation -_id",
       });
 
+      // Apply custom order if exists
+      if (config.productOrder && config.productOrder.length > 0) {
+        const orderedProducts: any[] = [];
+        const productMap = new Map(products.map(p => [String(p._id), p]));
+        
+        // Add products in specified order
+        for (const id of config.productOrder) {
+          if (productMap.has(id)) {
+            const product = productMap.get(id);
+            if (product) {
+              orderedProducts.push(product);
+              productMap.delete(id);
+            }
+          }
+        }
+        
+        // Add remaining products
+        orderedProducts.push(...Array.from(productMap.values()));
+        products = orderedProducts;
+      }
+
+      // Force limit to 8 products maximum
+      products = products.slice(0, 8);
+
       const productsWithReviews = await this.attachReviews(products);
 
       return {
         success: true,
         count: productsWithReviews.length,
         data: productsWithReviews,
+        config
       };
     } catch (error) {
       throw new InternalServerErrorException('Error fetching new products', error.message);
@@ -1324,6 +1406,133 @@ async recommendProduct(exclude: string[]) {
 
   return { product };
 }
+
+  // Best Seller Configuration Methods
+  async getBestSellerConfig() {
+    try {
+      let config = await this.bestSellerConfigModel.findOne();
+      if (!config) {
+        config = await this.bestSellerConfigModel.create({
+          sectionTitle: 'Meilleures ventes',
+          sectionDescription: 'Découvrez nos meilleures ventes du moment sur une sélection de produits !',
+          maxDisplay: 4,
+          showOnFrontend: true,
+          productOrder: []
+        });
+      }
+      return config;
+    } catch (error) {
+      throw new InternalServerErrorException('Error fetching best seller config', error.message);
+    }
+  }
+
+  async updateBestSellerConfig(configData: any) {
+    try {
+      let config = await this.bestSellerConfigModel.findOne();
+      if (!config) {
+        config = await this.bestSellerConfigModel.create(configData);
+      } else {
+        Object.assign(config, configData);
+        await config.save();
+      }
+      
+      // Clear cache
+      await this.redisService.del('bestseller-products');
+      
+      return {
+        message: 'Best seller configuration updated successfully',
+        data: config
+      };
+    } catch (error) {
+      throw new InternalServerErrorException('Error updating best seller config', error.message);
+    }
+  }
+
+  async updateBestSellerOrder(productOrder: string[]) {
+    try {
+      let config = await this.bestSellerConfigModel.findOne();
+      if (!config) {
+        config = await this.bestSellerConfigModel.create({ productOrder });
+      } else {
+        config.productOrder = productOrder;
+        await config.save();
+      }
+      
+      // Clear cache
+      await this.redisService.del('bestseller-products');
+      
+      return {
+        message: 'Best seller order updated successfully',
+        data: config
+      };
+    } catch (error) {
+      throw new InternalServerErrorException('Error updating best seller order', error.message);
+    }
+  }
+
+  // New Arrival Configuration Methods
+  async getNewArrivalConfig() {
+    try {
+      let config = await this.newArrivalConfigModel.findOne();
+      if (!config) {
+        config = await this.newArrivalConfigModel.create({
+          sectionTitle: 'Nouveautés',
+          sectionDescription: 'Découvrez nos nouveaux produits fraîchement arrivés !',
+          maxDisplay: 100,
+          showOnFrontend: true,
+          productOrder: []
+        });
+      }
+      return config;
+    } catch (error) {
+      throw new InternalServerErrorException('Error fetching new arrival config', error.message);
+    }
+  }
+
+  async updateNewArrivalConfig(configData: any) {
+    try {
+      let config = await this.newArrivalConfigModel.findOne();
+      if (!config) {
+        config = await this.newArrivalConfigModel.create(configData);
+      } else {
+        Object.assign(config, configData);
+        await config.save();
+      }
+      
+      // Clear cache
+      await this.redisService.del('newarrival-products');
+      await this.redisService.del('products-new-products');
+      
+      return {
+        message: 'New arrival configuration updated successfully',
+        data: config
+      };
+    } catch (error) {
+      throw new InternalServerErrorException('Error updating new arrival config', error.message);
+    }
+  }
+
+  async updateNewArrivalOrder(productOrder: string[]) {
+    try {
+      let config = await this.newArrivalConfigModel.findOne();
+      if (!config) {
+        config = await this.newArrivalConfigModel.create({ productOrder });
+      } else {
+        config.productOrder = productOrder;
+        await config.save();
+      }
+      
+      // Clear cache
+      await this.redisService.del('newarrival-products');
+      
+      return {
+        message: 'New arrival order updated successfully',
+        data: config
+      };
+    } catch (error) {
+      throw new InternalServerErrorException('Error updating new arrival order', error.message);
+    }
+  }
 }
 
 

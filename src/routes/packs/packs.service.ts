@@ -753,4 +753,50 @@ export class PacksService {
       throw new InternalServerErrorException('Error deleting packs');
     }
   }
+
+  /**
+   * Save pack section configuration
+   */
+  async savePackConfig(config: any) {
+    try {
+      // Save to a settings collection or file
+      const configCollection = this.connection.collection('pack_config');
+      
+      const configData = {
+        ...config,
+        lastUpdated: new Date()
+      };
+      
+      await configCollection.replaceOne(
+        { type: 'pack_section' },
+        { type: 'pack_section', ...configData },
+        { upsert: true }
+      );
+      
+      return configData;
+    } catch (error) {
+      console.error('Save config error:', error);
+      throw new InternalServerErrorException('Error saving configuration');
+    }
+  }
+
+  /**
+   * Get pack section configuration
+   */
+  async getPackConfig() {
+    try {
+      const configCollection = this.connection.collection('pack_config');
+      const config = await configCollection.findOne({ type: 'pack_section' });
+      
+      if (config) {
+        const { _id, type, ...cleanConfig } = config;
+        return cleanConfig;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Get config error:', error);
+      return null;
+    }
+  }
 }

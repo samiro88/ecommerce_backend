@@ -197,4 +197,23 @@ import {
         throw new InternalServerErrorException('Error fetching all subcategories');
       }
     }
+
+    async getSubCategoryBySlug(slug: string) {
+      try {
+        const subCategory = await this.subCategoryModel
+          .findOne({ slug })
+          .populate('category', 'name designation designation_fr slug id');
+        
+        if (!subCategory) {
+          throw new NotFoundException('Subcategory not found');
+        }
+
+        return subCategory;
+      } catch (error) {
+        if (error instanceof NotFoundException) {
+          throw error;
+        }
+        throw new InternalServerErrorException('Error fetching subcategory by slug');
+      }
+    }
   }
