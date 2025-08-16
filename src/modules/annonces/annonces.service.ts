@@ -12,11 +12,20 @@ export class AnnoncesService {
   ) {}
 
   async create(createAnnonceDto: CreateAnnonceDto): Promise<Annonce> {
-    const exists = await this.annonceModel.findOne({ id: createAnnonceDto.id });
-    if (exists) {
-      throw new ConflictException('Annonce with this id already exists');
+    // Generate id if not provided or empty
+    const id = createAnnonceDto.id && createAnnonceDto.id.trim() !== '' 
+      ? createAnnonceDto.id 
+      : `annonce-${Date.now()}`;
+    
+    // Only check for duplicates if we have a real ID
+    if (createAnnonceDto.id && createAnnonceDto.id.trim() !== '') {
+      const exists = await this.annonceModel.findOne({ id });
+      if (exists) {
+        throw new ConflictException('Annonce with this id already exists');
+      }
     }
-    const created = new this.annonceModel(createAnnonceDto);
+    
+    const created = new this.annonceModel({ ...createAnnonceDto, id });
     return created.save();
   }
 
@@ -49,5 +58,48 @@ export class AnnoncesService {
     if (!deleted) {
       throw new NotFoundException('Annonce not found');
     }
+  }
+
+  async updateWithFiles(
+    id: string, 
+    updateAnnonceDto: any, 
+    files?: any
+  ): Promise<Annonce> {
+    const updateData = { ...updateAnnonceDto };
+    
+    // Handle file uploads
+    if (files) {
+      const fs = require('fs/promises');
+      const path = require('path');
+      
+      for (const [fieldName, fileArray] of Object.entries(files)) {
+        if (fileArray && Array.isArray(fileArray) && fileArray.length > 0) {
+          const file = fileArray[0];
+          try {
+            const now = new Date();
+            const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+            
+            const dashboardPublicDir = path.join(
+              process.cwd(), '..', '..', 'sobitas-dashboard', 'dashboard-app', 'public', 'produits', monthYear
+            );
+            
+            await fs.mkdir(dashboardPublicDir, { recursive: true });
+            
+            const ext = path.extname(file.originalname) || '.jpg';
+            const baseName = path.basename(file.originalname, ext);
+            const uniqueName = `${baseName}-${Date.now()}${ext}`;
+            const filePath = path.join(dashboardPublicDir, uniqueName);
+            
+            await fs.writeFile(filePath, file.buffer);
+            
+            updateData[fieldName] = `/produits/${monthYear}/${uniqueName}`;
+          } catch (error) {
+            console.error(`Failed to upload ${fieldName}:`, error);
+          }
+        }
+      }
+    }
+    
+    return this.update(id, updateData);
   }
 }

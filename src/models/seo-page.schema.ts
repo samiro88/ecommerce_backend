@@ -5,10 +5,10 @@ export type SeoPageDocument = SeoPage & Document;
 
 @Schema({ timestamps: false, collection: 'seo_pages' })
 export class SeoPage {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: false, unique: false })
   id: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   page: string;
 
   @Prop({ required: false })

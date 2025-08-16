@@ -12,11 +12,20 @@ export class SlidesService {
   ) {}
 
   async create(createSlideDto: CreateSlideDto): Promise<Slide> {
-    const exists = await this.slideModel.findOne({ id: createSlideDto.id });
-    if (exists) {
-      throw new ConflictException('Slide with this id already exists');
+    // Generate id if not provided or empty
+    const id = createSlideDto.id && createSlideDto.id.trim() !== '' 
+      ? createSlideDto.id 
+      : `slide-${Date.now()}`;
+    
+    // Only check for duplicates if we have a real ID
+    if (createSlideDto.id && createSlideDto.id.trim() !== '') {
+      const exists = await this.slideModel.findOne({ id });
+      if (exists) {
+        throw new ConflictException('Slide with this id already exists');
+      }
     }
-    const created = new this.slideModel(createSlideDto);
+    
+    const created = new this.slideModel({ ...createSlideDto, id });
     return created.save();
   }
 
@@ -49,5 +58,43 @@ export class SlidesService {
     if (!deleted) {
       throw new NotFoundException('Slide not found');
     }
+  }
+
+  async updateWithFile(
+    id: string, 
+    updateSlideDto: any, 
+    file?: Express.Multer.File
+  ): Promise<Slide> {
+    const updateData = { ...updateSlideDto };
+    
+    // Handle file upload
+    if (file) {
+      try {
+        const fs = require('fs/promises');
+        const path = require('path');
+        
+        const now = new Date();
+        const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+        
+        const dashboardPublicDir = path.join(
+          process.cwd(), '..', '..', 'sobitas-dashboard', 'dashboard-app', 'public', 'produits', monthYear
+        );
+        
+        await fs.mkdir(dashboardPublicDir, { recursive: true });
+        
+        const ext = path.extname(file.originalname) || '.jpg';
+        const baseName = path.basename(file.originalname, ext);
+        const uniqueName = `${baseName}-${Date.now()}${ext}`;
+        const filePath = path.join(dashboardPublicDir, uniqueName);
+        
+        await fs.writeFile(filePath, file.buffer);
+        
+        updateData.cover = `/produits/${monthYear}/${uniqueName}`;
+      } catch (error) {
+        console.error('Failed to upload cover:', error);
+      }
+    }
+    
+    return this.update(id, updateData);
   }
 }

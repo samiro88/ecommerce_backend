@@ -12,11 +12,20 @@ export class TagsService {
   ) {}
 
   async create(createTagDto: CreateTagDto): Promise<Tag> {
-    const exists = await this.tagModel.findOne({ id: createTagDto.id });
-    if (exists) {
-      throw new ConflictException('Tag with this id already exists');
+    // Generate id if not provided or empty
+    const id = createTagDto.id && createTagDto.id.trim() !== '' 
+      ? createTagDto.id 
+      : `tag-${Date.now()}`;
+    
+    // Only check for duplicates if we have a real ID
+    if (createTagDto.id && createTagDto.id.trim() !== '') {
+      const exists = await this.tagModel.findOne({ id });
+      if (exists) {
+        throw new ConflictException('Tag with this id already exists');
+      }
     }
-    const created = new this.tagModel(createTagDto);
+    
+    const created = new this.tagModel({ ...createTagDto, id });
     return created.save();
   }
 

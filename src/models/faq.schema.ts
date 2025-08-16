@@ -3,13 +3,13 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 export class FAQ extends Document {
-  @Prop({ required: true })
-  declare id: string; // <-- Use declare to avoid TS error
+  @Prop()
+  declare id: string;
 
-  @Prop({ required: true })
+  @Prop()
   question: string;
 
-  @Prop({ required: true })
+  @Prop()
   answer: string;
 }
 

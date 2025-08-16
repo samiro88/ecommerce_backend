@@ -5,7 +5,7 @@ export type AnnonceDocument = Annonce & Document;
 
 @Schema({ timestamps: false })
 export class Annonce {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: false, unique: false })
   id: string;
 
   @Prop() image_1: string;

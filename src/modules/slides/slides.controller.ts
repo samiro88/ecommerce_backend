@@ -10,7 +10,11 @@ import {
   ValidationPipe,
   HttpCode,
   HttpStatus,
+  UseInterceptors,
+  UploadedFile,
+  Put,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { SlidesService } from './slides.service';
 import { CreateSlideDto } from '../dto/create-slide.dto';
 import { UpdateSlideDto } from '../dto/update-slide.dto';
@@ -46,5 +50,15 @@ export class SlidesController {
   async remove(@Param('id') id: string) {
     await this.slidesService.remove(id);
     return;
+  }
+
+  @Put(':id')
+  @UseInterceptors(FileInterceptor('cover'))
+  async updateWithFile(
+    @Param('id') id: string, 
+    @Body() updateSlideDto: any,
+    @UploadedFile() file?: Express.Multer.File
+  ) {
+    return this.slidesService.updateWithFile(id, updateSlideDto, file);
   }
 }

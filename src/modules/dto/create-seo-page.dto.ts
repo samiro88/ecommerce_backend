@@ -2,12 +2,12 @@ import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateSeoPageDto {
   @IsString()
-  @IsNotEmpty()
-  readonly id: string;
+  @IsOptional()
+  readonly id?: string;
 
   @IsString()
-  @IsNotEmpty()
-  readonly page: string;
+  @IsOptional()
+  readonly page?: string;
 
   @IsString()
   @IsOptional()

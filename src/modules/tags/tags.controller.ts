@@ -10,6 +10,7 @@ import {
   ValidationPipe,
   HttpCode,
   HttpStatus,
+  Put,
 } from '@nestjs/common';
 import { TagsService } from './tags.service';
 import { CreateTagDto } from '../dto/create-tag.dto';
@@ -46,5 +47,11 @@ export class TagsController {
   async remove(@Param('id') id: string) {
     await this.tagsService.remove(id);
     return;
+  }
+
+  @Put(':id')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  async updateWithPut(@Param('id') id: string, @Body() updateTagDto: UpdateTagDto) {
+    return this.tagsService.update(id, updateTagDto);
   }
 }

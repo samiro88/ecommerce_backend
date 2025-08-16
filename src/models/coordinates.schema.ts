@@ -5,7 +5,7 @@ export type CoordinatesDocument = Coordinates & Document;
 
 @Schema({ timestamps: false })
 export class Coordinates {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: false, unique: false })
   id: string;
 
   @Prop() designation_fr: string;

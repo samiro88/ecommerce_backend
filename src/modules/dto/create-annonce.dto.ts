@@ -2,8 +2,8 @@ import { IsString, IsOptional, IsNotEmpty } from 'class-validator';
 
 export class CreateAnnonceDto {
   @IsString()
-  @IsNotEmpty()
-  readonly id: string;
+  @IsOptional()
+  readonly id?: string;
 
   @IsString() @IsOptional() readonly image_1?: string;
   @IsString() @IsOptional() readonly image_2?: string;

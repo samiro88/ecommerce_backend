@@ -5,16 +5,16 @@ export type ServiceDocument = Service & Document;
 
 @Schema({ timestamps: false })
 export class Service {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: false, unique: false })
   id: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   designation_fr: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   description_fr: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   icon: string;
 
   @Prop({ required: false })

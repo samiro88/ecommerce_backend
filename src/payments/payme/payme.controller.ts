@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Headers } from '@nestjs/common';
+import { Controller, Post, Body, Headers, Delete, Param } from '@nestjs/common';
 import { PaymeService } from './payme.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 
@@ -19,5 +19,10 @@ export class PaymeController {
   @Post('webhook')
   async webhook(@Body() payload: any, @Headers() headers: any) {
     return this.paymeService.handleWebhook(payload, headers);
+  }
+
+  @Delete(':id')
+  async deletePayment(@Param('id') id: string) {
+    return this.paymeService.deletePayment(id);
   }
 }

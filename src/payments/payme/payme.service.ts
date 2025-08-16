@@ -156,4 +156,13 @@ export class PaymeService {
     const created = new this.transactionModel(data);
     return created.save();
   }
+
+  async deletePayment(id: string) {
+    const transaction = await this.transactionModel.findById(id);
+    if (!transaction) {
+      throw new NotFoundException('Transaction not found');
+    }
+    await this.transactionModel.findByIdAndDelete(id);
+    return { message: 'Payment deleted successfully' };
+  }
 }

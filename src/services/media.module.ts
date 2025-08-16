@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MediaController } from '../controllers/media.controller';
+import { UploadController } from '../controllers/upload.controller';
 import { MediaService } from '../services/media.service';
 import { MediaCompressionService } from '../shared/utils/media-compression/media-compression.service';
 import { RedisModule } from 'nestjs-redis';
@@ -16,7 +17,7 @@ import { FolderController } from '../controllers/folder.controller';
     { name: 'Folder', schema: FolderSchema }, // Uses 'folders' collection as per schema
     ]),
   ],
-  controllers: [MediaController, FolderController],
+  controllers: [MediaController, FolderController, UploadController],
   providers: [MediaService, MediaCompressionService, FolderService],
 })
 export class MediaModule {}

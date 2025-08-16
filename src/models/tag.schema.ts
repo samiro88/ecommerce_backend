@@ -5,10 +5,10 @@ export type TagDocument = Tag & Document;
 
 @Schema({ timestamps: false })
 export class Tag {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: false, unique: false })
   id: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   designation_fr: string;
 
   @Prop({ required: false })

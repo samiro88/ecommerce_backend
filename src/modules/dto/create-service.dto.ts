@@ -2,20 +2,20 @@ import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateServiceDto {
   @IsString()
-  @IsNotEmpty()
-  readonly id: string;
+  @IsOptional()
+  readonly id?: string;
 
   @IsString()
-  @IsNotEmpty()
-  readonly designation_fr: string;
+  @IsOptional()
+  readonly designation_fr?: string;
 
   @IsString()
-  @IsNotEmpty()
-  readonly description_fr: string;
+  @IsOptional()
+  readonly description_fr?: string;
 
   @IsString()
-  @IsNotEmpty()
-  readonly icon: string;
+  @IsOptional()
+  readonly icon?: string;
 
   @IsString()
   @IsOptional()

@@ -21,7 +21,8 @@ export class FaqsService {
 
   async create(createFaqDto: CreateFaqDto) {
     try {
-      const created = new this.faqModel(createFaqDto);
+      const faqData = { ...createFaqDto };
+      const created = new this.faqModel(faqData);
       return await created.save();
     } catch (error) {
       throw new BadRequestException(error.message);

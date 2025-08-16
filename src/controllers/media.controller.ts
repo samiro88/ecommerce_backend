@@ -1,11 +1,20 @@
-import { Controller, Get, Param, Query, Req, Res, Patch, Body, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req, Res, Patch, Body, Delete, HttpCode, HttpStatus, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { MediaService } from '../services/media.service';
+import { FolderService } from '../services/folder.service';
+import { Media, MediaDocument } from '../models/media.schema';
 import { Request, Response } from 'express';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 
 @Controller('media')
 export class MediaController {
   constructor(
     private readonly mediaService: MediaService,
+    private readonly folderService: FolderService,
+    @InjectModel('Media') private readonly mediaModel: Model<MediaDocument>,
   ) {}
 
   // NEW: List media by folder (MUST BE FIRST)
@@ -85,5 +94,74 @@ export class MediaController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteMedia(@Param('mediaId') mediaId: string) {
     await this.mediaService.deleteMedia(mediaId);
+  }
+
+  // NEW: Upload media to specific folder
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadMedia(
+    @UploadedFile() file: Express.Multer.File,
+    @Body('folderId') folderId: string,
+    @Res() res: Response,
+  ) {
+    if (!file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const now = new Date();
+    const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+    const folderPath = folderId || `uploads/${monthYear}`;
+    
+    // Create folder structure
+    const dashboardPublicDir = path.join(
+      process.cwd(), '..', '..', 'sobitas-dashboard', 'dashboard-app', 'public', folderPath
+    );
+    await fs.mkdir(dashboardPublicDir, { recursive: true });
+    
+    // Generate unique filename
+    const ext = path.extname(file.originalname) || '.jpg';
+    const baseName = path.basename(file.originalname, ext);
+    const uniqueName = `${baseName}-${Date.now()}${ext}`;
+    const filePath = path.join(dashboardPublicDir, uniqueName);
+    
+    // Save file
+    await fs.writeFile(filePath, file.buffer);
+    
+    const mediaId = `/${folderPath}/${uniqueName}`;
+    
+    // Create folders in database
+    const folderParts = folderPath.split('/');
+    let currentPath = '';
+    let parentId: string | null = null;
+    
+    for (const part of folderParts) {
+      currentPath = currentPath ? `${currentPath}/${part}` : part;
+      try {
+        await this.folderService.createFolder({
+          id: currentPath,
+          name: part,
+          parentId
+        });
+      } catch (e) {
+        // Folder already exists
+      }
+      parentId = currentPath;
+    }
+    
+    // Save media to database
+    const media = new this.mediaModel({
+      id: mediaId,
+      width: 800,
+      height: 600,
+      fileSize: file.size,
+      folderId: folderPath
+    });
+    await media.save();
+    
+    return res.json({
+      success: true,
+      url: mediaId,
+      media
+    });
   }
 }

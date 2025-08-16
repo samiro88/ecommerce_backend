@@ -27,12 +27,9 @@ import {
     }
   
     @Post()
-    @UseInterceptors(FileInterceptor('file'))
-    async createPage(
-      @Body() createPageDto: CreatePageDto,
-      @UploadedFile() file: Express.Multer.File,
-    ) {
-      return this.pagesService.createPage(createPageDto, file);
+    async createPage(@Body() createPageDto: CreatePageDto) {
+      console.log('Controller received body:', createPageDto);
+      return this.pagesService.createPage(createPageDto);
     }
   
     @Get('slug/:slug')
@@ -46,13 +43,12 @@ import {
     }
     
     @Put(':id')
-    @UseInterceptors(FileInterceptor('file'))
     async updatePage(
     @Param('id') id: string,
     @Body() updatePageDto: UpdatePageDto,
-    @UploadedFile() file: Express.Multer.File,
     ) {
-    return this.pagesService.updatePage(id, updatePageDto, file);
+    console.log('Update controller received body:', updatePageDto);
+    return this.pagesService.updatePage(id, updatePageDto);
     }
     
     @Get(':id')

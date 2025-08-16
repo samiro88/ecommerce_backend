@@ -35,12 +35,16 @@ export class ReviewsController {
   // POST /reviews
   @Post()
   async create(@Body() body: Partial<Review>): Promise<Review> {
-    return this.reviewsService.create(body);
+    console.log('POST /reviews called with body:', body);
+    const result = await this.reviewsService.create(body);
+    console.log('Review created:', result);
+    return result;
   }
 
   // PUT /reviews/:id
   @Put(':id')
   async update(@Param('id') id: string, @Body() body: Partial<Review>): Promise<Review> {
+    console.log('PUT /reviews/:id called with id:', id, 'body:', body);
     return this.reviewsService.update(id, body);
   }
 

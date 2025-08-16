@@ -8,13 +8,13 @@ export class Media {
   @Prop({ required: true, unique: true })
   id: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false, default: 0 })
   width: number;
 
-  @Prop({ required: true })
+  @Prop({ required: false, default: 0 })
   height: number;
 
-  @Prop({ required: true })
+  @Prop({ required: false, default: 0 })
   fileSize: number;
 
   @Prop({ required: false })

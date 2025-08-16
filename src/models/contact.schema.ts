@@ -5,16 +5,16 @@ export type ContactDocument = Contact & Document;
 
 @Schema({ timestamps: false, collection: 'contacts' })
 export class Contact {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: false, unique: false })
   id: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   email: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   message: string;
 
   @Prop({ required: false })

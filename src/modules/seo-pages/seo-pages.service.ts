@@ -12,11 +12,20 @@ export class SeoPagesService {
   ) {}
 
   async create(createSeoPageDto: CreateSeoPageDto): Promise<SeoPage> {
-    const exists = await this.seoPageModel.findOne({ id: createSeoPageDto.id });
-    if (exists) {
-      throw new ConflictException('SeoPage with this id already exists');
+    // Generate id if not provided or empty
+    const id = createSeoPageDto.id && createSeoPageDto.id.trim() !== '' 
+      ? createSeoPageDto.id 
+      : `seo-page-${Date.now()}`;
+    
+    // Only check for duplicates if we have a real ID
+    if (createSeoPageDto.id && createSeoPageDto.id.trim() !== '') {
+      const exists = await this.seoPageModel.findOne({ id });
+      if (exists) {
+        throw new ConflictException('SeoPage with this id already exists');
+      }
     }
-    const created = new this.seoPageModel(createSeoPageDto);
+    
+    const created = new this.seoPageModel({ ...createSeoPageDto, id });
     return created.save();
   }
 

@@ -2,12 +2,12 @@ import { IsString, IsOptional, IsNotEmpty } from 'class-validator';
 
 export class CreateSlideDto {
   @IsString()
-  @IsNotEmpty()
-  readonly id: string;
+  @IsOptional()
+  readonly id?: string;
 
   @IsString()
-  @IsNotEmpty()
-  readonly cover: string;
+  @IsOptional()
+  readonly cover?: string;
 
   @IsString()
   @IsOptional()

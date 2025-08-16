@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Res } from '@nestjs/common';
+import { Controller, Get, Query, Res, Delete, Param } from '@nestjs/common';
 import { PaymeService } from './payme.service';
 import { Response } from 'express';
 import { InjectModel } from '@nestjs/mongoose';
@@ -76,5 +76,10 @@ export class PaymeeAdminController {
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader('Content-Disposition', 'attachment; filename="paymee_transactions.csv"');
     res.send(csv);
+  }
+
+  @Delete('transactions/:id')
+  async deleteTransaction(@Param('id') id: string) {
+    return this.paymeService.deletePayment(id);
   }
 }

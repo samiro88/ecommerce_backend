@@ -5,10 +5,10 @@ export type SlideDocument = Slide & Document;
 
 @Schema({ timestamps: false })
 export class Slide {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: false, unique: false })
   id: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   cover: string;
 
   @Prop({ required: false })

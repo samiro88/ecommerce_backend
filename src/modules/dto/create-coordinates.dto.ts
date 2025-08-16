@@ -2,8 +2,8 @@ import { IsString, IsOptional, IsNotEmpty } from 'class-validator';
 
 export class CreateCoordinatesDto {
   @IsString()
-  @IsNotEmpty()
-  readonly id: string;
+  @IsOptional()
+  readonly id?: string;
 
   @IsString() @IsOptional() readonly designation_fr?: string;
   @IsString() @IsOptional() readonly abbreviation?: string;

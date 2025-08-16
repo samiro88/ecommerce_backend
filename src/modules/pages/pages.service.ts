@@ -30,38 +30,14 @@ import {
       }
     }
   
-    async createPage(createPageDto: CreatePageDto, file: Express.Multer.File) {
+    async createPage(createPageDto: CreatePageDto) {
       try {
-        if (!createPageDto.title || !createPageDto.body) {
-          throw new BadRequestException('Title and body are required');
-        }
-  
-        let cover: { url: string; img_id: string } | undefined = undefined;
-        if (file) {
-          const fileStr = file.buffer.toString('base64');
-          const fileType = file.mimetype;
-          const dataUri = `data:${fileType};base64,${fileStr}`;
-  
-          const result = await cloudinary.uploader.upload(dataUri, {
-            folder: 'pages',
-            resource_type: 'auto',
-            transformation: [{ width: 1000, crop: 'limit' }, { quality: 'auto' }],
-          });
-          cover = { url: result.secure_url, img_id: result.public_id };
-        }
-  
-        const newPage = new this.pageModel({
-          title: createPageDto.title,
-          body: createPageDto.body,
-          excerpt: createPageDto.excerpt,
-          meta_description: createPageDto.meta_description,
-          meta_keywords: createPageDto.meta_keywords,
-          author_id: createPageDto.author_id,
-          image: createPageDto.image,
-          cover: cover,
-          status: createPageDto.status,
-        });
-  
+        console.log('Creating page with data:', createPageDto);
+        const cleanData = Object.fromEntries(
+          Object.entries(createPageDto).filter(([_, value]) => value !== undefined && value !== '')
+        );
+        console.log('Final page data:', cleanData);
+        const newPage = new this.pageModel(cleanData);
         await newPage.save();
         return {
           message: 'Page created successfully',
@@ -100,55 +76,22 @@ import {
     async updatePage(
       id: string,
       updatePageDto: UpdatePageDto,
-      file: Express.Multer.File,
     ) {
       try {
-        const allowedFields = ['title', 'body', 'excerpt', 'meta_description', 'meta_keywords', 'author_id', 'image', 'status'];
-        const updateFields = Object.keys(updatePageDto);
-  
-        const invalidFields = updateFields.filter(
-          (field) => !allowedFields.includes(field),
-        );
-  
-        if (invalidFields.length > 0) {
-          throw new BadRequestException(
-            `Invalid fields provided: ${invalidFields.join(', ')}`,
-          );
-        }
-  
-        let cover: { url: string; img_id: string } | undefined = undefined;
+        console.log('Updating page with data:', updatePageDto);
         const page = await this.pageModel.findById(id);
-  
         if (!page) {
           throw new NotFoundException('Page not found');
         }
-  
-        if (file) {
-          if (page.cover && page.cover.img_id) {
-            await cloudinary.uploader.destroy(page.cover.img_id);
-          }
-  
-          const fileStr = file.buffer.toString('base64');
-          const fileType = file.mimetype;
-          const dataUri = `data:${fileType};base64,${fileStr}`;
-  
-          const result = await cloudinary.uploader.upload(dataUri, {
-            folder: 'pages',
-            resource_type: 'auto',
-            transformation: [{ width: 1000, crop: 'limit' }, { quality: 'auto' }],
-          });
-          cover = { url: result.secure_url, img_id: result.public_id };
-        }
-  
+        const cleanData = Object.fromEntries(
+          Object.entries(updatePageDto).filter(([_, value]) => value !== undefined && value !== '')
+        );
+        console.log('Final update data:', cleanData);
         const updatedPage = await this.pageModel.findByIdAndUpdate(
           id,
-          {
-            ...updatePageDto,
-            ...(typeof cover === 'object' && cover !== null ? { cover } : {}),
-          },
+          cleanData,
           { new: true, runValidators: true },
         );
-  
         return {
           message: 'Page updated successfully',
           data: updatedPage,

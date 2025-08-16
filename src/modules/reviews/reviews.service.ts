@@ -45,23 +45,59 @@ export class ReviewsService {
   }
 
   async create(data: Partial<Review>): Promise<Review> {
-    // Generate a new id if not provided
-    if (!data.id) {
+    // Generate a new id if not provided or empty
+    if (!data.id || data.id.trim() === '') {
       const last = await this.reviewModel.findOne().sort({ id: -1 }).exec();
       data.id = last ? (parseInt(last.id, 10) + 1).toString() : '1';
     }
+    
+    // Set timestamps
+    const now = new Date().toISOString();
+    data.created_at = now;
+    data.updated_at = now;
+    
+    console.log('Creating review with data:', data);
     const created = new this.reviewModel(data);
-    return created.save();
+    const saved = await created.save();
+    console.log('Review saved to database:', saved);
+    return saved;
   }
 
   async update(id: string, data: Partial<Review>): Promise<Review> {
-    const updated = await this.reviewModel.findOneAndUpdate({ id }, data, { new: true }).exec();
-    if (!updated) throw new NotFoundException('Review not found');
+    console.log('Updating review with id:', id, 'data:', data);
+    
+    // Set updated timestamp
+    data.updated_at = new Date().toISOString();
+    
+    // Try to update by id field first, then by _id if not found
+    let updated = await this.reviewModel.findOneAndUpdate({ id }, data, { new: true }).exec();
+    
+    if (!updated) {
+      // Try updating by MongoDB _id
+      updated = await this.reviewModel.findByIdAndUpdate(id, data, { new: true }).exec();
+    }
+    
+    if (!updated) {
+      console.log('Review not found with id:', id);
+      throw new NotFoundException('Review not found');
+    }
+    console.log('Review updated successfully:', updated);
     return updated;
   }
 
   async delete(id: string): Promise<{ deleted: boolean }> {
-    const res = await this.reviewModel.deleteOne({ id }).exec();
+    console.log('Deleting review with id:', id);
+    
+    // Try to delete by id field first, then by _id if not found
+    let res = await this.reviewModel.deleteOne({ id }).exec();
+    
+    if (res.deletedCount === 0) {
+      // Try deleting by MongoDB _id
+      const deletedDoc = await this.reviewModel.findByIdAndDelete(id).exec();
+      res = { deletedCount: deletedDoc ? 1 : 0 } as any;
+    }
+    
+    console.log('Delete result:', res);
     return { deleted: res.deletedCount > 0 };
   }
 

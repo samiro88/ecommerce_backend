@@ -10,6 +10,7 @@ import {
   ValidationPipe,
   HttpCode,
   HttpStatus,
+  Put,
 } from '@nestjs/common';
 import { SeoPagesService } from './seo-pages.service';
 import { CreateSeoPageDto } from '../dto/create-seo-page.dto';
@@ -46,5 +47,11 @@ export class SeoPagesController {
   async remove(@Param('id') id: string) {
     await this.seoPagesService.remove(id);
     return;
+  }
+
+  @Put(':id')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  async updateWithPut(@Param('id') id: string, @Body() updateSeoPageDto: UpdateSeoPageDto) {
+    return this.seoPagesService.update(id, updateSeoPageDto);
   }
 }

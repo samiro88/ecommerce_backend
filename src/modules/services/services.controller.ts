@@ -10,7 +10,11 @@ import {
   ValidationPipe,
   HttpCode,
   HttpStatus,
+  UseInterceptors,
+  UploadedFile,
+  Put,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from '../dto/create-service.dto';
 import { UpdateServiceDto } from '../dto/update-service.dto';
@@ -46,5 +50,15 @@ export class ServicesController {
   async remove(@Param('id') id: string) {
     await this.servicesService.remove(id);
     return;
+  }
+
+  @Put(':id')
+  @UseInterceptors(FileInterceptor('icon'))
+  async updateWithFile(
+    @Param('id') id: string, 
+    @Body() updateServiceDto: any,
+    @UploadedFile() file?: Express.Multer.File
+  ) {
+    return this.servicesService.updateWithFile(id, updateServiceDto, file);
   }
 }
