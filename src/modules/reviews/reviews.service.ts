@@ -115,7 +115,7 @@ export class ReviewsService {
 
   // Fetch reviews with user info for testimonials
   async findAllWithUser(publishedOnly = false): Promise<any[]> {
-    const filter = publishedOnly ? { publier: '1', comment: { $ne: null } } : { comment: { $ne: null } };
+    const filter = publishedOnly ? { publier: '1', comment: { $nin: [null, ''] } } : { comment: { $nin: [null, ''] } };
     console.log('Aggregation filter:', filter);
     const reviews = await this.reviewModel.aggregate([
       { $match: filter },
@@ -130,6 +130,8 @@ export class ReviewsService {
       { $unwind: { path: '$user', preserveNullAndEmptyArrays: true } },
       {
         $project: {
+          _id: 1,
+          id: 1,
           comment: 1,
           stars: 1,
           publier: 1,
@@ -140,7 +142,8 @@ export class ReviewsService {
             avatar: '$user.avatar'
           }
         }
-      }
+      },
+      { $sort: { created_at: -1 } }
     ]).exec();
     console.log('Aggregated reviews:', reviews);
     return reviews || [];
