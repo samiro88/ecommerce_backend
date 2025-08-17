@@ -1,9 +1,9 @@
 import { IsString, IsOptional, IsNotEmpty } from 'class-validator';
 
 export class CreateSystemMessageDto {
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  readonly id: string;
+  readonly id?: string;
 
   @IsString() @IsOptional() readonly msg_welcome?: string;
   @IsString() @IsOptional() readonly msg_etat_commande?: string;

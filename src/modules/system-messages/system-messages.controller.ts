@@ -10,6 +10,7 @@ import {
   ValidationPipe,
   HttpCode,
   HttpStatus,
+  Put,
 } from '@nestjs/common';
 import { SystemMessagesService } from './system-messages.service';
 import { CreateSystemMessageDto } from '../dto/create-system-message.dto';
@@ -46,5 +47,11 @@ export class SystemMessagesController {
   async remove(@Param('id') id: string) {
     await this.systemMessagesService.remove(id);
     return;
+  }
+
+  @Put(':id')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  async updateWithPut(@Param('id') id: string, @Body() updateSystemMessageDto: UpdateSystemMessageDto) {
+    return this.systemMessagesService.update(id, updateSystemMessageDto);
   }
 }

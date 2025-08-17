@@ -12,11 +12,20 @@ export class NewslettersService {
   ) {}
 
   async create(createNewsletterDto: CreateNewsletterDto): Promise<Newsletter> {
-    const exists = await this.newsletterModel.findOne({ id: createNewsletterDto.id });
-    if (exists) {
-      throw new ConflictException('Newsletter with this id already exists');
+    // Generate id if not provided or empty
+    const id = createNewsletterDto.id && createNewsletterDto.id.trim() !== '' 
+      ? createNewsletterDto.id 
+      : `newsletter-${Date.now()}`;
+    
+    // Only check for duplicates if we have a real ID
+    if (createNewsletterDto.id && createNewsletterDto.id.trim() !== '') {
+      const exists = await this.newsletterModel.findOne({ id });
+      if (exists) {
+        throw new ConflictException('Newsletter with this id already exists');
+      }
     }
-    const created = new this.newsletterModel(createNewsletterDto);
+    
+    const created = new this.newsletterModel({ ...createNewsletterDto, id });
     return created.save();
   }
 
@@ -33,11 +42,18 @@ export class NewslettersService {
   }
 
   async update(id: string, updateNewsletterDto: UpdateNewsletterDto): Promise<Newsletter> {
-    const updated = await this.newsletterModel.findOneAndUpdate(
+    // Try to update by id field first, then by _id if not found
+    let updated = await this.newsletterModel.findOneAndUpdate(
       { id },
       { $set: updateNewsletterDto },
       { new: true },
     );
+    
+    if (!updated) {
+      // Try updating by MongoDB _id
+      updated = await this.newsletterModel.findByIdAndUpdate(id, updateNewsletterDto, { new: true });
+    }
+    
     if (!updated) {
       throw new NotFoundException('Newsletter not found');
     }
@@ -45,7 +61,14 @@ export class NewslettersService {
   }
 
   async remove(id: string): Promise<void> {
-    const deleted = await this.newsletterModel.findOneAndDelete({ id });
+    // Try to delete by id field first, then by _id if not found
+    let deleted = await this.newsletterModel.findOneAndDelete({ id });
+    
+    if (!deleted) {
+      // Try deleting by MongoDB _id
+      deleted = await this.newsletterModel.findByIdAndDelete(id);
+    }
+    
     if (!deleted) {
       throw new NotFoundException('Newsletter not found');
     }

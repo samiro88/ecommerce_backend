@@ -10,6 +10,7 @@ import {
   ValidationPipe,
   HttpCode,
   HttpStatus,
+  Put,
 } from '@nestjs/common';
 import { NewslettersService } from './newsletters.service';
 import { CreateNewsletterDto } from '../dto/create-newsletter.dto';
@@ -46,5 +47,11 @@ export class NewslettersController {
   async remove(@Param('id') id: string) {
     await this.newslettersService.remove(id);
     return;
+  }
+
+  @Put(':id')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  async updateWithPut(@Param('id') id: string, @Body() updateNewsletterDto: UpdateNewsletterDto) {
+    return this.newslettersService.update(id, updateNewsletterDto);
   }
 }

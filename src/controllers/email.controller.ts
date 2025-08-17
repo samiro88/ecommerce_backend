@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, Delete, Param } from '@nestjs/common';
 import { EmailService } from '../services/email.service';
 
 @Controller('email')
@@ -38,15 +38,11 @@ return { message: '✅ Order shipped email sent successfully!' };
 @Post('preview')
 async previewTemplate(@Body() body: { type: string; payload: any }) {
   let html = this.emailService.compileTemplate(body.type, body.payload);
-
-  // Replace cid:logo-cid with your public logo URL (always works in browser)
   html = html.replace(
     /src="cid:logo-cid"/g,
     'src="https://protein.tn/images/logo/logo.png"'
   );
 
-  // Replace cid:qr-code-cid with a public QR code generator (fallback for preview)
-  // If you want to use the order number in the QR code, use the payload if present:
   const qrData = body.payload?.orderNumber
     ? `https://protein.tn/track-order/${body.payload.orderNumber}`
     : 'https://protein.tn';
@@ -65,5 +61,16 @@ async previewTemplate(@Body() body: { type: string; payload: any }) {
 async createTemplate(@Body() body: { type: string; html: string }) {
   this.emailService.createTemplate(body.type, body.html);
   return { message: 'Template créé avec succès !' };
+}
+
+@Get('templates')
+async listTemplates() {
+  return this.emailService.listTemplates();
+}
+
+@Delete('templates/:type')
+async deleteTemplate(@Param('type') type: string) {
+  this.emailService.deleteTemplate(type);
+  return { message: 'Template supprimé avec succès !' };
 }
 }

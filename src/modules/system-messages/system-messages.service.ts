@@ -12,11 +12,20 @@ export class SystemMessagesService {
   ) {}
 
   async create(createSystemMessageDto: CreateSystemMessageDto): Promise<SystemMessage> {
-    const exists = await this.systemMessageModel.findOne({ id: createSystemMessageDto.id });
-    if (exists) {
-      throw new ConflictException('SystemMessage with this id already exists');
+    // Generate id if not provided or empty
+    const id = createSystemMessageDto.id && createSystemMessageDto.id.trim() !== '' 
+      ? createSystemMessageDto.id 
+      : `sms-${Date.now()}`;
+    
+    // Only check for duplicates if we have a real ID
+    if (createSystemMessageDto.id && createSystemMessageDto.id.trim() !== '') {
+      const exists = await this.systemMessageModel.findOne({ id });
+      if (exists) {
+        throw new ConflictException('SystemMessage with this id already exists');
+      }
     }
-    const created = new this.systemMessageModel(createSystemMessageDto);
+    
+    const created = new this.systemMessageModel({ ...createSystemMessageDto, id });
     return created.save();
   }
 

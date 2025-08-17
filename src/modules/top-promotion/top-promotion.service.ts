@@ -12,32 +12,104 @@ export class TopPromotionService {
   async getAllTopPromotions() {
     const promotions = await this.topPromotionModel.find()
       .sort('-createdAt')
-      .populate('productId')
       .exec();
 
-    const mapped = promotions.map((promo: any) => ({
-      ...promo.toObject(),
-      product: promo.productId ? promo.productId.toObject?.() || promo.productId : null,
+    // Manual population to get product data with images
+    const mapped = await Promise.all(promotions.map(async (promo: any) => {
+      const promoObj = promo.toObject();
+      let product: any = null;
+      
+      if (promoObj.productId) {
+        try {
+          let productId = promoObj.productId;
+          // Handle ObjectId conversion
+          if (typeof productId === 'object') {
+            productId = productId.toString();
+          }
+          
+          const productDoc = await this.topPromotionModel.db.collection('products').findOne({ _id: new (require('mongoose').Types.ObjectId)(productId) });
+          
+          if (productDoc) {
+            product = {
+              _id: productDoc._id,
+              designation: productDoc.designation_fr || productDoc.designation,
+              price: productDoc.prix || productDoc.price,
+              oldPrice: productDoc.promo || productDoc.oldPrice,
+              mainImage: productDoc.mainImage || { url: productDoc.cover || '', img_id: '' },
+              images: productDoc.images || [],
+              cover: productDoc.cover || productDoc.mainImage?.url || ''
+            };
+          }
+        } catch (error: any) {
+          console.log('Error fetching product:', promoObj.productId, error.message);
+        }
+      }
+      
+      return {
+        ...promoObj,
+        product
+      };
     }));
 
     return { message: 'Success', data: mapped };
   }
 
   async getActiveTopPromotions() {
-  const promotions = await this.topPromotionModel.find({
-    active: true,
-  })
-    .sort('-createdAt')
-    .populate('productId')
-    .exec();
+    console.log('=== getActiveTopPromotions called ===');
+    const now = new Date();
+    const promotions = await this.topPromotionModel.find({
+      active: true,
+      startDate: { $lte: now },
+      endDate: { $gte: now },
+    })
+      .sort('-createdAt')
+      .exec();
+    
+    console.log('Found promotions:', promotions.length);
 
-  const mapped = promotions.map((promo: any) => ({
-    ...promo.toObject(),
-    product: promo.productId ? promo.productId.toObject?.() || promo.productId : null,
-  }));
+    // Manual population since populate isn't working
+    const mapped = await Promise.all(promotions.map(async (promo: any) => {
+      const promoObj = promo.toObject();
+      let product: any = null;
+      
+      console.log('ProductId type:', typeof promoObj.productId, 'Value:', promoObj.productId);
+      
+      if (promoObj.productId) {
+        try {
+          let productId = promoObj.productId;
+          // Handle ObjectId conversion
+          if (typeof productId === 'object') {
+            productId = productId.toString();
+          }
+          
+          console.log('Searching for product with ID:', productId);
+          const productDoc = await this.topPromotionModel.db.collection('products').findOne({ _id: new (require('mongoose').Types.ObjectId)(productId) });
+          console.log('Product found:', !!productDoc);
+          
+          if (productDoc) {
+            product = {
+              _id: productDoc._id,
+              designation: productDoc.designation_fr || productDoc.designation,
+              price: productDoc.prix || productDoc.price,
+              oldPrice: productDoc.promo || productDoc.oldPrice,
+              mainImage: productDoc.mainImage || { url: productDoc.cover || '', img_id: '' },
+              images: productDoc.images || [],
+              cover: productDoc.cover || productDoc.mainImage?.url || ''
+            };
+          }
+        } catch (error: any) {
+          console.log('Error fetching product:', promoObj.productId, error.message);
+        }
+      }
+      
+      return {
+        ...promoObj,
+        product
+      };
+    }));
 
-  return { message: 'Success', data: mapped };
-}
+    return { message: 'Success', data: mapped };
+  }
 
   async getTopPromotionById(id: string) {
     if (!isValidObjectId(id)) {

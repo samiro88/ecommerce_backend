@@ -1,13 +1,13 @@
 import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateNewsletterDto {
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  readonly id: string;
+  readonly id?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  readonly email: string;
+  readonly email?: string;
 
   @IsString()
   @IsOptional()

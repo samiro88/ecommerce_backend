@@ -211,4 +211,55 @@ export class EmailService {
   const filePath = path.join(baseDir, `${type}.hbs`);
   fs.writeFileSync(filePath, html, 'utf-8');
 }
+
+  public listTemplates(): any[] {
+    const baseDir =
+      process.env.NODE_ENV === 'production'
+        ? path.join(process.cwd(), 'dist', 'templates')
+        : path.join(process.cwd(), 'src', 'templates');
+    
+    try {
+      const files = fs.readdirSync(baseDir).filter(file => file.endsWith('.hbs'));
+      return files.map(file => {
+        const type = file.replace('.hbs', '');
+        const filePath = path.join(baseDir, file);
+        const stats = fs.statSync(filePath);
+        
+        return {
+          id: type,
+          name: type.charAt(0).toUpperCase() + type.slice(1).replace(/-/g, ' '),
+          type: type,
+          subject: this.getDefaultSubject(type),
+          updated_at: stats.mtime.toISOString(),
+        };
+      });
+    } catch (error) {
+      console.error('Error listing templates:', error);
+      return [];
+    }
+  }
+
+  private getDefaultSubject(type: string): string {
+    const subjects: Record<string, string> = {
+      'order-confirmation': 'Order Confirmation - Protein Tunisia',
+      'weekly-promotion': 'Promotions de la semaine chez Protein Tunisia',
+      'order-shipped': 'Votre commande a été expédiée',
+    };
+    return subjects[type] || `Email Template - ${type}`;
+  }
+
+  public deleteTemplate(type: string): void {
+    const baseDir =
+      process.env.NODE_ENV === 'production'
+        ? path.join(process.cwd(), 'dist', 'templates')
+        : path.join(process.cwd(), 'src', 'templates');
+    const filePath = path.join(baseDir, `${type}.hbs`);
+    
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      console.log(`Template deleted: ${filePath}`);
+    } else {
+      console.warn(`Template not found: ${filePath}`);
+    }
+  }
 }

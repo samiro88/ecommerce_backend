@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TopPromotion, TopPromotionSchema } from '../../models/top-promotion.schema';
+import { Product, ProductSchema } from '../../models/product.schema';
 import { TopPromotionService } from './top-promotion.service';
 import { TopPromotionController } from './top-promotion.controller';
 
@@ -8,6 +9,7 @@ import { TopPromotionController } from './top-promotion.controller';
   imports: [
     MongooseModule.forFeature([
       { name: TopPromotion.name, schema: TopPromotionSchema, collection: 'top_promotions' },
+      { name: Product.name, schema: ProductSchema },
     ]),
   ],
   controllers: [TopPromotionController],
