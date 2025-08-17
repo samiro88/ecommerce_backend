@@ -73,16 +73,22 @@ export class ProductsController {
   }
 
   @Get('store/new-arrivals')
-async getStoreNewArrivals() {
-  try {
-    return await this.productsService.getStoreNewArrivals();
-  } catch (error) {
-    throw new HttpException(
-      error.message,
-      error.status || HttpStatus.INTERNAL_SERVER_ERROR,
-    );
+  async getStoreNewArrivals() {
+    try {
+      const result = await this.productsService.getProductsWithNewVente();
+      return {
+        success: true,
+        count: result.data.length,
+        data: result.data,
+        config: result.config
+      };
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
-}
  /* Admin Routes (original from second file) */
   @Post('admin/new-with-file')
   @UseInterceptors(FileInterceptor('file'))

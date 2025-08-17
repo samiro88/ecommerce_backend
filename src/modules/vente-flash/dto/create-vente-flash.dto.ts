@@ -1,17 +1,17 @@
-import { IsOptional, IsString, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsOptional, IsString, IsNumber } from 'class-validator';
 
 export class CreateVenteFlashDto {
+  @IsOptional()
   @IsNumber()
-  @IsNotEmpty()
-  id: number;
+  id?: number;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  slug: string;
+  slug?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  designation_fr: string;
+  designation_fr?: string;
 
   @IsString()
   @IsOptional()
@@ -37,9 +37,9 @@ export class CreateVenteFlashDto {
   @IsOptional()
   description_cover?: string | null;
 
+  @IsOptional()
   @IsNumber()
-  @IsNotEmpty()
-  prix: number;
+  prix?: number;
 
   @IsString()
   @IsOptional()

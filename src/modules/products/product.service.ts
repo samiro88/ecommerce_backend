@@ -1173,8 +1173,10 @@ if (brand) {
         products = orderedProducts;
       }
 
-      // Force limit to 8 products maximum
-      products = products.slice(0, 8);
+      // Limit products based on config
+      if (config.maxDisplay && config.maxDisplay < products.length) {
+        products = products.slice(0, config.maxDisplay);
+      }
 
       const productsWithReviews = await this.attachReviews(products);
 
