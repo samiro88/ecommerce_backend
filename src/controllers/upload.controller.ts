@@ -20,6 +20,19 @@ export class UploadController {
   constructor(
     @InjectModel('Media') private readonly mediaModel: Model<Document>,
   ) {}
+
+  private getUploadPath(): string {
+    // Check if we're in production or development
+    const isDev = process.env.NODE_ENV !== 'production';
+    
+    if (isDev) {
+      // Development: use relative path to dashboard
+      return path.join(process.cwd(), '..', '..', 'sobitas-dashboard', 'dashboard-app', 'public');
+    } else {
+      // Production: use environment variable or default to current directory
+      return process.env.UPLOAD_PATH || path.join(process.cwd(), 'public');
+    }
+  }
   @Post('image')
   @UseInterceptors(FileInterceptor('file'))
   async uploadImage(@UploadedFile() file: Express.Multer.File) {
@@ -39,25 +52,16 @@ export class UploadController {
       const now = new Date();
       const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
       
-      // Save to dashboard public folder
-      const dashboardPublicDir = path.join(
-        process.cwd(), 
-        '..', 
-        '..', 
-        'sobitas-dashboard', 
-        'dashboard-app', 
-        'public', 
-        'produits', 
-        monthYear
-      );
+      // Get upload path based on environment
+      const uploadDir = path.join(this.getUploadPath(), 'produits', monthYear);
       
-      await fs.mkdir(dashboardPublicDir, { recursive: true });
+      await fs.mkdir(uploadDir, { recursive: true });
       
       // Generate unique filename
       const ext = path.extname(file.originalname) || '.jpg';
       const baseName = path.basename(file.originalname, ext);
       const uniqueName = `${baseName}-${Date.now()}${ext}`;
-      const filePath = path.join(dashboardPublicDir, uniqueName);
+      const filePath = path.join(uploadDir, uniqueName);
       
       // Save file
       await fs.writeFile(filePath, file.buffer);
@@ -129,16 +133,14 @@ export class UploadController {
       const now = new Date();
       const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
       
-      const dashboardPublicDir = path.join(
-        process.cwd(), '..', '..', 'sobitas-dashboard', 'dashboard-app', 'public', 'produits', monthYear
-      );
+      const uploadDir = path.join(this.getUploadPath(), 'produits', monthYear);
       
-      await fs.mkdir(dashboardPublicDir, { recursive: true });
+      await fs.mkdir(uploadDir, { recursive: true });
       
       const ext = path.extname(file.originalname) || '.jpg';
       const baseName = path.basename(file.originalname, ext);
       const uniqueName = `${baseName}-${Date.now()}${ext}`;
-      const filePath = path.join(dashboardPublicDir, uniqueName);
+      const filePath = path.join(uploadDir, uniqueName);
       
       await fs.writeFile(filePath, file.buffer);
       

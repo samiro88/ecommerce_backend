@@ -1,73 +1,27 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import * as cookieParser from 'cookie-parser';
-import { ValidationPipe } from '@nestjs/common';
-import * as express from 'express';
-import { DatabaseService } from './db/database.provider'; // Use existing service
+import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  const configService = app.get(ConfigService);
-
-  // ======================
-  // CORS Configuration
-  // ======================
-  function parseOrigins(origins: string | undefined) {
-    return origins ? origins.split(",").map(o => o.trim()) : [];
-  }
-
-  const corsOrigins = [
-    ...parseOrigins(configService.get('CORSADMIN')),
-    ...parseOrigins(configService.get('CORSSTORE')),
-  ].filter(Boolean);
-
-  const corsOptions = {
-    origin: corsOrigins,
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  };
-  app.enableCors(corsOptions);
-
-  // ======================
-  // Middleware
-  // ======================
-  app.use(cookieParser(configService.get('COOKIE_SECRET')));
   
-  // JSON/URL parsing is handled in app.module.ts - don't duplicate here
-
-  // Serve static files from /public
-  app.useStaticAssets('public');
-
-  // ======================
-  // Global Validation Pipe
-  // ======================
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true,
-    })
-  );
-
-  // ======================
-  // Database Connection & Server Start
-  // ======================
-  const PORT = configService.get('PORT') || 5000;
-  const NODE_ENV = configService.get('NODE_ENV') || 'development';
-
-  try {
-    // Using your existing DatabaseService
-    const databaseService = app.get(DatabaseService);
-    await databaseService.connectToDatabase(); // Explicit connection call
-    
-    await app.listen(PORT);
-    console.log(`🚀 Server running in ${NODE_ENV} mode on port ${PORT}`);
-  } catch (error) {
-    console.error('Server Error', error);
-    process.exit(1);
+  // Enable CORS for dashboard
+  app.enableCors({
+    origin: true, // Allow all origins during development
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  });
+  
+  // Serve static files in production
+  if (process.env.NODE_ENV === 'production') {
+    const uploadPath = process.env.UPLOAD_PATH || join(process.cwd(), 'public');
+    app.useStaticAssets(uploadPath, {
+      prefix: '/',
+    });
   }
+  
+  await app.listen(5000);
 }
-
 bootstrap();
