@@ -14,14 +14,16 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
   });
   
-  // Serve static files in production
-  if (process.env.NODE_ENV === 'production') {
-    const uploadPath = process.env.UPLOAD_PATH || join(process.cwd(), 'public');
-    app.useStaticAssets(uploadPath, {
-      prefix: '/',
-    });
-  }
+  // Serve static files in all environments
+  const uploadPath = process.env.UPLOAD_PATH || join(process.cwd(), 'public');
+  app.useStaticAssets(uploadPath, {
+    prefix: '/',
+  });
   
-  await app.listen(5000);
+  console.log(`Serving static files from: ${uploadPath}`);
+  
+  const port = process.env.PORT || 5000;
+  await app.listen(port);
+  console.log(`Backend running on port ${port}`);
 }
 bootstrap();
