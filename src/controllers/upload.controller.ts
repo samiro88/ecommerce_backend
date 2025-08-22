@@ -22,16 +22,11 @@ export class UploadController {
   ) {}
 
   private getUploadPath(): string {
-    // Check if we're in production or development
-    const isDev = process.env.NODE_ENV !== 'production';
+    // Always save to dashboard public folder
+    const dashboardPublicPath = process.env.DASHBOARD_PUBLIC_PATH || 
+      path.join(process.cwd(), '..', '..', 'sobitas-dashboard', 'dashboard-app', 'public');
     
-    if (isDev) {
-      // Development: use relative path to dashboard
-      return path.join(process.cwd(), '..', '..', 'sobitas-dashboard', 'dashboard-app', 'public');
-    } else {
-      // Production: use environment variable or default to current directory
-      return process.env.UPLOAD_PATH || path.join(process.cwd(), 'public');
-    }
+    return dashboardPublicPath;
   }
   @Post('image')
   @UseInterceptors(FileInterceptor('file'))
