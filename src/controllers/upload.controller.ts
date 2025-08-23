@@ -22,12 +22,12 @@ export class UploadController {
   ) {}
 
   private getUploadPath(): string {
-    // Save to API's public folder so files are accessible via the API server
-    const apiPublicPath = process.env.API_PUBLIC_PATH || 
-      path.join(process.cwd(), 'public');
-    
-    return apiPublicPath;
-  }
+  // On prod → use API_PUBLIC_PATH (e.g. /home/protein-api/htdocs/api.protein.tn/public)
+  // On dev → default to dashboard-app/public
+  return process.env.API_PUBLIC_PATH || 
+    path.join(process.cwd(), '..', 'sobitas-dashboard', 'dashboard-app', 'public');
+}
+
   @Post('image')
   @UseInterceptors(FileInterceptor('file'))
   async uploadImage(@UploadedFile() file: Express.Multer.File) {
@@ -45,7 +45,10 @@ export class UploadController {
 
       // Create folder structure: /produits/MonthYear/
       const now = new Date();
-      const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+      const monthYear = now
+  .toLocaleString('fr-FR', { month: 'long', year: 'numeric' })
+  .replace(' ', '');
+      
       
       // Get upload path based on environment
       const uploadDir = path.join(this.getUploadPath(), 'produits', monthYear);
@@ -126,7 +129,10 @@ export class UploadController {
       }
 
       const now = new Date();
-      const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '');
+      const monthYear = now
+  .toLocaleString('fr-FR', { month: 'long', year: 'numeric' })
+  .replace(' ', '');
+
       
       const uploadDir = path.join(this.getUploadPath(), 'produits', monthYear);
       
