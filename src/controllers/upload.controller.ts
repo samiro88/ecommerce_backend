@@ -46,8 +46,11 @@ export class UploadController {
       // Create folder structure: /produits/MonthYear/
       const now = new Date();
       const monthYear = now
-  .toLocaleString('fr-FR', { month: 'long', year: 'numeric' })
-  .replace(' ', '');
+  .toLocaleString('fr-FR', { month: 'long', year: 'numeric' }) // force French
+  .replace(' ', '') // remove space between month & year
+  .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove accents (août → aout)
+  .toLowerCase(); // optional: make it lowercase (aout2025)
+
       
       
       // Get upload path based on environment
@@ -130,8 +133,11 @@ export class UploadController {
 
       const now = new Date();
       const monthYear = now
-  .toLocaleString('fr-FR', { month: 'long', year: 'numeric' })
-  .replace(' ', '');
+  .toLocaleString('fr-FR', { month: 'long', year: 'numeric' }) // force French
+  .replace(' ', '') // remove space between month & year
+  .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove accents (août → aout)
+  .toLowerCase(); // optional: make it lowercase (aout2025)
+
 
       
       const uploadDir = path.join(this.getUploadPath(), 'produits', monthYear);
