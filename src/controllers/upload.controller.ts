@@ -22,11 +22,11 @@ export class UploadController {
   ) {}
 
   private getUploadPath(): string {
-    // Always save to dashboard public folder
-    const dashboardPublicPath = process.env.DASHBOARD_PUBLIC_PATH || 
-      path.join(process.cwd(), '..', '..', 'sobitas-dashboard', 'dashboard-app', 'public');
+    // Save to API's public folder so files are accessible via the API server
+    const apiPublicPath = process.env.API_PUBLIC_PATH || 
+      path.join(process.cwd(), 'public');
     
-    return dashboardPublicPath;
+    return apiPublicPath;
   }
   @Post('image')
   @UseInterceptors(FileInterceptor('file'))
