@@ -22,11 +22,10 @@ export class UploadController {
   ) {}
 
   private getUploadPath(): string {
-  // On prod → use API_PUBLIC_PATH (e.g. /home/protein-api/htdocs/api.protein.tn/public)
-  // On dev → default to dashboard-app/public
-  return process.env.API_PUBLIC_PATH || 
-    path.join(process.cwd(), '..', 'sobitas-dashboard', 'dashboard-app', 'public');
-}
+    // Use environment variable first, fallback to relative dev path
+    return process.env.DASHBOARD_PUBLIC_PATH ||
+      path.join(process.cwd(), '..', '..', 'sobitas-dashboard', 'dashboard-app', 'public');
+  }
 
   @Post('image')
   @UseInterceptors(FileInterceptor('file'))
@@ -46,30 +45,24 @@ export class UploadController {
       // Create folder structure: /produits/MonthYear/
       const now = new Date();
       const monthYear = now
-  .toLocaleString('fr-FR', { month: 'long', year: 'numeric' }) // force French
-  .replace(' ', '') // remove space between month & year
-  .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove accents (août → aout)
-  .toLowerCase(); // optional: make it lowercase (aout2025)
+        .toLocaleString('fr-FR', { month: 'long', year: 'numeric' })
+        .replace(/\s+/g, '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
 
-      
-      
-      // Get upload path based on environment
       const uploadDir = path.join(this.getUploadPath(), 'produits', monthYear);
-      
       await fs.mkdir(uploadDir, { recursive: true });
-      
-      // Generate unique filename
+
       const ext = path.extname(file.originalname) || '.jpg';
       const baseName = path.basename(file.originalname, ext);
       const uniqueName = `${baseName}-${Date.now()}${ext}`;
       const filePath = path.join(uploadDir, uniqueName);
-      
-      // Save file
+
       await fs.writeFile(filePath, file.buffer);
-      
+
       const publicUrl = `/produits/${monthYear}/${uniqueName}`;
-      
-      // Extract image metadata
+
       let width = 0, height = 0;
       try {
         if (file.mimetype.startsWith('image/') && sharp) {
@@ -78,11 +71,10 @@ export class UploadController {
           height = metadata.height || 0;
         }
       } catch (err) {
-        console.log('Could not extract image metadata, using defaults:', err.message);
         width = 800;
         height = 600;
       }
-      
+
       // Save to database
       const mediaDoc = new this.mediaModel({
         id: publicUrl,
@@ -92,15 +84,9 @@ export class UploadController {
         folderId: `produits/${monthYear}`
       });
       await mediaDoc.save();
-      
-      console.log('File saved successfully:', {
-        path: filePath,
-        url: publicUrl,
-        width,
-        height,
-        fileSize: file.size
-      });
-      
+
+      console.log('File saved successfully:', { path: filePath, url: publicUrl });
+
       return {
         success: true,
         message: 'File uploaded successfully',
@@ -133,26 +119,24 @@ export class UploadController {
 
       const now = new Date();
       const monthYear = now
-  .toLocaleString('fr-FR', { month: 'long', year: 'numeric' }) // force French
-  .replace(' ', '') // remove space between month & year
-  .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove accents (août → aout)
-  .toLowerCase(); // optional: make it lowercase (aout2025)
+        .toLocaleString('fr-FR', { month: 'long', year: 'numeric' })
+        .replace(/\s+/g, '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
 
-
-      
       const uploadDir = path.join(this.getUploadPath(), 'produits', monthYear);
-      
       await fs.mkdir(uploadDir, { recursive: true });
-      
+
       const ext = path.extname(file.originalname) || '.jpg';
       const baseName = path.basename(file.originalname, ext);
       const uniqueName = `${baseName}-${Date.now()}${ext}`;
       const filePath = path.join(uploadDir, uniqueName);
-      
+
       await fs.writeFile(filePath, file.buffer);
-      
+
       const publicUrl = `/produits/${monthYear}/${uniqueName}`;
-      
+
       let width = 0, height = 0;
       try {
         if (file.mimetype.startsWith('image/') && sharp) {
@@ -164,7 +148,7 @@ export class UploadController {
         width = 800;
         height = 600;
       }
-      
+
       const mediaDoc = new this.mediaModel({
         id: publicUrl,
         width,
@@ -173,7 +157,7 @@ export class UploadController {
         folderId: folderId || `produits/${monthYear}`
       });
       await mediaDoc.save();
-      
+
       return {
         success: true,
         message: 'Media uploaded successfully',
