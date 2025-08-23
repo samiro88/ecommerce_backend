@@ -15,12 +15,12 @@ async function bootstrap() {
   });
   
   // Serve static files in all environments
-  const uploadPath = process.env.UPLOAD_PATH || join(process.cwd(), 'public');
-  app.useStaticAssets(uploadPath, {
+ const uploadPath = process.env.DASHBOARD_PUBLIC_PATH || join(process.cwd(), '..', 'sobitas-dashboard', 'dashboard-app', 'public');
+app.useStaticAssets(uploadPath, {
     prefix: '/',
-  });
-  
-  console.log(`Serving static files from: ${uploadPath}`);
+});
+console.log(`Serving static files from: ${uploadPath}`);
+
   
   const port = process.env.PORT || 5000;
   await app.listen(port);
