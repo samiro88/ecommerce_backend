@@ -77,6 +77,8 @@ export class PacksService {
         updated_by,
         venteflashDate,
         rate,
+        qte,
+        displayOrder,
       } = body;
 
       const missingFields: string[] = [];
@@ -160,6 +162,8 @@ export class PacksService {
         updated_by,
         venteflashDate: venteflashDate ? new Date(venteflashDate) : undefined,
         rate: rate ? parseFloat(rate) : undefined,
+        qte,
+        displayOrder: displayOrder ? parseInt(displayOrder) : 0,
       };
 
       // Remove undefined fields
@@ -244,6 +248,8 @@ export class PacksService {
         'new_product',
         'gallery',
         'cover',
+        'qte',
+        'displayOrder',
       ].join(' ');
 
       const [packs, total] = await Promise.all([
@@ -370,6 +376,8 @@ export class PacksService {
         'updated_by',
         'venteflashDate',
         'rate',
+        'qte',
+        'displayOrder',
       ];
 
       for (const field of updatableFields) {
@@ -387,6 +395,8 @@ export class PacksService {
             field === 'venteflashDate'
           ) {
             existingPack[field] = body[field] ? new Date(body[field]) : existingPack[field];
+          } else if (field === 'displayOrder') {
+            existingPack[field] = body[field] ? parseInt(body[field]) : existingPack[field];
           } else {
             existingPack[field] = body[field];
           }
@@ -710,6 +720,16 @@ export class PacksService {
       if (updateData.price) updateData.price = parseFloat(updateData.price);
       if (updateData.oldPrice) updateData.oldPrice = parseFloat(updateData.oldPrice);
       if (updateData.rate) updateData.rate = parseFloat(updateData.rate);
+      
+      // Handle qte field
+      if (updateData.qte !== undefined) {
+        updateData.qte = updateData.qte.toString();
+      }
+      
+      // Handle displayOrder field
+      if (updateData.displayOrder !== undefined) {
+        updateData.displayOrder = parseInt(updateData.displayOrder) || 0;
+      }
       
       // Handle boolean fields
       if (updateData.status !== undefined) {

@@ -157,6 +157,28 @@ export class Pack extends Document {
   @Prop()
   updated_by: string;
 
+  @Prop()
+  qte: string;
+
+
+  @Prop()
+  prix_ht: string;
+
+  @Prop()
+  promo_ht: string;
+
+  @Prop()
+  pack: string;
+
+  @Prop()
+  rupture: string;
+
+  @Prop()
+  meta: string;
+
+  @Prop()
+  review: string;
+
   // Display order for frontend control
   @Prop({ default: 0 })
   displayOrder: number;

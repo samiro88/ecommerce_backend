@@ -51,6 +51,9 @@ declare id: string;
   @Prop()
   more_details: string;
 
+  @Prop()
+  slug: string;
+
   // Link to aromas (array of ObjectId references)
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Aroma' }], default: [] })
   aromas: Types.ObjectId[];

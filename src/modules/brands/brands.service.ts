@@ -30,11 +30,21 @@ async findBySlug(slug: string): Promise<Brand[]> {
   }
 
   async create(data: Partial<Brand>): Promise<Brand> {
-    // Generate ID if not provided
+    // Generate slug from designation_fr if not provided
+    const generateSlug = (text: string) => {
+      return text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+    };
+
     const brandData = {
       ...data,
       id: (data as any).id || Math.random().toString(36).substr(2, 9),
       designation_fr: data.designation_fr || 'Untitled Brand',
+      slug: data.slug || (data.designation_fr ? generateSlug(data.designation_fr) : ''),
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
@@ -49,6 +59,19 @@ async findBySlug(slug: string): Promise<Brand[]> {
     // Handle aromas field - remove if empty string or invalid
     if (typeof cleanData.aromas === 'string' && (cleanData.aromas === '' || cleanData.aromas === "[ '' ]")) {
       delete cleanData.aromas;
+    }
+    
+    // Generate slug from designation_fr if slug is empty but designation_fr is provided
+    if (!cleanData.slug && cleanData.designation_fr) {
+      const generateSlug = (text: string) => {
+        return text
+          .toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .trim();
+      };
+      cleanData.slug = generateSlug(cleanData.designation_fr);
     }
     
     // Remove fields that shouldn't be updated
