@@ -97,9 +97,9 @@ export class EmailService {
     };
     try {
       await this.transporter.sendMail({
-        from: `"Protein Tunisia" <${process.env.EMAIL_USER}>`,
+        from: `"sobitas protein.tn" <${process.env.EMAIL_USER}>`,
         to,
-        subject: 'Order Confirmation - Protein Tunisia',
+        subject: 'Order Confirmation - sobitas protein.tn',
         html: htmlContent,
         attachments: [...attachments, qrAttachment],
       });
@@ -138,9 +138,9 @@ export class EmailService {
       ? [...attachments, qrAttachment, logoAttachment]
       : [...attachments, qrAttachment];
     await this.transporter.sendMail({
-      from: `"Protein Tunisia" <${process.env.EMAIL_USER}>`,
+      from: `"sobitas protein.tn" <${process.env.EMAIL_USER}>`,
       to,
-      subject: safeContext.subject || 'This Week’s Offers - Protein Tunisia',
+      subject: safeContext.subject || 'This Week’s Offers - sobitas protein.tn',
       html: htmlContent,
       attachments: allAttachments, // Preserves existing attachments and adds logo
     });
@@ -188,9 +188,9 @@ export class EmailService {
       const htmlContent = this.compileTemplate('order-shipped', updatedContext);
 
       const info = await this.transporter.sendMail({
-        from: `"Protein Tunisia" <${process.env.EMAIL_USER}>`,
+        from: `"sobitas protein.tn" <${process.env.EMAIL_USER}>`,
         to,
-        subject: updatedContext.subject || 'Votre commande a été expédiée - Protein Tunisia', // Uses French subject from request or falls back
+        subject: updatedContext.subject || 'Votre commande a été expédiée - sobitas protein.tn', // Uses French subject from request or falls back
         html: htmlContent,
         attachments: allAttachments, // Merge existing attachments + QR code + logo
       });
@@ -241,8 +241,8 @@ export class EmailService {
 
   private getDefaultSubject(type: string): string {
     const subjects: Record<string, string> = {
-      'order-confirmation': 'Order Confirmation - Protein Tunisia',
-      'weekly-promotion': 'Promotions de la semaine chez Protein Tunisia',
+      'order-confirmation': 'Order Confirmation - sobitas protein.tn',
+      'weekly-promotion': 'Promotions de la semaine chez sobitas protein.tn',
       'order-shipped': 'Votre commande a été expédiée',
     };
     return subjects[type] || `Email Template - ${type}`;
