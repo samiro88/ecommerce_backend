@@ -274,6 +274,17 @@ export class PacksService {
   }
 
   /**
+   * Helper to convert string boolean values to actual booleans
+   */
+  private convertStringToBoolean(value: any): boolean {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') {
+      return value.toLowerCase() === 'true' || value === '1' || value === 'active';
+    }
+    return Boolean(value);
+  }
+
+  /**
    * Update a pack with full schema support.
    */
   async updatePack(id: string, body: any, files: Express.Multer.File[]) {
@@ -699,6 +710,20 @@ export class PacksService {
       if (updateData.price) updateData.price = parseFloat(updateData.price);
       if (updateData.oldPrice) updateData.oldPrice = parseFloat(updateData.oldPrice);
       if (updateData.rate) updateData.rate = parseFloat(updateData.rate);
+      
+      // Handle boolean fields
+      if (updateData.status !== undefined) {
+        updateData.status = this.convertStringToBoolean(updateData.status);
+      }
+      if (updateData.inStock !== undefined) {
+        updateData.inStock = this.convertStringToBoolean(updateData.inStock);
+      }
+      if (updateData.best_seller !== undefined) {
+        updateData.best_seller = this.convertStringToBoolean(updateData.best_seller);
+      }
+      if (updateData.new_product !== undefined) {
+        updateData.new_product = this.convertStringToBoolean(updateData.new_product);
+      }
 
       const updatedPack = await this.packModel.findByIdAndUpdate(
         id,
