@@ -61,7 +61,8 @@ export class UploadController {
 
       await fs.writeFile(filePath, file.buffer);
 
-      const publicUrl = `/produits/${monthYear}/${uniqueName}`;
+      const baseUrl = process.env.BACKEND_API_URL || 'https://api.protein.tn';
+      const publicUrl = `${baseUrl}/produits/${monthYear}/${uniqueName}`;
 
       let width = 0, height = 0;
       try {
@@ -135,7 +136,8 @@ export class UploadController {
 
       await fs.writeFile(filePath, file.buffer);
 
-      const publicUrl = `/produits/${monthYear}/${uniqueName}`;
+      const baseUrl = process.env.BACKEND_API_URL || 'https://api.protein.tn';
+      const publicUrl = `${baseUrl}/produits/${monthYear}/${uniqueName}`;
 
       let width = 0, height = 0;
       try {
