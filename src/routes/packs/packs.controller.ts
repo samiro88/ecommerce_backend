@@ -69,7 +69,8 @@ export class PacksController {
         const filePath = path.join(dashboardPublicDir, uniqueName);
         
         await fs.writeFile(filePath, file.buffer);
-        imageUrl = `/packs/${monthYear}/${uniqueName}`;
+        const baseUrl = process.env.BACKEND_API_URL || 'https://api.protein.tn';
+        imageUrl = `${baseUrl}/packs/${monthYear}/${uniqueName}`;
         
         console.log('File saved successfully:', {
           path: filePath,
@@ -297,7 +298,8 @@ export class PacksController {
         const filePath = path.join(dashboardPublicDir, uniqueName);
         
         await fs.writeFile(filePath, file.buffer);
-        imageUrl = `/packs/${monthYear}/${uniqueName}`;
+        const baseUrl = process.env.BACKEND_API_URL || 'https://api.protein.tn';
+        imageUrl = `${baseUrl}/packs/${monthYear}/${uniqueName}`;
         
         console.log('File saved successfully:', {
           path: filePath,

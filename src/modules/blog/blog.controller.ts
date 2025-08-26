@@ -86,7 +86,8 @@ export class BlogController {
         const filePath = path.join(dashboardPublicDir, uniqueName);
         
         await fs.writeFile(filePath, file.buffer);
-        imageUrl = `/blogs/${monthYear}/${uniqueName}`;
+        const baseUrl = process.env.BACKEND_API_URL || 'https://api.protein.tn';
+        imageUrl = `${baseUrl}/blogs/${monthYear}/${uniqueName}`;
         
         console.log('File saved successfully:', {
           path: filePath,
@@ -197,7 +198,8 @@ export class BlogController {
         const filePath = path.join(dashboardPublicDir, uniqueName);
         
         await fs.writeFile(filePath, file.buffer);
-        imageUrl = `/blogs/${monthYear}/${uniqueName}`;
+        const baseUrl = process.env.BACKEND_API_URL || 'https://api.protein.tn';
+        imageUrl = `${baseUrl}/blogs/${monthYear}/${uniqueName}`;
         
         console.log('File saved successfully:', {
           path: filePath,
